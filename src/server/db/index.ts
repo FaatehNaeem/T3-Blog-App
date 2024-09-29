@@ -1,18 +1,25 @@
-import { drizzle } from "drizzle-orm/postgres-js";
-import postgres from "postgres";
-
 import { env } from "~/env";
 import * as schema from "./schema";
+import { PostgresJsDatabase, drizzle } from "drizzle-orm/postgres-js";
+import postgres from "postgres";
 
-/**
- * Cache the database connection in development. This avoids creating a new connection on every HMR
- * update.
- */
-const globalForDb = globalThis as unknown as {
-  conn: postgres.Sql | undefined;
-};
+declare global {
+  // eslint-disable-next-line no-var -- only var works here
+  var database: PostgresJsDatabase<typeof schema> | undefined;
+}
 
-const conn = globalForDb.conn ?? postgres(env.DATABASE_URL);
-if (env.NODE_ENV !== "production") globalForDb.conn = conn;
+let database: PostgresJsDatabase<typeof schema>;
+let pg: ReturnType<typeof postgres>;
 
-export const db = drizzle(conn, { schema });
+if (env.NODE_ENV === "production") {
+  pg = postgres(env.DATABASE_URL);
+  database = drizzle(pg, { schema });
+} else {
+  if (!global.database) {
+    pg = postgres(env.DATABASE_URL);
+    global.database = drizzle(pg, { schema });
+  }
+  database = global.database;
+}
+
+export { database, pg };
