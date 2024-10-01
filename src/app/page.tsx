@@ -1,8 +1,7 @@
-import SignUpForm from "~/components/signup-form"
-
-
-export default function Dashboard() {
+export default function Home() {
   return (
-    <SignUpForm/>
-  )
+    <div className="w-screen h-screen bg-black flex justify-center items-center">
+      <h1 className="text-white text-3xl">Home Page</h1>
+    </div>
+  );
 }

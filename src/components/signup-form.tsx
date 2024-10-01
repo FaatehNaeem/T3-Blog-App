@@ -7,7 +7,7 @@ import Image from "next/image";
 import Link from "next/link";
 
 import { useForm } from "react-hook-form";
-import { z } from "zod";
+import { userSchema } from "~/validations/user-validation";
 
 import {
   Form,
@@ -17,22 +17,12 @@ import {
   FormLabel,
   FormMessage,
 } from "~/components/ui/form";
+import type z from "zod";
 
-const formSchema = z.object({
-  username: z.string().min(2, {
-    message: "Username must be at least 2 characters.",
-  }),
-  email: z.string().min(2, {
-    message: "Email is not valid",
-  }),
-  password: z.string().min(8, {
-    message: "Password must be of atleast 8 characters",
-  }),
-});
 
 export default function SignUpForm() {
-  const form = useForm<z.infer<typeof formSchema>>({
-    resolver: zodResolver(formSchema),
+  const form = useForm<z.infer<typeof userSchema>>({
+    resolver: zodResolver(userSchema),
     defaultValues: {
       username: "",
       email: "",
@@ -41,7 +31,7 @@ export default function SignUpForm() {
     mode: "onBlur",
   });
 
-  function onSubmit(values: z.infer<typeof formSchema>) {
+  function onSubmit(values: z.infer<typeof userSchema>) {
     console.log(values);
   }
 
