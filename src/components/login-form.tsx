@@ -7,7 +7,7 @@ import Image from "next/image";
 import Link from "next/link";
 
 import { useForm } from "react-hook-form";
-import { z } from "zod";
+import type z  from "zod";
 
 import {
   Form,
@@ -17,19 +17,12 @@ import {
   FormLabel,
   FormMessage,
 } from "~/components/ui/form";
+import { userSchema } from "~/validations/user-validation";
 
-const formSchema = z.object({
-  email: z.string().min(2, {
-    message: "Email is not valid",
-  }),
-  password: z.string().min(8, {
-    message: "Password must be of atleast 8 characters",
-  }),
-});
 
 export default function LoginForm() {
-  const form = useForm<z.infer<typeof formSchema>>({
-    resolver: zodResolver(formSchema),
+  const form = useForm<z.infer<typeof userSchema>>({
+    resolver: zodResolver(userSchema),
     defaultValues: {
       email: "",
       password: "",
@@ -37,13 +30,22 @@ export default function LoginForm() {
     mode: "onBlur",
   });
 
-  function onSubmit(values: z.infer<typeof formSchema>) {
+  function onSubmit(values: z.infer<typeof userSchema>) {
     console.log(values);
   }
 
   return (
     <Form {...form}>
       <div className="w-full bg-zinc-950 lg:grid lg:min-h-[600px] lg:grid-cols-2 xl:min-h-[559px]">
+        <div className="hidden bg-muted lg:block">
+          <Image
+            src="social/wp-content/uploads/2015/12/blog-background-2.jpg"
+            alt="Image"
+            width="1920"
+            height="1000"
+            className="h-full w-full object-cover dark:brightness-[0.2] dark:grayscale"
+          />
+        </div>
         <div className="flex items-center justify-center">
           <div className="fixed mx-auto grid w-[350px] gap-6 rounded-2xl bg-zinc-800 p-6">
             <div className="grid gap-2">
@@ -114,16 +116,6 @@ export default function LoginForm() {
               </form>
             </div>
           </div>
-        </div>
-
-        <div className="hidden bg-muted lg:block">
-          <Image
-            src="social/wp-content/uploads/2015/12/blog-background-2.jpg"
-            alt="Image"
-            width="1920"
-            height="1000"
-            className="h-full w-full object-cover dark:brightness-[0.2] dark:grayscale"
-          />
         </div>
       </div>
     </Form>
