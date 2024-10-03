@@ -1,4 +1,5 @@
 import Blogs from "~/components/blogs-container";
+import Footer from "~/components/common/footer";
 import Header from "~/components/common/header";
 
 export default function Home() {
@@ -8,7 +9,7 @@ export default function Home() {
         <Header />
         <Blogs />
       </div>
-
+      <Footer/>
       <br />
       <br />
       <br />
