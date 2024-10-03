@@ -1,4 +1,3 @@
-import { Package2 } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 
@@ -45,12 +44,15 @@ export default function Footer() {
         {/* border between  */}
         <div className="border-2 border-red-600"></div>
 
+        {/* second section  */}
         <div className="h-full w-[48%] flex-col">
+          {/* logo + web name */}
           <div className="flex h-1/3 w-full flex-row items-center justify-center gap-4 bg-black">
             <Image src="/favicon.ico" alt="Image" width="20" height="20" />
             <h3>MY Blog App</h3>
           </div>
 
+          {/* menu items  */}
           <div className="flex h-1/3 w-full flex-row items-center justify-center gap-4 bg-black">
             <Link
               href="#"
@@ -72,6 +74,7 @@ export default function Footer() {
             </Link>
           </div>
 
+          {/* copyrights         */}
           <div className="flex h-1/3 w-full flex-row items-center justify-center bg-black">
             <h3>&copy;Copyright. All Rights Reserved</h3>
           </div>
