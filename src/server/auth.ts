@@ -8,8 +8,8 @@ import { type Adapter } from "next-auth/adapters";
 // import DiscordProvider from "next-auth/providers/discord";
 import CredentialsProvider from "next-auth/providers/credentials";
 
-
-import { env } from "~/env";
+import { eq,and } from "drizzle-orm";
+// import { env } from "~/env";
 import { db } from "~/server/db";
 import {
   accounts,
@@ -17,6 +17,7 @@ import {
   users,
   verificationTokens,
 } from "~/server/db/schema";
+
 
 /**
  * Module augmentation for `next-auth` types. Allows us to add custom properties to the `session`
@@ -77,11 +78,18 @@ export const authOptions: NextAuthOptions = {
 
       async authorize(credentials) {
         // Add logic here to look up the user from the credentials supplied
-        const user = { id: "1", name: "J Smith", email: "jsmith@example.com" }
+        // const user = { id: "1", name: "J Smith", email: "jsmith@example.com" }
+        const email = credentials?.email
+        const password = credentials?.password
+
+        const user = await db.query.users.findFirst({
+          where: and(eq(users.email, email), eq(users.password, password)),
+        });
+
 
         if (user) {
           // Any object returned will be saved in `user` property of the JWT
-          return user
+          return user;
         } else {
           // If you return null then an error will be displayed advising the user to check their details.
           return null
