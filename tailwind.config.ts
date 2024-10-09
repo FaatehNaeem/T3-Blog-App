@@ -16,7 +16,10 @@ export default {
   		},
   		colors: {
   			background: 'hsl(var(--background))',
-  			foreground: 'hsl(var(--foreground))',
+			background2: 'hsl(var(--background2))',
+			foreground: 'hsl(var(--foreground))',
+			foreground2: 'hsl(var(--foreground2))',
+			
   			card: {
   				DEFAULT: 'hsl(var(--card))',
   				foreground: 'hsl(var(--card-foreground))'
@@ -58,5 +61,5 @@ export default {
   		}
   	}
   },
-  plugins: [require("tailwindcss-animate")],
+  plugins: [import("tailwindcss-animate")],
 } satisfies Config;

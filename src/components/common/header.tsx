@@ -9,7 +9,7 @@ export default function Header() {
   return (
     // <div className="flex min-h-screen w-full flex-col">
     <>
-      <header className="top-0 flex h-16 w-full items-center gap-4 border-b-4 border-red-700 bg-zinc-800 px-4 md:px-6">
+      <header className="t1op-0 flex h-16 w-full items-center gap-4 border-b-4 border-red-700 bg-foreground px-4 md:px-6">
         <nav className="hidden flex-col gap-6 text-lg font-medium md:flex md:flex-row md:items-center md:gap-5 md:text-sm lg:gap-12 w-2/3 justify-center">
           <Link
             href="#"
@@ -20,19 +20,19 @@ export default function Header() {
           </Link>
           <Link
             href="#"
-            className="text-white transition-colors hover:text-zinc-300"
+            className="text-background transition-colors hover:text-zinc-300"
           >
             Home
           </Link>
           <Link
             href="#"
-            className="text-white transition-colors hover:text-zinc-300"
+            className="text-background transition-colors hover:text-zinc-300"
           >
             About
           </Link>
           <Link
             href="#"
-            className="text-white transition-colors hover:text-zinc-300"
+            className="text-background transition-colors hover:text-zinc-300"
           >
             Categories
           </Link>
