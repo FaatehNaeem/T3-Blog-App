@@ -26,7 +26,7 @@ export const users: Table = pgTable("users", {
   id: varchar("id", { length: 255 }).primaryKey().$default(() => crypto.randomUUID()),
   username: varchar("username", { length: 255 }).notNull().unique(),
   email: varchar('email').notNull().unique(),
-  password: varchar('password', { length: 20 }).notNull().unique(),
+  password: varchar('password', { length: 256}).notNull().unique(),
   profileImage: varchar('profileImage', { length: 300 }),
   createdAt: timestamp('createdAt').notNull().defaultNow(),
   updatedAt: timestamp('updatedAt').notNull().defaultNow(),

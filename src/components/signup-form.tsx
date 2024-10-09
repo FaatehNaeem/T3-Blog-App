@@ -17,10 +17,24 @@ import {
   FormLabel,
   FormMessage,
 } from "~/components/ui/form";
+
 import type z from "zod";
 
+import { api } from "~/trpc/react";
 
+// trpc logic
 export default function SignUpForm() {
+  const utils = api.useUtils();
+
+  const user = api.user.createUser.useMutation({
+    onSuccess: async () => {
+      await utils.user.invalidate();
+    },
+    onError: (error) => {
+      console.error("Mutation error:", error);
+    },
+  });
+
   const form = useForm<z.infer<typeof userSchema>>({
     resolver: zodResolver(userSchema),
     defaultValues: {
@@ -31,8 +45,18 @@ export default function SignUpForm() {
     mode: "onBlur",
   });
 
-  function onSubmit(values: z.infer<typeof userSchema>) {
-    console.log(values);
+  async function onSubmit(
+    values: z.infer<typeof userSchema>,
+    event: React.FormEvent<HTMLFormElement>,
+  ) {
+    // console.log(values.username);
+    event.preventDefault();
+
+    user.mutate({
+      username: values.username,
+      email: values.email,
+      password: values.password,
+    });
   }
 
   return (
@@ -42,6 +66,7 @@ export default function SignUpForm() {
           <div className="fixed mx-auto grid w-[350px] gap-6 rounded-2xl bg-zinc-800 p-6">
             <div className="grid gap-2">
               <h1 className="text-3xl font-bold text-white">Sign Up</h1>
+
               <p className="text-balance text-muted-foreground text-white">
                 Enter your details below to signup !
               </p>
@@ -114,8 +139,12 @@ export default function SignUpForm() {
                       )}
                     />
                   </div>
-                  <Button type="submit" className="mt-4">
-                    Sign Up
+                  <Button
+                    type="submit"
+                    className="mt-4"
+                    disabled={user.isPending}
+                  >
+                    {user.isPending ? "Submitting..." : "Submit"}
                   </Button>
                 </div>
 
