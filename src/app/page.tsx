@@ -9,7 +9,11 @@ export default function Home() {
         <Header />
         <Blogs />
       </div>
-      <Footer/>
+      <Footer />
+      <br />
+      <br />
+      <br />
+      <br />
     </div>
   );
 }
