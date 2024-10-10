@@ -41,6 +41,9 @@ export default function myImageLoader({ src, width, quality }: ImageProperties) 
     if (src.startsWith('https://www.svgrepo.com/show/')) {
     return src; // Return the original src for svgrepo images
     }
+    if (src.startsWith('https://pngimg.com/')) {
+    return src; // Return the original src for svgrepo images
+    }
     // Default behavior for your existing domain
     return `https://nsiteam.com/${src}?w=${width}&q=${quality || 75}`;
 }

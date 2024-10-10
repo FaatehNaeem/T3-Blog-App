@@ -1,14 +1,15 @@
 import Image from "next/image";
 import Link from "next/link";
 
-const techStack = ["T", "E", "C", "H", "S", "T", "A", "C", "K"];
+const tech = ["T", "E", "C", "H"];
+const stack = ["S", "T", "A", "C", "K"];
 export default function Footer() {
   return (
     <>
-      <div className="flex h-2/3 w-screen flex-row bg-background2 text-white">
+      <div className="flex h-2/3 w-screen flex-row bg-foreground text-white">
         {/* tech stack 1 */}
         <div className="mx-auto my-auto h-[80%] flex-col">
-          <div className="flex h-2/4 w-[300px] flex-col items-center justify-center">
+          <div className="flex h-2/4 w-[300px] flex-col items-center justify-center hover:bg-foreground2">
             <Image
               src="https://static-00.iconduck.com/assets.00/nextjs-icon-512x512-y563b8iq.png"
               alt="Image"
@@ -17,7 +18,7 @@ export default function Footer() {
             />
           </div>
 
-          <div className="mt-4 flex h-2/4 w-[300px] flex-col items-center justify-center">
+          <div className="mt-4 flex h-2/4 w-[300px] flex-col items-center justify-center hover:bg-foreground2">
             <Image
               src="https://www.svgrepo.com/show/374144/typescript.svg"
               alt="TypeScript Logo"
@@ -25,14 +26,19 @@ export default function Footer() {
               height={120}
               priority
             />
-            {/* <h3>MY Blog App</h3> */}
           </div>
         </div>
 
         {/* Tech stack container  */}
-        <div className="flex h-full w-16 flex-col items-center justify-center bg-foreground">
-          {techStack.map((stack, index) => (
-            <h1 key={index} className="mt-[6px] font-extrabold">
+        <div className="flex h-full w-16 flex-col items-center justify-center bg-background2 text-foreground">
+          {tech.map((stack, index) => (
+            <h1 key={index} className="mt-[14px] font-extrabold">
+              {stack}
+            </h1>
+          ))}
+          <div className="mt-4 h-1 w-full bg-foreground"></div>
+          {stack.map((stack, index) => (
+            <h1 key={index} className="mt-[14px] font-extrabold">
               {stack}
             </h1>
           ))}
@@ -40,7 +46,7 @@ export default function Footer() {
 
         {/* tech stack 2 */}
         <div className="mx-auto my-auto h-[80%] flex-col">
-          <div className="flex h-2/4 w-[300px] flex-col items-center justify-center">
+          <div className="flex h-2/4 w-[300px] flex-col items-center justify-center hover:bg-foreground2">
             <Image
               src="https://trpc.io/img/logo.svg"
               alt="Image"
@@ -50,7 +56,7 @@ export default function Footer() {
             {/* <h3>MY Blog App</h3> */}
           </div>
 
-          <div className="mt-4 flex h-2/4 w-[300px] flex-col items-center justify-center">
+          <div className="mt-4 flex h-2/4 w-[300px] flex-col items-center justify-center hover:bg-foreground2">
             <Image
               src="https://static-00.iconduck.com/assets.00/postgresql-plain-wordmark-icon-1024x1021-3tzxcisn.png"
               alt="Image"
@@ -61,65 +67,84 @@ export default function Footer() {
           </div>
         </div>
 
-        {/* border between  */}
-        <div className="flex h-full w-16 flex-col items-center justify-center gap-2 bg-foreground">
+        {/* social links */}
+        <div className="flex h-full w-16 flex-col items-center justify-center gap-6 bg-background2 text-foreground">
           <Image
-            src="https://icons.veryicon.com/png/o/internet--web/color-social-media-icon/github-36.png"
+            src="https://www.svgrepo.com/show/521688/github.svg"
             alt="Image"
-            width="60"
-            height="60"
-            className="bg-red-600"
+            width="50"
+            height="50"
+            className="bg-background2"
           />
-            <Image
-              src="https://www.svgrepo.com/show/353184/linkedin-with-circle.svg"
-              alt="Image"
-              width="60"
-              height="60"
-              className="bg-red-600"
-            />
           <Image
-            src="https://static.vecteezy.com/system/resources/previews/018/930/473/non_2x/instagram-logo-instagram-icon-transparent-free-png.png"
+            src="https://www.svgrepo.com/show/521725/linkedin.svg"
             alt="Image"
-            width="60"
-            height="60"
-            className="bg-red-600"
+            width="50"
+            height="50"
+            className="bg-background2"
+          />
+          <div className="mb-5 h-1 w-full bg-foreground"></div>
+          <Image
+            src="https://www.svgrepo.com/show/521711/instagram.svg"
+            alt="Image"
+            width="50"
+            height="50"
+            className="bg-background2"
+          />
+          <Image
+            src="https://www.svgrepo.com/show/501561/facebook-boxed.svg"
+            alt="Image"
+            width="50"
+            height="50"
+            className="bg-background2"
           />
         </div>
 
         {/* second section  */}
-        <div className="mx-auto my-auto h-[80%] w-[48%] flex-col">
-          {/* logo + web name */}
-          <div className="flex h-1/3 w-[95%] flex-row items-center justify-center gap-4 bg-black">
-            <Image src="/favicon.ico" alt="Image" width="20" height="20" />
-            <h3>MY Blog App Logo</h3>
-          </div>
+        <div className="mx-auto my-auto ml-3 h-[80%] w-[48%] flex-col bg-foreground">
+          
+        {/* logo + web name */}
+        <div className="flex h-1/3 w-[95%] flex-row items-center justify-center gap-0 text-background hover:bg-background2 hover:text-foreground">
+          {/* <Image
+              src="https://pngimg.com/d/firefox_PNG47.png"
+              alt="Image"
+              width="60"
+              height="60"
+            /> */}
+          <h3 className="text-lg font-extrabold">My Blog App</h3>
+        </div>
 
-          {/* menu items  */}
-          <div className="mt-2 flex h-1/3 w-[95%] flex-row items-center justify-center gap-4 bg-black">
-            <Link
-              href="#"
-              className="text-white transition-colors hover:text-zinc-300"
-            >
-              Home
-            </Link>
-            <Link
-              href="#"
-              className="text-white transition-colors hover:text-zinc-300"
-            >
-              About
-            </Link>
-            <Link
-              href="#"
-              className="text-white transition-colors hover:text-zinc-300"
-            >
-              Categories
-            </Link>
-          </div>
+        {/* menu items  */}
+        <div className="group mt-2 flex h-1/3 w-[95%] flex-row items-center justify-center gap-6 pl-8 hover:bg-background2">
+          <Link
+            href="#"
+            className="text-lg font-bold text-background transition-colors group-hover:text-foreground"
+          >
+            Home
+          </Link>
 
-          {/* copyrights         */}
-          <div className="mt-2 flex h-1/3 w-[95%] flex-row items-center justify-center bg-black">
-            <h3>&copy;Copyright. All Rights Reserved</h3>
-          </div>
+          <Link
+            href="#"
+            className="text-lg font-bold text-background transition-colors group-hover:text-foreground"
+          >
+            About
+          </Link>
+
+          <Link
+            href="#"
+            className="text-lg font-bold text-background transition-colors hover:text-foreground hover:text-zinc-300 group-hover:text-foreground"
+          >
+            Categories
+          </Link>
+        </div>
+
+        {/* copyrights*/}
+        <div className="group mt-2 flex h-1/3 w-[95%] flex-row items-center justify-center pl-4 text-foreground hover:bg-background2">
+          <h3 className="text-lg font-bold text-background group-hover:text-foreground">
+            &copy; Copyright. All Rights Reserved
+          </h3>
+        </div>
+          
         </div>
       </div>
     </>
