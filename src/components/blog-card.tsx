@@ -15,7 +15,7 @@ import { Avatar, AvatarFallback, AvatarImage } from "~/components/ui/avatar";
 export function BlogCard() {
     return (
       
-      <Card className="h-[400px] w-[350px] cursor-pointer rounded-none bg-background text-foreground border-red-950">
+      <Card className="h-[400px] w-[350px] cursor-pointer rounded-none bg-background2 text-foreground border-2 border-blue-950">
           
       <Image
         src="social/wp-content/uploads/2015/12/blog-background-2.jpg"
