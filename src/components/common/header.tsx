@@ -9,34 +9,33 @@ export default function Header() {
   return (
     // <div className="flex min-h-screen w-full flex-col">
     <>
-      <header className="t1op-0 flex h-16 w-full items-center gap-4 border-b-4 border-red-700 bg-foreground px-4 md:px-6">
-        <nav className="hidden flex-col gap-6 text-lg font-medium md:flex md:flex-row md:items-center md:gap-5 md:text-sm lg:gap-12 w-2/3 justify-center">
+      <header className="t1op-0 flex h-16 w-full items-center gap-4 border-b-2 border-foreground2 bg-background2 px-4 md:px-6">
+        <nav className="hidden w-2/3 flex-col justify-center gap-6 text-lg font-medium md:flex md:flex-row md:items-center md:gap-5 md:text-sm lg:gap-12">
           <Link
             href="#"
             className="flex items-center gap-2 text-lg font-semibold md:text-base"
           >
-            <Package2 className="h-6 w-6" color="red"/>
+            <Package2 className="h-6 w-6" color="red" />
             <span className="sr-only">Acme Inc</span>
           </Link>
           <Link
             href="#"
-            className="text-background transition-colors hover:text-zinc-300"
+            className="text-foreground transition-colors hover:text-zinc-300"
           >
             Home
           </Link>
           <Link
             href="#"
-            className="text-background transition-colors hover:text-zinc-300"
+            className="text-foreground transition-colors hover:text-zinc-300"
           >
             About
           </Link>
           <Link
             href="#"
-            className="text-background transition-colors hover:text-zinc-300"
+            className="text-foreground transition-colors hover:text-zinc-300"
           >
             Categories
           </Link>
-        
         </nav>
         <Sheet>
           <SheetTrigger asChild>
@@ -88,7 +87,7 @@ export default function Header() {
             </nav>
           </SheetContent>
         </Sheet>
-        <div className="flex w-full items-center gap-6 md:ml-auto md:gap-2 lg:gap-4 justify-end mr-12">
+        <div className="mr-12 flex w-full items-center justify-end gap-6 md:ml-auto md:gap-2 lg:gap-4">
           {/* <DropdownMenu>
             <DropdownMenuTrigger asChild>
               <Button variant="secondary" size="icon" className="rounded-full">
@@ -105,7 +104,7 @@ export default function Header() {
               <DropdownMenuItem>Logout</DropdownMenuItem>
             </DropdownMenuContent>
           </DropdownMenu> */}
-          <Button>Login</Button>
+          <Button className="bg-foreground2 text-foreground hover:bg-foreground hover:text-background">Login</Button>
         </div>
       </header>
       <form className="mt-2 flex h-12 items-center justify-center">

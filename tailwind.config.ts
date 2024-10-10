@@ -15,10 +15,10 @@ export default {
   			sm: 'calc(var(--radius) - 4px)'
   		},
   		colors: {
-  			background: 'hsl(var(--background))',
-			background2: 'hsl(var(--background2))',
-			foreground: 'hsl(var(--foreground))',
-			foreground2: 'hsl(var(--foreground2))',
+  			background: 'hsl(var(--background))', // first color
+			background2: 'hsl(var(--background2))', // 2nd color
+			foreground: 'hsl(var(--foreground))', // darkblue 
+			foreground2: 'hsl(var(--foreground2))', // 3rd color
 			
   			card: {
   				DEFAULT: 'hsl(var(--card))',
