@@ -1,5 +1,6 @@
 import { type Config } from "tailwindcss";
 import { fontFamily } from "tailwindcss/defaultTheme";
+import tailwindcssAnimate from "tailwindcss-animate"
 
 export default {
     darkMode: ["class"],
@@ -15,8 +16,11 @@ export default {
   			sm: 'calc(var(--radius) - 4px)'
   		},
   		colors: {
-  			background: 'hsl(var(--background))',
-  			foreground: 'hsl(var(--foreground))',
+  			background: 'hsl(var(--background))', // first color
+			background2: 'hsl(var(--background2))', // 2nd color
+			foreground: 'hsl(var(--foreground))', // darkblue 
+			foreground2: 'hsl(var(--foreground2))', // 3rd color
+			
   			card: {
   				DEFAULT: 'hsl(var(--card))',
   				foreground: 'hsl(var(--card-foreground))'
@@ -58,5 +62,6 @@ export default {
   		}
   	}
   },
-  plugins: [require("tailwindcss-animate")],
-} satisfies Config;
+plugins: [
+		tailwindcssAnimate,
+	],} satisfies Config;
