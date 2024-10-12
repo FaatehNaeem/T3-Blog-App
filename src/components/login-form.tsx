@@ -7,7 +7,7 @@ import Image from "next/image";
 import Link from "next/link";
 
 import { useForm } from "react-hook-form";
-import type z  from "zod";
+import type z from "zod";
 
 import {
   Form,
@@ -17,21 +17,42 @@ import {
   FormLabel,
   FormMessage,
 } from "~/components/ui/form";
-import { userSchema } from "~/validations/user-validation";
-
+import { loginSchema } from "~/validations/user-validation";
+import { signIn } from "next-auth/react";
+import { useRouter } from "next/navigation";
+import { useState } from "react";
 
 export default function LoginForm() {
-  const form = useForm<z.infer<typeof userSchema>>({
-    resolver: zodResolver(userSchema),
+  const [isSubmitted,setIsSubmitting] = useState(false)
+  const router = useRouter();
+  const form = useForm<z.infer<typeof loginSchema>>({
+    resolver: zodResolver(loginSchema),
     defaultValues: {
       email: "",
       password: "",
     },
-    mode: "onBlur",
   });
 
-  function onSubmit(values: z.infer<typeof userSchema>) {
-    console.log(values);
+  async function onSubmit(values: z.infer<typeof loginSchema>) {
+    console.log("Form submitted with values:", values); // Check if the form values are correct
+
+    setIsSubmitting(true);
+    try {
+      const res = await signIn("credentials", {
+        email: values.email,
+        password: values.password,
+        redirect: false, // Prevent auto-redirect for custom handling
+      });
+      if (res?.error) {
+        console.error("Login failed:", res.error);
+      } else if (res?.ok) {
+        router.push("/signup"); // Redirect to dashboard upon success
+      }
+    } catch (error) {
+      throw error;
+    } finally {
+      setIsSubmitting(false);
+    }
   }
 
   return (
@@ -72,6 +93,7 @@ export default function LoginForm() {
                             <Input
                               placeholder="email"
                               className="bg-zinc-800"
+                              type="email"
                               {...field}
                             />
                           </FormControl>
@@ -92,6 +114,7 @@ export default function LoginForm() {
                             <Input
                               placeholder="password"
                               className="bg-zinc-800"
+                              type="password"
                               {...field}
                             />
                           </FormControl>
@@ -103,7 +126,7 @@ export default function LoginForm() {
                     />
                   </div>
                   <Button type="submit" className="mt-4">
-                    Login
+                  {!isSubmitted?"Login":"Logging In"} 
                   </Button>
                 </div>
 
