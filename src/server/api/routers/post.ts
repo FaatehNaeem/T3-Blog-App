@@ -3,14 +3,14 @@ import {
   publicProcedure,
 } from "~/server/api/trpc";
 import { users } from "~/server/db/schema";
-import { userSchema } from "~/validations/user-validation";
+import { signupSchema } from "~/validations/user-validation";
 
 import bcrypt from "bcrypt"
 
 
 export const userRouter = createTRPCRouter({
   createUser: publicProcedure
-  .input(userSchema)
+  .input(signupSchema)
   .mutation(async ({ ctx, input }) => {
     console.log("Input received:", input); // Log input data
     const salt = await bcrypt.genSalt(10);

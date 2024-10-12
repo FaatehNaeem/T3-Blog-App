@@ -7,7 +7,7 @@ import Image from "next/image";
 import Link from "next/link";
 
 import { useForm } from "react-hook-form";
-import { userSchema } from "~/validations/user-validation";
+import { signupSchema } from "~/validations/user-validation";
 
 import {
   Form,
@@ -21,9 +21,11 @@ import {
 import type z from "zod";
 
 import { api } from "~/trpc/react";
+import { useRouter } from "next/navigation";
 
 // trpc logic
 export default function SignUpForm() {
+  const router = useRouter();
   const utils = api.useUtils();
 
   const user = api.user.createUser.useMutation({
@@ -35,8 +37,8 @@ export default function SignUpForm() {
     },
   });
 
-  const form = useForm<z.infer<typeof userSchema>>({
-    resolver: zodResolver(userSchema),
+  const form = useForm<z.infer<typeof signupSchema>>({
+    resolver: zodResolver(signupSchema),
     defaultValues: {
       username: "",
       email: "",
@@ -45,18 +47,14 @@ export default function SignUpForm() {
     mode: "onBlur",
   });
 
-  async function onSubmit(
-    values: z.infer<typeof userSchema>,
-    event: React.FormEvent<HTMLFormElement>,
-  ) {
-    // console.log(values.username);
-    event.preventDefault();
-
+  async function onSubmit(values: z.infer<typeof signupSchema>) {
     user.mutate({
       username: values.username,
       email: values.email,
       password: values.password,
     });
+
+    router.push("/login");
   }
 
   return (
