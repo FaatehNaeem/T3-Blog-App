@@ -17,7 +17,7 @@ import { useRouter } from "next/navigation";
 export function BlogCard() {
   const router = useRouter();
   const handleClick = () => {
-    router.push('/signup')
+    router.push('/blog/1')
   }
 
     return (
