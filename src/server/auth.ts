@@ -9,9 +9,9 @@ import { type Adapter } from "next-auth/adapters";
 
 import { db } from "~/server/db";
 import { users } from "~/server/db/schema";
-import {  and, eq } from "drizzle-orm";
-import { ParenthesesIcon } from "lucide-react";
+import { eq } from "drizzle-orm";
 import { compare } from "bcrypt";
+import { env } from "~/env";
 
 
 /**
@@ -78,6 +78,7 @@ export const authOptions: NextAuthOptions = {
     error: "/auth/error",
   },
   adapter: DrizzleAdapter(db) as Adapter,
+  secret:env.NEXTAUTH_SECRET,
   session: {
     strategy: "jwt",
   },
