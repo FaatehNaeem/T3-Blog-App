@@ -1,8 +1,11 @@
+"use client"
 import React from 'react'
 import { Badge } from "~/components/ui/badge";
 import Image from 'next/image';
 
+
 export default function BlogInfo() {
+
     return (
       <>
         <Image
@@ -21,7 +24,6 @@ export default function BlogInfo() {
           <Badge>Category 2</Badge>
           <Badge variant={"outline"}>Category 3</Badge>
         </div>
-
         <div className="mx-auto mt-4 w-[90%] bg-background2 p-12">
           <p className="text-center">
             This is the blog description : Lorem ipsum dolor sit amet
@@ -42,7 +44,9 @@ export default function BlogInfo() {
             Praesentium illo exercitationem at dolorum corporis aspernatur
             aliquid excepturi. Saepe corporis, obcaecati maiores incid
           </p>
-          <p className="mt-8 text-right text-zinc-950 font-bold">Created by - Faateh</p>
+          <p className="mt-8 text-right font-bold text-zinc-950">
+            Created by - Faateh
+          </p>
         </div>
         <br />
         <br />
