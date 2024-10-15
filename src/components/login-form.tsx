@@ -46,7 +46,7 @@ export default function LoginForm() {
       if (res?.error) {
         console.error("Login failed:", res.error);
       } else if (res?.ok) {
-        router.push("/signup"); // Redirect to dashboard upon success
+        router.push("/blog/1"); // Redirect to dashboard upon success
       }
     } catch (error) {
       throw error;

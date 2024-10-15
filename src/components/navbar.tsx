@@ -1,9 +1,15 @@
+"use client"
+
 import { Sheet, SheetContent, SheetTrigger } from "~/components/ui/sheet";
 import { Menu, Package2 } from "lucide-react";
 import Link from "next/link";
 import { Button } from "~/components/ui/button";
+import { useSession } from "next-auth/react";
+
 
 export default function Navbar() {
+    const { data: session } = useSession();
+
     return (
       <header className="t1op-0 flex h-16 w-full items-center gap-4 border-b-[1px] border-foreground2 bg-foreground px-4 md:px-6">
         <nav className="hidden w-2/3 flex-col justify-center gap-6 text-lg font-medium md:flex md:flex-row md:items-center md:gap-5 md:text-sm lg:gap-12">
@@ -100,9 +106,13 @@ export default function Navbar() {
               <DropdownMenuItem>Logout</DropdownMenuItem>
             </DropdownMenuContent>
           </DropdownMenu> */}
-          <Button className="bg-background2 font-bold text-foreground hover:bg-foreground hover:text-background">
-            Login
-          </Button>
+          {/* <p>Welcome {session?.user.email}!</p>; */}
+          {session?.user.email? <p className="text-white">Welcome {session?.user.email}!</p>
+          :
+            <Button className="bg-background2 font-bold text-foreground hover:bg-foreground hover:text-background">
+              Login
+            </Button>
+          }
         </div>
       </header>
     );
