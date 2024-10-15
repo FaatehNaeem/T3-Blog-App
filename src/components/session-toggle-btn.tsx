@@ -10,7 +10,7 @@ export default function SessionToggleBtn() {
     if (session) {
       return (
         <>
-          <h3 className="text-background">Signed in as {session.user.email} </h3>
+          <h3 className="text-background">Signed in as {session.user.username}</h3>
           <Button
             className="bg-background2 font-bold text-foreground hover:bg-foreground hover:text-background"
             onClick={() => signOut()}>

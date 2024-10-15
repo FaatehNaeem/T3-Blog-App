@@ -47,31 +47,6 @@ declare module "next-auth/jwt" {
 }
 
 export const authOptions: NextAuthOptions = {
-  callbacks: {
-    jwt: async ({ token, user }) => {
-      if (user) {
-        token.id= user.id;
-        token.name = user.name;
-        token.email = user.email;
-        token.role = user.role;
-      }
-      return token;
-    },
-    session: async ({ session, token }) => {
-      session.user.email = token.email;
-      session.user.name = token.name;
-      session.user.role = token.role;
-      session.user.id = token.id;
-      return session;
-    },
-        async redirect({ url, baseUrl }) {
-      // Example: Redirect new users to the profile page
-      if (url === "/signup") {
-        return url;
-      }
-      return baseUrl; // Default to homepage after login
-    },
-  },
   pages: {
     signIn: "/login",
     signOut: "/auth/signout",
@@ -83,7 +58,6 @@ export const authOptions: NextAuthOptions = {
     strategy: "jwt",
   },
   providers: [
-
     CredentialsProvider({
       name: "Credentials",
       credentials: {
@@ -101,7 +75,8 @@ export const authOptions: NextAuthOptions = {
 
       if (!user) {
         return null;
-      }
+        }
+        // console.log(user)
 
   // Compare the provided plain password with the hashed password in the database
   const passwordMatch = await compare(password, user.password);
@@ -112,13 +87,37 @@ export const authOptions: NextAuthOptions = {
   }
 
   // Authentication succeeded, return the user
-        return user
-
+        return {username:user.username,email:user.email}
       }
     }),
-
-
   ],
+    callbacks: {
+    jwt: async ({ token, user }) => {
+      if (user) {
+        return {
+          ...token,
+          username: user.username
+        }
+        }
+        return token
+      },
+      session: async ({ session, token }) => {
+      return {
+        ...session,
+        user: {
+          ...session.user,
+          username: token.username
+        }
+      } 
+    },
+        async redirect({ url, baseUrl }) {
+      // Example: Redirect new users to the profile page
+      if (url === "/signup") {
+        return url;
+      }
+      return baseUrl; // Default to homepage after login
+    },
+  },
 };
 
 /**
