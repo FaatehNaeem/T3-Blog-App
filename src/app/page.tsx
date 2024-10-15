@@ -11,10 +11,6 @@ export default function Home() {
         <Blogs />
       </div>
       <Footer />
-      {/* <br />
-      <br />
-      <br />
-      <br /> */}
     </div>
   );
 }
