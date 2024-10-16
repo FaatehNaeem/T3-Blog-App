@@ -23,7 +23,7 @@ import { useRouter } from "next/navigation";
 import { useState } from "react";
 
 export default function LoginForm() {
-  const [isSubmitted,setIsSubmitting] = useState(false)
+  const [isSubmitted, setIsSubmitting] = useState(false);
   const router = useRouter();
   const form = useForm<z.infer<typeof loginSchema>>({
     resolver: zodResolver(loginSchema),
@@ -46,7 +46,7 @@ export default function LoginForm() {
       if (res?.error) {
         console.error("Login failed:", res.error);
       } else if (res?.ok) {
-        router.push("/blog/1"); // Redirect to dashboard upon success
+        router.push("/"); // Redirect to dashboard upon success
       }
     } catch (error) {
       throw error;
@@ -126,7 +126,7 @@ export default function LoginForm() {
                     />
                   </div>
                   <Button type="submit" className="mt-4">
-                  {!isSubmitted?"Login":"Logging In"} 
+                    {!isSubmitted ? "Login" : "Logging In"}
                   </Button>
                 </div>
 
