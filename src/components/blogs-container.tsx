@@ -8,11 +8,6 @@ export default function Blogs() {
       <BlogCard />
       <BlogCard />
       <BlogCard />
-      <BlogCard />
-      <BlogCard />
-      <BlogCard />
-      <BlogCard />
-      <BlogCard />
     </div>
   );
 }

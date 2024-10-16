@@ -29,7 +29,7 @@ export default function Footer() {
         </div>
 
         {/* Tech stack container  */}
-        <div className="flex h-full w-16 flex-col items-center justify-center bg-background text-foreground">
+        <div className="flex h-full w-16 flex-col items-center justify-center bg-background text-foreground border-t-4 border-purple-950">
           {tech.map((stack, index) => (
             <h1 key={index} className="mt-[14px] font-extrabold">
               {stack}
@@ -67,7 +67,7 @@ export default function Footer() {
         </div>
 
         {/* social links */}
-        <div className="flex h-full w-16 flex-col items-center justify-center gap-6 bg-background text-foreground">
+        <div className="flex h-full w-16 flex-col items-center justify-center gap-6 bg-background text-foreground border-t-4 border-purple-950">
           <Image
             src="https://www.svgrepo.com/show/521688/github.svg"
             alt="Image"
