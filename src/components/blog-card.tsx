@@ -22,7 +22,7 @@ export function BlogCard() {
 
     return (
       
-      <Card className="h-[400px] w-[350px] cursor-pointer rounded-none bg-background2 text-foreground border-2 border-blue-950" onClick={handleClick}>
+      <Card className="h-[400px] w-[350px] cursor-pointer rounded-md bg-background text-foreground shadow-md shadow-foreground" onClick={handleClick}>
           
       <Image
         src="social/wp-content/uploads/2015/12/blog-background-2.jpg"
@@ -32,7 +32,7 @@ export function BlogCard() {
         priority/>
           
       <CardHeader>
-        <CardTitle>Blog Title</CardTitle>
+        <CardTitle className="text-foreground font-bold drop-shadow-sm">Blog Title</CardTitle>
         <CardDescription>
           Lorem ipsum dolor sit, amet consectetur adipisicing elit. Dicta,
           placeat quo. Facilis, veritatis ratione nostrum explicabo quisquam
@@ -48,8 +48,8 @@ export function BlogCard() {
               </Avatar>
               
         <div className="flex h-full flex-col items-center">
-          <CardTitle>Faateh N</CardTitle>
-          <CardContent className="text-sm text-black">
+          <CardTitle className="text-foreground">Faateh N</CardTitle>
+          <CardContent className="text-sm text-zinc-900">
             October 8, 2023
           </CardContent>
               </div>
