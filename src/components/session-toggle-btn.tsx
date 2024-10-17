@@ -12,7 +12,7 @@ export default function SessionToggleBtn() {
         <>
           <h3 className="text-background">Signed in as {session.user.username}</h3>
           <Button
-            className="bg-background2 font-bold text-foreground hover:bg-foreground hover:text-background"
+            className="bg-background font-bold text-foreground hover:bg-background2 hover:text-foreground"
             onClick={() => signOut()}>
             Sign out
           </Button>
@@ -22,8 +22,9 @@ export default function SessionToggleBtn() {
     return (
       <>
         <Button
-          className="bg-background2 font-bold text-foreground hover:bg-foreground hover:text-background"
-          onClick={() => signIn()}>
+          className="bg-background font-bold text-foreground hover:bg-background2 hover:text-foreground"
+          onClick={() => signIn()}
+        >
           Sign In
         </Button>
       </>

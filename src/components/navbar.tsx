@@ -17,7 +17,7 @@ export default function Navbar() {
         </Link>
         <Link
           href="#"
-          className="text-background2 transition-colors hover:text-zinc-300"
+          className="text-background transition-colors hover:text-zinc-300 font-bold"
         >
           Home
         </Link>
