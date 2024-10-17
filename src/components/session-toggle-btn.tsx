@@ -12,11 +12,12 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "~/components/ui/dropdown-menu"
+import { useRouter } from "next/navigation";
 
 
 export default function SessionToggleBtn() {
     const { data: session } = useSession();
-
+    const router = useRouter()
     if (session) {
       return (
         <>
@@ -52,7 +53,7 @@ export default function SessionToggleBtn() {
       <>
         <Button
           className="bg-background font-bold text-foreground hover:bg-background2 hover:text-foreground"
-          onClick={() => signIn()}
+          onClick={() => router.push('/login')}
         >
           Sign In
         </Button>
