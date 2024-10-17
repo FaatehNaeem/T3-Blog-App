@@ -3,6 +3,16 @@
 import React from "react";
 import { signIn, signOut, useSession } from "next-auth/react";
 import { Button } from "./ui/button";
+import Avatar from "react-avatar";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuLabel,
+  DropdownMenuSeparator,
+  DropdownMenuTrigger,
+} from "~/components/ui/dropdown-menu"
+
 
 export default function SessionToggleBtn() {
     const { data: session } = useSession();
@@ -10,12 +20,31 @@ export default function SessionToggleBtn() {
     if (session) {
       return (
         <>
-          <h3 className="text-background">Signed in as {session.user.username}</h3>
-          <Button
-            className="bg-background font-bold text-foreground hover:bg-background2 hover:text-foreground"
-            onClick={() => signOut()}>
-            Sign out
-          </Button>
+          
+          <DropdownMenu>
+            <DropdownMenuTrigger asChild>
+              <Button variant="outline" size="icon" className="rounded-full border-2 border-white">
+                <Avatar
+                  name={session.user.username}
+                  size="40"
+                  textSizeRatio={2}
+                  round
+                  color="purple"/>
+
+                <span className="sr-only">Toggle user menu</span>
+              </Button>
+            </DropdownMenuTrigger>
+            <DropdownMenuContent align="end">
+              <DropdownMenuLabel>Welcome {session.user.username}!
+              </DropdownMenuLabel>
+              <DropdownMenuSeparator />
+              <DropdownMenuItem>Settings</DropdownMenuItem>
+              <DropdownMenuItem>Support</DropdownMenuItem>
+              <DropdownMenuSeparator />
+              <DropdownMenuItem onClick={()=>signOut()}>Logout</DropdownMenuItem>
+            </DropdownMenuContent>
+          </DropdownMenu>
+
         </>
       );
     }
