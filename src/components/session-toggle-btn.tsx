@@ -31,8 +31,10 @@ export default function SessionToggleBtn() {
                 name={session.user.username}
                 size="40"
                 textSizeRatio={2}
+                title="user"
                 round
-                color="purple"
+                color="#7A1CAC"
+                className="font-bold"
               />
 
               <span className="sr-only">Toggle user menu</span>
