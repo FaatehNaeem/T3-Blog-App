@@ -81,29 +81,6 @@ export default function Navbar() {
         </SheetContent>
       </Sheet>
       <div className="mr-12 flex w-full items-center justify-end gap-6 md:ml-auto md:gap-2 lg:gap-4">
-        {/* <DropdownMenu>
-            <DropdownMenuTrigger asChild>
-              <Button variant="secondary" size="icon" className="rounded-full">
-                <CircleUser className="h-5 w-5" />
-                <span className="sr-only">Toggle user menu</span>
-              </Button>
-            </DropdownMenuTrigger>
-            <DropdownMenuContent align="end">
-              <DropdownMenuLabel>My Account</DropdownMenuLabel>
-              <DropdownMenuSeparator />
-              <DropdownMenuItem>Settings</DropdownMenuItem>
-              <DropdownMenuItem>Support</DropdownMenuItem>
-              <DropdownMenuSeparator />
-              <DropdownMenuItem>Logout</DropdownMenuItem>
-            </DropdownMenuContent>
-          </DropdownMenu> */}
-        {/* <p>Welcome {session?.user.email}!</p>; */}
-        {/* {session?.user.email? <p className="text-white">Welcome {session?.user.email}!</p>
-          :
-            <Button className="bg-background2 font-bold text-foreground hover:bg-foreground hover:text-background">
-              Login
-            </Button>
-          } */}
         <SessionToggleBtn />
       </div>
     </header>
