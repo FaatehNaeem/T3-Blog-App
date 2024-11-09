@@ -13,6 +13,7 @@ import {
   DropdownMenuTrigger,
 } from "~/components/ui/dropdown-menu";
 import { useRouter } from "next/navigation";
+import Link from "next/link";
 
 export default function SessionToggleBtn() {
   const { data: session } = useSession();
@@ -45,8 +46,8 @@ export default function SessionToggleBtn() {
               Welcome {session.user.username}!
             </DropdownMenuLabel>
             <DropdownMenuSeparator />
+            <Link href={"/Dashboard"}>Dashboard</Link>
             <DropdownMenuItem>Settings</DropdownMenuItem>
-            <DropdownMenuItem>Support</DropdownMenuItem>
             <DropdownMenuSeparator />
             <DropdownMenuItem onClick={() => signOut()}>
               Logout
