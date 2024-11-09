@@ -3,7 +3,7 @@ import {
   publicProcedure,
 } from "~/server/api/trpc";
 import { users } from "~/server/db/schema";
-import { signupSchema } from "~/validations/user-validation";
+import { signupSchema } from "~/utils/schemas";
 
 import bcrypt from "bcrypt"
 

@@ -1,9 +1,10 @@
 import React from 'react'
+import BlogPostForm from '~/components/forms/blog-post-form'
 
 export default function Page() {
   return (
-    <div className='bg-background w-screen h-screen flex items-center'>
-    <p>Create a post in here</p>
+    <div className='bg-background w-screen h-screen flex items-center justify-center'>
+    <BlogPostForm/>
 </div>  )
 }
 

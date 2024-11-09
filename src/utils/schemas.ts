@@ -28,3 +28,14 @@ export const loginSchema = z.object({
     })
     .trim(),
 });
+
+
+// blogs Posts schema 
+
+ 
+export const BlogPostSchema = z.object({
+  title: z.string().min(2).max(50),
+  description : z.string().min(1,"Description is required"),
+  category: z.string().min(1,"Category is required"),
+  blogImage: z.string().min(1,"Image is required")
+})

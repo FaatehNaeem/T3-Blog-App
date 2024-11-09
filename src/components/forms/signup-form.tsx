@@ -7,7 +7,7 @@ import Image from "next/image";
 import Link from "next/link";
 
 import { useForm } from "react-hook-form";
-import type z from "zod";
+import { signupSchema } from "~/utils/schemas";
 
 import {
   Form,
@@ -17,62 +17,56 @@ import {
   FormLabel,
   FormMessage,
 } from "~/components/ui/form";
-import { loginSchema } from "~/validations/user-validation";
-import { signIn } from "next-auth/react";
-import { useRouter } from "next/navigation";
-import { useState } from "react";
 
-export default function LoginForm() {
-  const [isSubmitted, setIsSubmitting] = useState(false);
+import type z from "zod";
+
+import { api } from "~/trpc/react";
+import { useRouter } from "next/navigation";
+
+// trpc logic
+export default function SignUpForm() {
   const router = useRouter();
-  const form = useForm<z.infer<typeof loginSchema>>({
-    resolver: zodResolver(loginSchema),
-    defaultValues: {
-      email: "",
-      password: "",
+  const utils = api.useUtils();
+
+  const user = api.user.createUser.useMutation({
+    onSuccess: async () => {
+      await utils.user.invalidate();
+    },
+    onError: (error) => {
+      console.error("Mutation error:", error);
     },
   });
 
-  async function onSubmit(values: z.infer<typeof loginSchema>) {
-    console.log("Form submitted with values:", values); // Check if the form values are correct
+  const form = useForm<z.infer<typeof signupSchema>>({
+    resolver: zodResolver(signupSchema),
+    defaultValues: {
+      username: "",
+      email: "",
+      password: "",
+    },
+    mode: "onBlur",
+  });
 
-    setIsSubmitting(true);
-    try {
-      const res = await signIn("credentials", {
-        email: values.email,
-        password: values.password,
-        redirect: false, // Prevent auto-redirect for custom handling
-      });
-      if (res?.error) {
-        console.error("Login failed:", res.error);
-      } else if (res?.ok) {
-        router.push("/"); // Redirect to dashboard upon success
-      }
-    } catch (error) {
-      throw error;
-    } finally {
-      setIsSubmitting(false);
-    }
+  async function onSubmit(values: z.infer<typeof signupSchema>) {
+    user.mutate({
+      username: values.username,
+      email: values.email,
+      password: values.password,
+    });
+
+    router.push("/login");
   }
 
   return (
     <Form {...form}>
       <div className="w-full bg-zinc-950 lg:grid lg:min-h-[600px] lg:grid-cols-2 xl:min-h-[559px]">
-        <div className="hidden bg-muted lg:block">
-          <Image
-            src="social/wp-content/uploads/2015/12/blog-background-2.jpg"
-            alt="Image"
-            width="1920"
-            height="1000"
-            className="h-full w-full object-cover dark:brightness-[0.2] dark:grayscale"
-          />
-        </div>
         <div className="flex items-center justify-center">
           <div className="fixed mx-auto grid w-[350px] gap-6 rounded-2xl bg-zinc-800 p-6">
             <div className="grid gap-2">
-              <h1 className="text-3xl font-bold text-white">Login</h1>
+              <h1 className="text-3xl font-bold text-white">Sign Up</h1>
+
               <p className="text-balance text-muted-foreground text-white">
-                Enter your details below to login !
+                Enter your details below to signup !
               </p>
             </div>
 
@@ -85,6 +79,26 @@ export default function LoginForm() {
                   <div className="grid gap-2">
                     <FormField
                       control={form.control}
+                      name="username"
+                      render={({ field }) => (
+                        <FormItem className="text-white">
+                          <FormLabel className="text-white">Username</FormLabel>
+                          <FormControl>
+                            <Input
+                              placeholder="username"
+                              className="bg-zinc-800"
+                              {...field}
+                            />
+                          </FormControl>
+                          <div className="h-0">
+                            <FormMessage className="font-extrabold" />
+                          </div>
+                        </FormItem>
+                      )}
+                    />
+
+                    <FormField
+                      control={form.control}
                       name="email"
                       render={({ field }) => (
                         <FormItem className="mt-4 text-white">
@@ -93,7 +107,6 @@ export default function LoginForm() {
                             <Input
                               placeholder="email"
                               className="bg-zinc-800"
-                              type="email"
                               {...field}
                             />
                           </FormControl>
@@ -114,7 +127,6 @@ export default function LoginForm() {
                             <Input
                               placeholder="password"
                               className="bg-zinc-800"
-                              type="password"
                               {...field}
                             />
                           </FormControl>
@@ -125,20 +137,34 @@ export default function LoginForm() {
                       )}
                     />
                   </div>
-                  <Button type="submit" className="mt-4">
-                    {!isSubmitted ? "Login" : "Logging In"}
+                  <Button
+                    type="submit"
+                    className="mt-4"
+                    disabled={user.isPending}
+                  >
+                    {user.isPending ? "Submitting..." : "Submit"}
                   </Button>
                 </div>
 
                 <div className="mt-4 text-center text-sm text-white">
-                  Don&apos;t have an account?{" "}
+                  Already have an account?{" "}
                   <Link href="#" className="underline">
-                    Sign up
+                    Login
                   </Link>
                 </div>
               </form>
             </div>
           </div>
+        </div>
+
+        <div className="hidden bg-muted lg:block">
+          <Image
+            src="social/wp-content/uploads/2015/12/blog-background-2.jpg"
+            alt="Image"
+            width="1920"
+            height="1000"
+            className="h-full w-full object-cover dark:brightness-[0.2] dark:grayscale"
+          />
         </div>
       </div>
     </Form>
