@@ -1,5 +1,5 @@
 "use client";
-import React from "react";
+import React, { useState } from "react";
 import { BlogPostSchema } from "~/utils/schemas";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
@@ -23,8 +23,17 @@ import {
 } from "~/components/ui/form";
 import { Input } from "~/components/ui/input";
 import {ChevronDown} from "lucide-react"
+import { api } from "~/trpc/react";
 
 export default function BlogPostForm() {
+  const [submitting,isSubmitted] = useState(false)
+  const utils = api.useUtils()
+  const {mutate} = api.blog.createBlog.useMutation({
+    onSuccess:async()=>{
+      await utils.blog.invalidate();
+    }
+  })
+
   const form = useForm<z.infer<typeof BlogPostSchema>>({
     resolver: zodResolver(BlogPostSchema),
     defaultValues: {
@@ -36,7 +45,17 @@ export default function BlogPostForm() {
   });
 
   function onSubmit(values: z.infer<typeof BlogPostSchema>) {
-    console.log(values);
+    console.log("ya values hain:", values);
+    try {
+      mutate({
+        title:values.title,
+        category:values.category,
+        description:values.description,
+        blogImage:values.blogImage
+      })
+    } catch (error) {
+      throw error
+    }
   }
 
   return (
