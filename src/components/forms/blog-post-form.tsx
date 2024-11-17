@@ -24,10 +24,15 @@ import {
 import { Input } from "~/components/ui/input";
 import {ChevronDown} from "lucide-react"
 import { api } from "~/trpc/react";
+import { useSession } from "next-auth/react";
 
 export default function BlogPostForm() {
   const [submitting,isSubmitted] = useState(false)
   const utils = api.useUtils()
+  // const {data:session} = useSession()
+  // const userId = session?.user.id;
+
+
   const {mutate} = api.blog.createBlog.useMutation({
     onSuccess:async()=>{
       await utils.blog.invalidate();
@@ -40,22 +45,23 @@ export default function BlogPostForm() {
       title: "",
       description: "",
       category: "",
-      blogImage: "",
+      blogImage: ""
     },
   });
 
-  function onSubmit(values: z.infer<typeof BlogPostSchema>) {
-    console.log("ya values hain:", values);
-    try {
-      mutate({
-        title:values.title,
-        category:values.category,
-        description:values.description,
-        blogImage:values.blogImage
-      })
-    } catch (error) {
-      throw error
-    }
+   const onSubmit=async(values: z.infer<typeof BlogPostSchema>) =>{
+    // if (!session?.user?.id) {
+    //   alert("User not logged in");
+    //   return;
+    // }
+    // console.log(session.user.id)
+    await mutate({
+          title:values.title,
+          category:values.category,
+          description:values.description,
+          blogImage:values.blogImage,
+        });
+
   }
 
   return (

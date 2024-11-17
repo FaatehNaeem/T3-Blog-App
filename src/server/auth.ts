@@ -90,7 +90,7 @@ export const authOptions: NextAuthOptions = {
   }
 
   // Authentication succeeded, return the user
-        return {username:user.username,email:user.email}
+        return {username:user.username,email:user.email,id:user.id}
       }
     }),
   ],
@@ -99,7 +99,8 @@ export const authOptions: NextAuthOptions = {
       if (user) {
         return {
           ...token,
-          username: user.username
+          username: user.username,
+          id:user.id
         }
         }
         return token
@@ -109,7 +110,8 @@ export const authOptions: NextAuthOptions = {
         ...session,
         user: {
           ...session.user,
-          username: token.username
+          username: token.username,
+          id:token.id
         }
       } 
     },
