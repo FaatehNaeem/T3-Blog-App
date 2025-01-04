@@ -1,63 +1,58 @@
 import { relations, type Table } from "drizzle-orm";
 import {
-  pgTableCreator,
   text,
   timestamp,
   varchar,
   pgEnum,
   pgTable
 } from "drizzle-orm/pg-core";
-// import { type AdapterAccount } from "next-auth/adapters";
 
 /**
- * This is an example of how to use the multi-project schema feature of Drizzle ORM. Use the same
- * database instance for multiple projects.
- *
- * @see https://orm.drizzle.team/docs/goodies#multi-project-schema
+ * Enums for categorizing blogs and roles
  */
+export const blogEnum = pgEnum("blogCategories", ["Fashion", "Technology", "Health", "Lifestyle", "Coding"]);
+export const roleEnum = pgEnum("roles", ["user", "admin"]);
 
-export const blogEnum = pgEnum('blogCategories', ['Fashion', 'Technology', 'Health', 'Lifestyle', 'Coding'])
-export const roleEnum = pgEnum('roles', ['user', 'admin'])
-
-export const createTable = pgTableCreator((name) => `my-blog-app_${name}`);
-
-
-export const users: Table = pgTable("users", {
+/**
+ * Schema for the Users table
+ */
+export const users: Table = pgTable("mb_users", {
   id: varchar("id", { length: 255 }).primaryKey().$default(() => crypto.randomUUID()),
   username: varchar("username", { length: 255 }).notNull().unique(),
-  email: varchar('email').notNull().unique(),
-  password: varchar('password', { length: 256}).notNull().unique(),
-  profileImage: varchar('profileImage', { length: 300 }),
-  createdAt: timestamp('createdAt').notNull().defaultNow(),
-  updatedAt: timestamp('updatedAt').notNull().defaultNow(),
-  role: roleEnum('roles').notNull().$default(() => 'user'),
-  // blogs: varchar('blogs').references(() => blogs.id)
-})
+  email: varchar("email").notNull().unique(),
+  password: varchar("password", { length: 256 }).notNull(),
+  profileImage: varchar("profileImage", { length: 300 }),
+  createdAt: timestamp("createdAt").notNull().defaultNow(),
+  updatedAt: timestamp("updatedAt").notNull().defaultNow(),
+  role: roleEnum("roles").notNull().$default(() => "user"),
+});
 
+/**
+ * Schema for the Blogs table
+ */
+export const blogs: Table = pgTable("mb_blogs", {
+  id: varchar("blogId", { length: 255 }).primaryKey().$default(() => crypto.randomUUID()),
+  title: varchar("title", { length: 100 }).notNull(),
+  description: text("description").notNull(),
+  category: blogEnum("blogCategories"),
+  blogImage: varchar("blogImage", { length: 255 }).notNull(),
+  userId: varchar("userId", { length: 255 }) // Ensures correct foreign key length
+    .notNull()
+    .references(() => users.id, { onDelete: "cascade" }), // References `users.id`
+});
+
+/**
+ * Relationships between Users and Blogs
+ * One user can have many blogs, but each blog has one user (creator).
+ */
 export const usersRelations = relations(users, ({ many }) => ({
-  blogs: many(blogs)
-}))
-
-export const blogs: Table = pgTable("blogs", {
-  id: varchar('blogId', { length: 255 }).primaryKey().$defaultFn(() => crypto.randomUUID()),
-  title: varchar('title', { length: 100 }).notNull(),
-  description: text('description').notNull(),
-  category: blogEnum('blogCategories'),
-  blogImage: varchar('blogImage', { length: 255 }).notNull(),
-  userId: varchar('userId',{length:255}).references(() => users.id)
-})
-
+  blogs: many(blogs),
+}));
 
 export const blogsRelations = relations(blogs, ({ one }) => ({
-  userId: one(users, {
-    fields: [blogs.userId],
-    references: [users.id]
-  })
-})
-)
+  creator: one(users, {
+    fields: [blogs.userId],       // Foreign key in `blogs`
+    references: [users.id],       // Primary key in `users`
+  }),
+}));
 
-/* one user can have many blogs
-but many blogs can only have one user
-- so the relation can be
-one to many
-*/

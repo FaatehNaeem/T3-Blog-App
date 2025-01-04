@@ -1,5 +1,4 @@
 "use client"
-import Image from "next/image";
 import * as React from "react";
 
 import {
@@ -13,30 +12,34 @@ import {
 
 import { Avatar, AvatarFallback, AvatarImage } from "~/components/ui/avatar";
 import { useRouter } from "next/navigation";
+import { api } from "~/trpc/react";
 
 export function BlogCard() {
-  const router = useRouter();
+
+  const {data:blogs} = api.blog.getAll.useQuery()
+
+  const router = useRouter(); 
+
   const handleClick = () => {
     router.push('/blog/1')
   }
 
     return (
       
-      <Card className="h-[400px] w-[350px] cursor-pointer rounded-md bg-background text-foreground shadow-md shadow-foreground" onClick={handleClick}>
-          
-      <Image
-        src="social/wp-content/uploads/2015/12/blog-background-2.jpg"
+      <>
+      {blogs?.map((blog,index)=>(
+
+      <Card key={index} className="h-[400px] w-[350px] cursor-pointer rounded-md bg-background text-foreground shadow-md shadow-foreground" onClick={handleClick}>
+  
+      <img
+        src={blog.blogImage}
         alt="error loading image"
-        width={350}
-        height={150}
-        priority/>
+        />
           
       <CardHeader>
-        <CardTitle className="text-foreground font-bold drop-shadow-sm">Blog Title</CardTitle>
+        <CardTitle className="text-foreground font-bold drop-shadow-sm">{blog.title}</CardTitle>
         <CardDescription>
-          Lorem ipsum dolor sit, amet consectetur adipisicing elit. Dicta,
-          placeat quo. Facilis, veritatis ratione nostrum explicabo quisquam
-          recusandae.....
+         {blog.description}
         </CardDescription>
           </CardHeader>
           
@@ -57,5 +60,7 @@ export function BlogCard() {
         </CardFooter>
           
     </Card>
+          ))}
+          </>
   );
 }
