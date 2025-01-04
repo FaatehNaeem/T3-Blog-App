@@ -25,14 +25,11 @@ import {
   FormMessage,
 } from "~/components/ui/form";
 import { Input } from "~/components/ui/input";
-import { ChevronDown } from "lucide-react";
 import { api } from "~/trpc/react";
 
 export default function BlogPostForm() {
-  const [submitting, isSubmitted] = useState(false);
+  const [submitting, setSubmitting] = useState(false);
   const utils = api.useUtils();
-  // const {data:session} = useSession()
-  // const userId = session?.user.id;
 
   const { mutate } = api.blog.createBlog.useMutation({
     onSuccess: async () => {
@@ -51,17 +48,36 @@ export default function BlogPostForm() {
   });
 
   const onSubmit = async (values: z.infer<typeof BlogPostSchema>) => {
-    // if (!session?.user?.id) {
-    //   alert("User not logged in");
-    //   return;
-    // }
-    // console.log(session.user.id)
-    await mutate({
-      title: values.title,
-      category: values.category,
-      description: values.description,
-      blogImage: values.blogImage,
-    });
+    const formData = new FormData();
+    formData.append("file", values.blogImage);
+    formData.append("upload_preset",process.env.NEXT_PUBLIC_UPLOAD_PRESET); 
+
+    setSubmitting(true);
+    try {
+      const res = await fetch(`https://api.cloudinary.com/v1_1/${process.env.NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME}/image/upload`, {
+        method: "POST",
+        body: formData,
+      });
+
+      if (!res.ok) {
+        console.log("Oops! Something went wrong with the image upload.");
+        return;
+      }
+
+      const data = await res.json();
+
+      await mutate({
+        title: values.title,
+        category: values.category,
+        description: values.description,
+        blogImage: data.secure_url
+      });
+
+    } catch (error) {
+      console.log(error);
+    } finally {
+      setSubmitting(false); // Reset submitting state
+    }
   };
 
   return (
@@ -70,7 +86,6 @@ export default function BlogPostForm() {
         onSubmit={form.handleSubmit(onSubmit)}
         className="h-screen w-2/4 rounded-2xl border border-background bg-foreground p-6 text-background"
       >
-        {/* <h1 className="text-background mb-4">Create your blog post</h1> */}
         <FormField
           control={form.control}
           name="title"
@@ -106,7 +121,7 @@ export default function BlogPostForm() {
           name="category"
           render={({ field }) => (
             <FormItem className="mt-4 h-28">
-              <FormLabel>Catgory</FormLabel>
+              <FormLabel>Category</FormLabel>
               <Select onValueChange={field.onChange} defaultValue={field.value}>
                 <FormControl>
                   <SelectTrigger className="w-full">
@@ -124,7 +139,6 @@ export default function BlogPostForm() {
                   </SelectGroup>
                 </SelectContent>
               </Select>
-
               <FormMessage className="h-6" />
             </FormItem>
           )}
@@ -140,7 +154,12 @@ export default function BlogPostForm() {
                 <Input
                   placeholder="Upload an image"
                   type="file"
-                  {...field}
+                  onChange={(e) => {
+                    if (e.target.files?.[0]) {
+                      field.onChange(e.target.files[0]); // Set the file object in the field
+                    }
+                  }}
+                  // {...field}
                   className="text-center"
                 />
               </FormControl>
@@ -151,8 +170,9 @@ export default function BlogPostForm() {
         <Button
           type="submit"
           className="mt-2 w-full bg-background text-foreground hover:bg-background hover:opacity-90"
+          disabled={submitting} // Disable the button while submitting
         >
-          Submit
+          {submitting ? "Submitting..." : "Submit"}
         </Button>
       </form>
     </Form>

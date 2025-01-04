@@ -1,12 +1,13 @@
+import { createTRPCRouter, protectedProcedure, publicProcedure } from "~/server/api/trpc";
 import { blogs } from "~/server/db/schema";
-import { createTRPCRouter, protectedProcedure } from "~/server/api/trpc";
 import { BlogPostSchema } from "~/utils/schemas";
+
 
 export const blogRouter = createTRPCRouter({
   createBlog: protectedProcedure
     .input(BlogPostSchema)
     .mutation(async ({ ctx, input }) => {
-      const userId = ctx.session.user.id; // Ensure user ID comes from the session
+      const userId = ctx.session.user.id;
       if (!userId) {
         throw new Error("User is not authenticated.");
       }
@@ -19,7 +20,7 @@ export const blogRouter = createTRPCRouter({
             description: input.description,
             category: input.category,
             blogImage: input.blogImage,
-            userId, // Directly from the session
+            userId,
           })
           .onConflictDoNothing();
 
@@ -29,4 +30,8 @@ export const blogRouter = createTRPCRouter({
         throw new Error("Failed to create blog post");
       }
     }),
-});
+    getAll:publicProcedure
+    .query(async({ctx})=>{
+      return await ctx.db.query.blogs.findMany()
+    })
+    })

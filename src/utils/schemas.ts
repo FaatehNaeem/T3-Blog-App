@@ -37,5 +37,9 @@ export const BlogPostSchema = z.object({
   title: z.string().min(2).max(50),
   description : z.string().min(1,"Description is required"),
   category: z.string().min(1,"Category is required"),
-  blogImage: z.string().min(1,"Image is required")
+  blogImage: z
+  .any()
+  .refine((value) => value instanceof File || typeof value === "string", {
+    message: "Image is required and must be a valid file",
+  }),
 })
