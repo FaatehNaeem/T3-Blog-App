@@ -8,7 +8,7 @@ await import("./src/env.js");
 const config = {
     images: {
         loader: 'custom',
-        loaderFile:'./public/my/img/loader.ts'
+        loaderFile: './public/my/img/loader.ts',
     }
 };
 

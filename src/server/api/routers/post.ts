@@ -1,39 +1,25 @@
-import { z } from "zod";
-
 import {
   createTRPCRouter,
-  protectedProcedure,
   publicProcedure,
 } from "~/server/api/trpc";
-import { posts } from "~/server/db/schema";
+import { users } from "~/server/db/schema";
+import { signupSchema } from "~/utils/schemas";
 
-export const postRouter = createTRPCRouter({
-  hello: publicProcedure
-    .input(z.object({ text: z.string() }))
-    .query(({ input }) => {
-      return {
-        greeting: `Hello ${input.text}`,
-      };
-    }),
+import bcrypt from "bcrypt"
 
-  create: protectedProcedure
-    .input(z.object({ name: z.string().min(1) }))
-    .mutation(async ({ ctx, input }) => {
-      await ctx.db.insert(posts).values({
-        name: input.name,
-        createdById: ctx.session.user.id,
-      });
-    }),
 
-  getLatest: publicProcedure.query(async ({ ctx }) => {
-    const post = await ctx.db.query.posts.findFirst({
-      orderBy: (posts, { desc }) => [desc(posts.createdAt)],
+export const userRouter = createTRPCRouter({
+  createUser: publicProcedure
+  .input(signupSchema)
+  .mutation(async ({ ctx, input }) => {
+    console.log("Input received:", input); // Log input data
+    const salt = await bcrypt.genSalt(10);
+    const hashedPassword = await bcrypt.hash(input.password, salt)
+    // console.log(hashedPassword)
+    await ctx.db.insert(users).values({
+      username: input.username,
+      email: input.email,
+      password: hashedPassword,
     });
-
-    return post ?? null;
-  }),
-
-  getSecretMessage: protectedProcedure.query(() => {
-    return "you can now see this secret message!";
-  }),
+    })
 });
