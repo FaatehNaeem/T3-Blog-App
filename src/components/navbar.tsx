@@ -50,7 +50,7 @@ export default function Navbar() {
               <Package2 className="h-6 w-6" />
               <span className="sr-only">Acme Inc</span>
             </Link>
-            <Link
+            {/* <Link
               href="#"
               className="text-muted-foreground hover:text-foreground"
             >
@@ -76,7 +76,7 @@ export default function Navbar() {
             </Link>
             <Link href="#" className="hover:text-foreground">
               Settings
-            </Link>
+            </Link> */}
           </nav>
         </SheetContent>
       </Sheet>

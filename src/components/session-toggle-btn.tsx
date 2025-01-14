@@ -43,10 +43,10 @@ export default function SessionToggleBtn() {
           </DropdownMenuTrigger>
           <DropdownMenuContent align="end">
             <DropdownMenuLabel>
-              Welcome {session.user.username}!
+              Welcome <p className="text-foreground font-black">{session.user.username}!</p>
             </DropdownMenuLabel>
             <DropdownMenuSeparator />
-            <Link href={"/Dashboard"}>Dashboard</Link>
+            <DropdownMenuItem><Link href={"/Dashboard"}>Dashboard</Link></DropdownMenuItem>
             <DropdownMenuItem>Settings</DropdownMenuItem>
             <DropdownMenuSeparator />
             <DropdownMenuItem onClick={() => signOut()}>
