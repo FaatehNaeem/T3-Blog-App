@@ -5,6 +5,7 @@ import { type Metadata } from "next";
 
 import { TRPCReactProvider } from "~/trpc/react";
 import SessionWrapper from "~/components/providers/providers";
+import Header from "~/components/common/header";
 
 export const metadata: Metadata = {
   title: "My Blog App",
@@ -19,6 +20,7 @@ export default function RootLayout({
     <html lang="en" className={`${GeistSans.variable}`}>
       <body className="h-screen w-screen overflow-x-hidden bg-background">
         <SessionWrapper>
+          <Header />
           <TRPCReactProvider>{children}</TRPCReactProvider>
         </SessionWrapper>
       </body>

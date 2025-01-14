@@ -23,8 +23,7 @@ export const blogRouter = createTRPCRouter({
             userId,
           })
           .onConflictDoNothing();
-
-        console.log("Insert query executed");
+          
       } catch (error) {
         console.error("Error inserting blog:", error);
         throw new Error("Failed to create blog post");
@@ -33,5 +32,5 @@ export const blogRouter = createTRPCRouter({
     getAll:publicProcedure
     .query(async({ctx})=>{
       return await ctx.db.query.blogs.findMany()
-    })
-    })
+    }),
+})
