@@ -9,14 +9,14 @@ export default function Navbar() {
     <header className="t1op-0 flex h-16 w-full items-center gap-4 border-b-[1px] border-foreground2 bg-foreground px-4 md:px-6">
       <nav className="hidden w-2/3 flex-col justify-center gap-6 text-lg font-medium md:flex md:flex-row md:items-center md:gap-5 md:text-sm lg:gap-12">
         <Link
-          href="#"
+          href="/"
           className="flex items-center gap-2 text-lg font-semibold md:text-base"
         >
           <Package2 className="h-6 w-6 text-background2" />
           <span className="sr-only">Acme Inc</span>
         </Link>
         <Link
-          href="#"
+          href="/"
           className="text-background transition-colors hover:text-zinc-300 font-bold"
         >
           Home
@@ -50,33 +50,6 @@ export default function Navbar() {
               <Package2 className="h-6 w-6" />
               <span className="sr-only">Acme Inc</span>
             </Link>
-            {/* <Link
-              href="#"
-              className="text-muted-foreground hover:text-foreground"
-            >
-              Dashboard
-            </Link>
-            <Link
-              href="#"
-              className="text-muted-foreground hover:text-foreground"
-            >
-              Orders
-            </Link>
-            <Link
-              href="#"
-              className="text-muted-foreground hover:text-foreground"
-            >
-              Products
-            </Link>
-            <Link
-              href="#"
-              className="text-muted-foreground hover:text-foreground"
-            >
-              Customers
-            </Link>
-            <Link href="#" className="hover:text-foreground">
-              Settings
-            </Link> */}
           </nav>
         </SheetContent>
       </Sheet>

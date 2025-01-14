@@ -111,7 +111,7 @@ export default function Footer() {
           {/* menu items  */}
           <div className="group mt-2 flex h-1/3 w-[95%] flex-row items-center justify-center gap-6 pl-8 hover:bg-background2">
             <Link
-              href="#"
+              href="/"
               className="text-lg font-bold text-background transition-colors group-hover:text-foreground"
             >
               Home

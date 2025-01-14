@@ -5,6 +5,9 @@ import { type Metadata } from "next";
 
 import { TRPCReactProvider } from "~/trpc/react";
 import SessionWrapper from "~/components/providers/providers";
+import Header from "~/components/common/header";
+import SearchBar from "~/components/search-bar";
+import Footer from "~/components/common/footer";
 
 export const metadata: Metadata = {
   title: "My Blog App",
@@ -17,12 +20,13 @@ export default function RootLayout({
 }: Readonly<{ children: React.ReactNode }>) {
   return (
     <html lang="en" className={`${GeistSans.variable}`}>
-      <body>
-          <SessionWrapper>
-        <TRPCReactProvider>
-            {children}
-        </TRPCReactProvider>
-          </SessionWrapper>
+      <body className="h-screen w-screen overflow-x-hidden bg-background">
+        <SessionWrapper>
+          <Header />
+          {/* <SearchBar /> */}
+          <TRPCReactProvider>{children}</TRPCReactProvider>
+          <Footer />
+        </SessionWrapper>
       </body>
     </html>
   );
