@@ -41,7 +41,7 @@ export function BlogCard() {
           {blogs?.map((blog, index) => (
             <Card
               key={index}
-              className="h-[400px] w-[350px] cursor-pointer rounded-md bg-background text-foreground shadow-foreground p-4"
+              className="h-[400px] w-[350px] cursor-pointer rounded-md bg-background text-foreground shadow-foreground"
               onClick={()=>handleClick(blog.id)}
             >
               <img src={blog.blogImage} alt="error loading image" />
@@ -50,7 +50,7 @@ export function BlogCard() {
                 <CardTitle className="font-bold text-foreground drop-shadow-sm">
                   {blog.title}
                 </CardTitle>
-                <CardDescription>{blog.description}</CardDescription>
+                <CardDescription>{blog.description.length>100 ? blog.description.slice(0,100) + "...": blog.description}</CardDescription>
               </CardHeader>
 
               <CardFooter className="m-0 flex h-9 w-full flex-row items-center py-0">

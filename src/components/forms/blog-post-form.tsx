@@ -50,7 +50,7 @@ export default function BlogPostForm() {
   const onSubmit = async (values: z.infer<typeof BlogPostSchema>) => {
     const formData = new FormData();
     formData.append("file", values.blogImage);
-    formData.append("upload_preset",process.env.NEXT_PUBLIC_UPLOAD_PRESET); 
+    formData.append("upload_preset",process.env.NEXT_PUBLIC_UPLOAD_PRESET ?? ""); 
 
     setSubmitting(true);
     try {
@@ -66,7 +66,7 @@ export default function BlogPostForm() {
 
       const data = await res.json();
 
-      await mutate({
+       await mutate({
         title: values.title,
         category: values.category,
         description: values.description,
@@ -93,7 +93,7 @@ export default function BlogPostForm() {
           render={({ field }) => (
             <FormItem>
               <FormLabel>Title</FormLabel>
-              <FormControl>
+              <FormControl className="placeholder:text-white">
                 <Input placeholder="Enter a title" {...field} />
               </FormControl>
               <FormMessage/>
@@ -109,7 +109,7 @@ export default function BlogPostForm() {
               <FormControl>
                 <Textarea
                   placeholder="Tell us a little bit about yourself"
-                  className="resize-none"
+                  className="resize-none placeholder:text-white"
                   {...field}
                 />
               </FormControl>
@@ -169,8 +169,8 @@ export default function BlogPostForm() {
         />
         <Button
           type="submit"
-          className="mt-2 w-full bg-background text-foreground hover:bg-background hover:opacity-90"
-          disabled={submitting} // Disable the button while submitting
+          className="mt-4 w-full bg-background text-foreground hover:bg-background hover:opacity-90"
+          disabled={submitting}
         >
           {submitting ? "Submitting..." : "Submit"}
         </Button>
