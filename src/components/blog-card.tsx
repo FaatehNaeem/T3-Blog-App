@@ -17,6 +17,8 @@ import { Loader2Icon } from "lucide-react";
 
 export function BlogCard() {
   const { data: blogs } = api.blog.getAll.useQuery();
+  
+  const router = useRouter();
 
   const [isloading, setIsLoading] = React.useState(true);
 
@@ -26,10 +28,8 @@ export function BlogCard() {
     }
   }, [blogs]);
 
-  const router = useRouter();
-
-  const handleClick = () => {
-    router.push("/blog/1");
+  const handleClick = (blogId:string) => {
+    router.push(`/blog/${blogId}`);
   };
 
   return (
@@ -42,7 +42,7 @@ export function BlogCard() {
             <Card
               key={index}
               className="h-[400px] w-[350px] cursor-pointer rounded-md bg-background text-foreground shadow-foreground p-4"
-              onClick={handleClick}
+              onClick={()=>handleClick(blog.id)}
             >
               <img src={blog.blogImage} alt="error loading image" />
 
