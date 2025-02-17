@@ -81,21 +81,22 @@ export default function BlogPostForm() {
   };
 
   return (
+
     <Form {...form}>
       <form
         onSubmit={form.handleSubmit(onSubmit)}
-        className="h-screen w-2/4 rounded-2xl border border-background bg-foreground p-6 text-background"
+        className="w-2/4 rounded-2xl border border-background bg-gradient-to-b from-foreground to-card-foreground p-6 text-background"
       >
         <FormField
           control={form.control}
           name="title"
           render={({ field }) => (
-            <FormItem className="h-28">
+            <FormItem>
               <FormLabel>Title</FormLabel>
               <FormControl>
                 <Input placeholder="Enter a title" {...field} />
               </FormControl>
-              <FormMessage className="h-6" />
+              <FormMessage/>
             </FormItem>
           )}
         />
@@ -103,7 +104,7 @@ export default function BlogPostForm() {
           control={form.control}
           name="description"
           render={({ field }) => (
-            <FormItem className="h-28">
+            <FormItem className="mt-2">
               <FormLabel>Description</FormLabel>
               <FormControl>
                 <Textarea
@@ -112,7 +113,7 @@ export default function BlogPostForm() {
                   {...field}
                 />
               </FormControl>
-              <FormMessage className="h-6" />
+              <FormMessage />
             </FormItem>
           )}
         />
@@ -120,7 +121,7 @@ export default function BlogPostForm() {
           control={form.control}
           name="category"
           render={({ field }) => (
-            <FormItem className="mt-4 h-28">
+            <FormItem className="mt-2">
               <FormLabel>Category</FormLabel>
               <Select onValueChange={field.onChange} defaultValue={field.value}>
                 <FormControl>
@@ -139,7 +140,7 @@ export default function BlogPostForm() {
                   </SelectGroup>
                 </SelectContent>
               </Select>
-              <FormMessage className="h-6" />
+              <FormMessage/>
             </FormItem>
           )}
         />
@@ -148,7 +149,7 @@ export default function BlogPostForm() {
           control={form.control}
           name="blogImage"
           render={({ field }) => (
-            <FormItem className="mt-2 h-28">
+            <FormItem className="mt-2">
               <FormLabel>Blog Image</FormLabel>
               <FormControl>
                 <Input
@@ -156,14 +157,13 @@ export default function BlogPostForm() {
                   type="file"
                   onChange={(e) => {
                     if (e.target.files?.[0]) {
-                      field.onChange(e.target.files[0]); // Set the file object in the field
+                      field.onChange(e.target.files[0]);
                     }
                   }}
-                  // {...field}
                   className="text-center"
                 />
               </FormControl>
-              <FormMessage className="h-6" />
+              <FormMessage />
             </FormItem>
           )}
         />
@@ -178,3 +178,21 @@ export default function BlogPostForm() {
     </Form>
   );
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
