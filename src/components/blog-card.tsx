@@ -50,7 +50,8 @@ export function BlogCard() {
                 <CardTitle className="font-bold text-foreground drop-shadow-sm">
                   {blog.title}
                 </CardTitle>
-                <CardDescription className="bg-red-500">{blog.description.length>100 ? blog.description.slice(0,100) + "...": blog.description}</CardDescription>
+                <CardDescription className="break-words">{blog.description.length>=100 ? blog.description.slice(0,100) + "..." : blog.description}</CardDescription>
+
               </CardHeader>
 
               <CardFooter className="m-0 flex w-full flex-row items-center py-0">
