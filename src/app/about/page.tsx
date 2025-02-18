@@ -1,6 +1,7 @@
 import React from "react";
 import Navbar from "~/components/navbar";
 import Image from "next/image";
+import Footer from "~/components/common/footer";
 
 function page() {
   return (
@@ -9,9 +10,9 @@ function page() {
       <h1 className="mt-2 text-center text-2xl font-black">
         Blog Nest - A cozy space for bloggers to create and share.
       </h1>
-      <div className="mt-8 flex w-screen flex-row items-center justify-around p-8 bg-gradient-to-b from-foreground to-card-foreground text-white overflow-x-hidden">
-        <div className="flex w-1/3 flex-col gap-4">
-          <p>
+      <div className="mt-8 flex w-screen flex-col lg:flex-row items-center justify-around p-8 bg-gradient-to-b from-foreground to-card-foreground text-white overflow-x-hidden">
+        <div className="flex w-full lg:w-1/3 flex-col gap-4">
+          <p className="font-mono">
             BlogSphere is a dynamic and user-friendly blogging platform designed
             to give users complete control over their blogging experience.
             Whether you're a casual reader or an active blogger, our platform
@@ -57,8 +58,11 @@ function page() {
             </li>
           </ul>
         </div>
-        <div className="flex flex-col justify-center gap-8 p-4 items-center">
-          <h1 className="text-2xl font-black">TECH STACK</h1>
+
+        <h1 className="text-2xl font-black block lg:hidden mt-8">TECH STACK</h1>
+
+        <div className="flex flex-row flex-wrap lg:flex-col justify-center gap-8 p-4 items-center mt-8 lg:mt-0">
+          <h1 className="text-2xl font-black hidden lg:block">TECH STACK</h1>
           <Image
             src="https://trpc.io/img/logo.svg"
             alt="Image"
