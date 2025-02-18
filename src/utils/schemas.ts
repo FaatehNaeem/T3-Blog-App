@@ -35,7 +35,7 @@ export const loginSchema = z.object({
  
 export const BlogPostSchema = z.object({
   title: z.string().min(2).max(50),
-  description : z.string().min(1,"Description is required"),
+  description : z.string().min(100,"Description should be of atleast 100 characters").max(1000,"Description should not exceed 1000 characters"),
   category: z.string().min(1,"Category is required"),
   blogImage: z
   .any()
