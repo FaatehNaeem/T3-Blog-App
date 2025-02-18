@@ -31,7 +31,7 @@ export const users: Table = pgTable("mb_users", {
  * Schema for the Blogs table
  */
 export const blogs: Table = pgTable("mb_blogs", {
-  id: varchar("blogId", { length: 255 }).primaryKey().$default(() => crypto.randomUUID()),
+  id: varchar("id", { length: 255 }).primaryKey().$default(() => crypto.randomUUID()),
   title: varchar("title", { length: 100 }).notNull(),
   description: text("description").notNull(),
   category: blogEnum("blogCategories"),

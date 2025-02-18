@@ -1,11 +1,12 @@
 import "~/styles/globals.css";
 
+import { GeistSans } from "geist/font/sans";
 import { type Metadata } from "next";
 
 import { TRPCReactProvider } from "~/trpc/react";
 import SessionWrapper from "~/components/providers/providers";
-import { Jacquarda_Bastarda_9_Charted,Noto_Serif } from 'next/font/google'
-
+import Header from "~/components/common/header";
+import Footer from "~/components/common/footer";
 
 export const metadata: Metadata = {
   title: "My Blog App",
@@ -13,27 +14,16 @@ export const metadata: Metadata = {
   icons: [{ rel: "icon", url: "/favicon.ico" }],
 };
 
-const jacquardaBastarda9Charted = Jacquarda_Bastarda_9_Charted({
-  subsets:['latin'],
-  display:"swap",
-  weight:"400",
-  variable:'--font-jacquardaBastarda9Charted'
-})
-
-const notoSerif = Noto_Serif({
-  preload:true,
-  subsets:["greek"],
-  variable:'--font-notoSerif'
-})
-
 export default function RootLayout({
   children,
-}: Readonly<{ children: React.ReactNode }>) { 
+}: Readonly<{ children: React.ReactNode }>) {
   return (
-    <html lang="en" className={`${jacquardaBastarda9Charted.variable} ${notoSerif.variable} font-notoSerif`}>
+    <html lang="en" className={`${GeistSans.variable}`}>
       <body className="h-screen w-screen overflow-x-hidden bg-background">
         <SessionWrapper>
+          <Header />
           <TRPCReactProvider>{children}</TRPCReactProvider>
+          <Footer />
         </SessionWrapper>
       </body>
     </html>

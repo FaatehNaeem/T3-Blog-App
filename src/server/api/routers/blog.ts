@@ -1,5 +1,7 @@
+import { eq } from "drizzle-orm";
+import { z } from "zod";
 import { createTRPCRouter, protectedProcedure, publicProcedure } from "~/server/api/trpc";
-import { blogs } from "~/server/db/schema";
+import { blogs, users } from "~/server/db/schema";
 import { BlogPostSchema } from "~/utils/schemas";
 
 
@@ -23,8 +25,7 @@ export const blogRouter = createTRPCRouter({
             userId,
           })
           .onConflictDoNothing();
-
-        console.log("Insert query executed");
+          
       } catch (error) {
         console.error("Error inserting blog:", error);
         throw new Error("Failed to create blog post");
@@ -32,6 +33,29 @@ export const blogRouter = createTRPCRouter({
     }),
     getAll:publicProcedure
     .query(async({ctx})=>{
-      return await ctx.db.query.blogs.findMany()
-    })
-    })
+      return (await ctx.db.query.blogs.findMany())
+    }),
+
+    getBlogById: publicProcedure
+    .input(z.object({ id: z.string() }))
+    .query(async ({ ctx, input }) => {
+      const result = await ctx.db
+        .select({
+          blogId: blogs.id,
+          title: blogs.title,
+          description: blogs.description,
+          categories: blogs.category,
+          blogImage: blogs.blogImage,
+          creator: {
+            username: users.username,
+          },
+        })
+        .from(blogs)
+        .where(eq(blogs.id, input.id))
+        .rightJoin(users, eq(blogs.userId, users.id))
+        .limit(1);
+  
+      return result[0] ?? null;
+    }),
+  
+});

@@ -5,7 +5,7 @@ const tech = ["T", "E", "C", "H"];
 const stack = ["S", "T", "A", "C", "K"];
 export default function Footer() {
   return (
-      <div className="flex h-2/3 w-screen flex-row bg-foreground text-white">
+      <div className="flex h-2/3 w-screen flex-row bg-gradient-to-b from-foreground to-card-foreground text-white">
         {/* tech stack 1 */}
         <div className="mx-auto my-auto h-[80%] flex-col">
           <div className="flex h-2/4 w-[300px] flex-col items-center justify-center hover:bg-background2">
@@ -96,7 +96,7 @@ export default function Footer() {
         </div>
 
         {/* second section  */}
-        <div className="mx-auto my-auto ml-3 h-[80%] w-[48%] flex-col bg-foreground">
+        <div className="mx-auto my-auto ml-3 h-[80%] w-[48%] flex-col bg-gradient-to-b from-foreground to-card-foreground">
           {/* logo + web name */}
           <div className="flex h-1/3 w-[95%] flex-row items-center justify-center gap-0 text-background hover:bg-background2 hover:text-foreground">
             {/* <Image
@@ -111,7 +111,7 @@ export default function Footer() {
           {/* menu items  */}
           <div className="group mt-2 flex h-1/3 w-[95%] flex-row items-center justify-center gap-6 pl-8 hover:bg-background2">
             <Link
-              href="#"
+              href="/"
               className="text-lg font-bold text-background transition-colors group-hover:text-foreground"
             >
               Home
