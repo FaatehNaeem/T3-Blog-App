@@ -41,20 +41,21 @@ export function BlogCard() {
           {blogs?.map((blog, index) => (
             <Card
               key={index}
-              className="h-[400px] w-[350px] cursor-pointer rounded-md bg-background text-foreground shadow-foreground p-4"
+              className="h-[400px] w-[350px] cursor-pointer rounded-md bg-background text-foreground shadow-foreground"
               onClick={()=>handleClick(blog.id)}
             >
               <img src={blog.blogImage} alt="error loading image" />
 
-              <CardHeader>
+              <CardHeader className="h-[calc(350px-150px)]">
                 <CardTitle className="font-bold text-foreground drop-shadow-sm">
                   {blog.title}
                 </CardTitle>
-                <CardDescription>{blog.description}</CardDescription>
+                <CardDescription className="break-words">{blog.description.length>=100 ? blog.description.slice(0,100) + "..." : blog.description}</CardDescription>
+
               </CardHeader>
 
-              <CardFooter className="m-0 flex h-9 w-full flex-row items-center py-0">
-                <Avatar>
+              <CardFooter className="m-0 flex w-full flex-row items-center py-0">
+                <Avatar className="bottom-3">
                   <AvatarImage
                     src="https://github.com/shadcn.png"
                     alt="@shadcn"
@@ -62,7 +63,7 @@ export function BlogCard() {
                   <AvatarFallback>CN</AvatarFallback>
                 </Avatar>
 
-                <div className="flex h-full flex-col items-center">
+                <div className="flex flex-col items-center">
                   <CardTitle className="text-foreground">Faateh N</CardTitle>
                   <CardContent className="text-sm text-zinc-900">
                     October 8, 2023

@@ -1,6 +1,8 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+
 @layer base {
   :root {
     --background: 261 100% 97%;
@@ -81,4 +83,12 @@
   body {
     @apply bg-background text-foreground;
   }
+}
+
+input[type=file]::file-selector-button {
+  padding: .2em .4em;
+  border-radius: .2em;
+  background-color: #380056;
+  color: white;
+  transition: 1s;
 }

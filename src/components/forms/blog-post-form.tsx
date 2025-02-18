@@ -50,7 +50,7 @@ export default function BlogPostForm() {
   const onSubmit = async (values: z.infer<typeof BlogPostSchema>) => {
     const formData = new FormData();
     formData.append("file", values.blogImage);
-    formData.append("upload_preset",process.env.NEXT_PUBLIC_UPLOAD_PRESET); 
+    formData.append("upload_preset",process.env.NEXT_PUBLIC_UPLOAD_PRESET ?? ""); 
 
     setSubmitting(true);
     try {
@@ -66,7 +66,7 @@ export default function BlogPostForm() {
 
       const data = await res.json();
 
-      await mutate({
+       await mutate({
         title: values.title,
         category: values.category,
         description: values.description,
@@ -81,21 +81,22 @@ export default function BlogPostForm() {
   };
 
   return (
+
     <Form {...form}>
       <form
         onSubmit={form.handleSubmit(onSubmit)}
-        className="h-screen w-2/4 rounded-2xl border border-background bg-foreground p-6 text-background"
+        className="w-2/4 rounded-2xl border border-background bg-gradient-to-b from-foreground to-card-foreground p-6 text-background"
       >
         <FormField
           control={form.control}
           name="title"
           render={({ field }) => (
-            <FormItem className="h-28">
+            <FormItem>
               <FormLabel>Title</FormLabel>
-              <FormControl>
+              <FormControl className="placeholder:text-white">
                 <Input placeholder="Enter a title" {...field} />
               </FormControl>
-              <FormMessage className="h-6" />
+              <FormMessage/>
             </FormItem>
           )}
         />
@@ -103,16 +104,16 @@ export default function BlogPostForm() {
           control={form.control}
           name="description"
           render={({ field }) => (
-            <FormItem className="h-28">
+            <FormItem className="mt-2">
               <FormLabel>Description</FormLabel>
               <FormControl>
                 <Textarea
                   placeholder="Tell us a little bit about yourself"
-                  className="resize-none"
+                  className="resize-none placeholder:text-white"
                   {...field}
                 />
               </FormControl>
-              <FormMessage className="h-6" />
+              <FormMessage />
             </FormItem>
           )}
         />
@@ -120,7 +121,7 @@ export default function BlogPostForm() {
           control={form.control}
           name="category"
           render={({ field }) => (
-            <FormItem className="mt-4 h-28">
+            <FormItem className="mt-2">
               <FormLabel>Category</FormLabel>
               <Select onValueChange={field.onChange} defaultValue={field.value}>
                 <FormControl>
@@ -139,7 +140,7 @@ export default function BlogPostForm() {
                   </SelectGroup>
                 </SelectContent>
               </Select>
-              <FormMessage className="h-6" />
+              <FormMessage/>
             </FormItem>
           )}
         />
@@ -148,7 +149,7 @@ export default function BlogPostForm() {
           control={form.control}
           name="blogImage"
           render={({ field }) => (
-            <FormItem className="mt-2 h-28">
+            <FormItem className="mt-2">
               <FormLabel>Blog Image</FormLabel>
               <FormControl>
                 <Input
@@ -156,21 +157,20 @@ export default function BlogPostForm() {
                   type="file"
                   onChange={(e) => {
                     if (e.target.files?.[0]) {
-                      field.onChange(e.target.files[0]); // Set the file object in the field
+                      field.onChange(e.target.files[0]);
                     }
                   }}
-                  // {...field}
                   className="text-center"
                 />
               </FormControl>
-              <FormMessage className="h-6" />
+              <FormMessage />
             </FormItem>
           )}
         />
         <Button
           type="submit"
-          className="mt-2 w-full bg-background text-foreground hover:bg-background hover:opacity-90"
-          disabled={submitting} // Disable the button while submitting
+          className="mt-4 w-full bg-background text-foreground hover:bg-background hover:opacity-90"
+          disabled={submitting}
         >
           {submitting ? "Submitting..." : "Submit"}
         </Button>
@@ -178,3 +178,21 @@ export default function BlogPostForm() {
     </Form>
   );
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
