@@ -22,7 +22,7 @@ export default function Navbar() {
           Home
         </Link>
         <Link
-          href="#"
+          href="/about"
           className="text-background2 transition-colors text-white hover:text-zinc-300"
         >
           About

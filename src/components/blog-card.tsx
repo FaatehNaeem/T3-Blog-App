@@ -64,7 +64,7 @@ export function BlogCard() {
                 </Avatar>
 
                 <div className="flex flex-col items-center">
-                  <CardTitle className="text-foreground">Faateh N</CardTitle>
+                  <CardTitle className="text-foreground">{blog.creator.username}</CardTitle>
                   <CardContent className="text-sm text-zinc-900">
                     October 8, 2023
                   </CardContent>

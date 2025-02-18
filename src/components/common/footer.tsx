@@ -105,7 +105,7 @@ export default function Footer() {
               width="60"
               height="60"
             /> */}
-            <h3 className="text-lg font-extrabold">My Blog App</h3>
+            <h3 className="text-lg font-extrabold">BLOG NEST</h3>
           </div>
 
           {/* menu items  */}

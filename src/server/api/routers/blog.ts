@@ -33,7 +33,11 @@ export const blogRouter = createTRPCRouter({
     }),
     getAll:publicProcedure
     .query(async({ctx})=>{
-      return (await ctx.db.query.blogs.findMany())
+      return (await ctx.db.query.blogs.findMany({with:{
+        creator:{
+          username:true
+        }
+      }}))
     }),
 
     getBlogById: publicProcedure
