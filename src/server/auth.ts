@@ -90,7 +90,7 @@ export const authOptions: NextAuthOptions = {
   }
 
   // Authentication succeeded, return the user
-        return {username:user.username,email:user.email,id:user.id}
+        return {username:user.username,email:user.email,id:user.id,role:user.role}
       }
     }),
   ],

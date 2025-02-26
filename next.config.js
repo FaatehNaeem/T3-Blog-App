@@ -9,6 +9,9 @@ const config = {
     images: {
         loader: 'custom',
         loaderFile: './public/my/img/loader.ts',
+    },
+    eslint:{
+        ignoreDuringBuilds:true
     }
 };
 

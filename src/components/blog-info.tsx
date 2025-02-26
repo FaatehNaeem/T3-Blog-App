@@ -27,13 +27,13 @@ export default function BlogInfo() {
       />
       <h2 className="mt-4 text-center text-2xl font-bold">{blog.title}</h2>
       <div className="mt-2 flex justify-center gap-2">
-        <Badge variant="destructive">{blog.categories}</Badge>
+        <Badge variant="destructive">{blog.category}</Badge>
       </div>
       <div className="mx-auto mt-4 w-[90%] bg-background2 p-12">
         <p className="text-center">{blog.description}</p>
         {blog.creator && (
           <p className="mt-8 text-right font-bold text-zinc-950">
-            Created by {blog.creator.username}
+            Created by {blog.creator.username ?? "Unkown Author"}
           </p>
         )}
       </div>

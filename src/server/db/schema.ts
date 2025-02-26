@@ -1,4 +1,4 @@
-import { relations, type Table } from "drizzle-orm";
+import { relations } from "drizzle-orm";
 import {
   text,
   timestamp,
@@ -10,13 +10,12 @@ import {
 /**
  * Enums for categorizing blogs and roles
  */
-export const blogEnum = pgEnum("blogCategories", ["Fashion", "Technology", "Health", "Lifestyle", "Coding"]);
 export const roleEnum = pgEnum("roles", ["user", "admin"]);
 
 /**
  * Schema for the Users table
  */
-export const users: Table = pgTable("mb_users", {
+export const users = pgTable("users", {
   id: varchar("id", { length: 255 }).primaryKey().$default(() => crypto.randomUUID()),
   username: varchar("username", { length: 255 }).notNull().unique(),
   email: varchar("email").notNull().unique(),
@@ -30,15 +29,15 @@ export const users: Table = pgTable("mb_users", {
 /**
  * Schema for the Blogs table
  */
-export const blogs: Table = pgTable("mb_blogs", {
+export const blogs = pgTable("blogs", {
   id: varchar("id", { length: 255 }).primaryKey().$default(() => crypto.randomUUID()),
-  title: varchar("title", { length: 100 }).notNull(),
+  title: text("title").notNull(),
   description: text("description").notNull(),
-  category: blogEnum("blogCategories"),
+  category: text("category").notNull(),
   blogImage: varchar("blogImage", { length: 255 }).notNull(),
-  userId: varchar("userId", { length: 255 }) // Ensures correct foreign key length
+  userId: varchar("userId", { length: 255 })
     .notNull()
-    .references(() => users.id, { onDelete: "cascade" }), // References `users.id`
+    .references(() => users.id, { onDelete: "cascade" }),
 });
 
 /**
