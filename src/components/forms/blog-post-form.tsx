@@ -13,7 +13,6 @@ import {
   SelectValue,
   SelectLabel,
 } from "~/components/ui/select";
-
 import { Textarea } from "~/components/ui/textarea";
 import { Button } from "~/components/ui/button";
 import {
@@ -29,6 +28,7 @@ import { api } from "~/trpc/react";
 
 export default function BlogPostForm() {
   const [submitting, setSubmitting] = useState(false);
+  const [selectedFile, setSelectedFile] = useState<File | null>(null); // State to hold the File object
   const utils = api.useUtils();
 
   const { mutate } = api.blog.createBlog.useMutation({
@@ -43,45 +43,55 @@ export default function BlogPostForm() {
       title: "",
       description: "",
       category: "",
-      blogImage: "",
+      blogImage: "", // This will store the Cloudinary URL after upload
     },
   });
 
   const onSubmit = async (values: z.infer<typeof BlogPostSchema>) => {
+    if (!selectedFile) {
+      console.error("No file selected.");
+      return;
+    }
+
     const formData = new FormData();
-    formData.append("file", values.blogImage);
-    formData.append("upload_preset",process.env.NEXT_PUBLIC_UPLOAD_PRESET ?? ""); 
+    formData.append("file", selectedFile); // Append the File object to FormData
+    formData.append("upload_preset", process.env.NEXT_PUBLIC_UPLOAD_PRESET ?? "");
 
     setSubmitting(true);
     try {
-      const res = await fetch(`https://api.cloudinary.com/v1_1/${process.env.NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME}/image/upload`, {
-        method: "POST",
-        body: formData,
-      });
+      // Upload image to Cloudinary
+      const res = await fetch(
+        `https://api.cloudinary.com/v1_1/${process.env.NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME}/image/upload`,
+        {
+          method: "POST",
+          body: formData,
+        },
+      );
 
       if (!res.ok) {
-        console.log("Oops! Something went wrong with the image upload.");
+        console.error("Oops! Something went wrong with the image upload.");
         return;
       }
 
       const data = await res.json();
+      
+      const imageUrl = data.secure_url; // Get the secure URL from Cloudinary
 
-       await mutate({
+      // Submit blog post data with the image URL
+      await mutate({
         title: values.title,
         category: values.category,
         description: values.description,
-        blogImage: data.secure_url
+        blogImage: imageUrl, // Use the Cloudinary URL
       });
-
     } catch (error) {
-      console.log(error);
+      console.error(error);
     } finally {
       setSubmitting(false); // Reset submitting state
     }
   };
 
   return (
-
     <Form {...form}>
       <form
         onSubmit={form.handleSubmit(onSubmit)}
@@ -96,7 +106,7 @@ export default function BlogPostForm() {
               <FormControl className="placeholder:text-white">
                 <Input placeholder="Enter a title" {...field} />
               </FormControl>
-              <FormMessage/>
+              <FormMessage />
             </FormItem>
           )}
         />
@@ -140,33 +150,27 @@ export default function BlogPostForm() {
                   </SelectGroup>
                 </SelectContent>
               </Select>
-              <FormMessage/>
-            </FormItem>
-          )}
-        />
-
-        <FormField
-          control={form.control}
-          name="blogImage"
-          render={({ field }) => (
-            <FormItem className="mt-2">
-              <FormLabel>Blog Image</FormLabel>
-              <FormControl>
-                <Input
-                  placeholder="Upload an image"
-                  type="file"
-                  onChange={(e) => {
-                    if (e.target.files?.[0]) {
-                      field.onChange(e.target.files[0]);
-                    }
-                  }}
-                  className="text-center"
-                />
-              </FormControl>
               <FormMessage />
             </FormItem>
           )}
         />
+        <FormItem className="mt-2">
+          <FormLabel>Blog Image</FormLabel>
+          <FormControl>
+            <Input
+              type="file"
+              accept="image/*" // Restrict to image files
+              onChange={(e) => {
+                const file = e.target.files?.[0];
+                if (file) {
+                  setSelectedFile(file); // Store the File object in state
+                }
+              }}
+              className="text-center"
+            />
+          </FormControl>
+          <FormMessage />
+        </FormItem>
         <Button
           type="submit"
           className="mt-4 w-full bg-background text-foreground hover:bg-background hover:opacity-90"
@@ -178,21 +182,3 @@ export default function BlogPostForm() {
     </Form>
   );
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
