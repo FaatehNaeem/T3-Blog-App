@@ -5,7 +5,6 @@ export const env = createEnv({
   server: {
     DATABASE_URL: z.string().url(),
     NODE_ENV: z.string().min(1),
-    VERCEL_URL: z.string().min(1),
     NEXTAUTH_SECRET: z.string().min(1),
   },
   client: {
@@ -13,7 +12,6 @@ export const env = createEnv({
   runtimeEnv: {
     NODE_ENV: process.env.NODE_ENV,
     DATABASE_URL: process.env.DATABASE_URL,
-    VERCEL_URL: process.env.VERCEL_URL,
     NEXTAUTH_SECRET: process.env.NEXTAUTH_SECRET
   },
 });
