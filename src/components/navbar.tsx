@@ -1,42 +1,62 @@
+"use client"
 import { Sheet, SheetContent, SheetTrigger } from "~/components/ui/sheet";
 import { Menu, Package2 } from "lucide-react";
 import Link from "next/link";
 import { Button } from "~/components/ui/button";
 import SessionToggleBtn from "./session-toggle-btn";
+import { usePathname } from "next/navigation";
 
 export default function Navbar() {
-  return (
-    <header className="t1op-0 flex h-16 w-full items-center gap-4 border-b-[1px] px-4 md:px-6">
-      <nav className="hidden w-2/3 flex-col justify-center gap-6 text-lg font-medium md:flex md:flex-row md:items-center md:gap-5 md:text-sm lg:gap-12">
-        <Link
-          href="/"
-          className="flex items-center gap-2 text-lg font-semibold md:text-base"
-        >
+  const pathname = usePathname();
 
-<div className="flex flex-row items-center justify-center py-4">
-          <img src="/blog-nest.png" alt="" width={60} height={60}/>
-          <p className="text-white">Blog Nest</p>
-          </div>
-        </Link>
-        <Link
-          href="/"
-          className="text-background transition-colors text-white hover:text-zinc-300 font-bold"
-        >
-          Home
-        </Link>
-        <Link
-          href="/about"
-          className="text-background2 transition-colors text-white hover:text-zinc-300"
-        >
-          About
-        </Link>
-        <Link
-          href="#"
-          className="text-background2 transition-colors text-white hover:text-zinc-300"
-        >
-          Categories
-        </Link>
+  const isActivePathName = pathname
+  const navlinks = [
+    {
+      pathUrl: "/",
+      navLinkName:'Home'
+    },
+
+    {
+      pathUrl: "/about",
+      navLinkName:'About'
+
+    },
+
+    {
+      pathUrl: "/categories",
+      navLinkName:'Categories'
+    },
+
+  ];
+
+  return (
+    <header className="flex w-full items-center gap-4 border-b-[1px] bg-background">
+      <nav className="flex w-full flex-row items-center justify-around">
+        <div className="w-1/5">
+          <Link
+            href="/"
+            className="flex items-center gap-2 text-lg font-semibold md:text-base"
+          >
+            <div className="flex flex-row items-center justify-center">
+              <img src="/blog-nest.png" alt="" width={60} height={60} />
+              <p className="text-xl text-foreground">
+                Blog <span className="text-primary">Nest</span>
+              </p>
+            </div>
+          </Link>
+        </div>
+
+        <div className="active flex w-3/5 justify-center gap-12">
+        {navlinks.map((item,index)=>(
+          <Link href={item.pathUrl} key={index} className={`${pathname!==item.pathUrl?"text-foreground":"text-primary"}`}>{item.navLinkName}</Link>
+        ))}
+        </div>
+
+        <div className="mr-12 flex items-center justify-end gap-6 md:ml-auto md:gap-2 lg:gap-4">
+          <SessionToggleBtn />
+        </div>
       </nav>
+
       <Sheet>
         <SheetTrigger asChild>
           <Button variant="outline" size="icon" className="shrink-0 md:hidden">
@@ -56,9 +76,6 @@ export default function Navbar() {
           </nav>
         </SheetContent>
       </Sheet>
-      <div className="mr-12 flex w-full items-center justify-end gap-6 md:ml-auto md:gap-2 lg:gap-4">
-        <SessionToggleBtn />
-      </div>
     </header>
   );
 }

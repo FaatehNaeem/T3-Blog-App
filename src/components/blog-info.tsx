@@ -29,7 +29,7 @@ export default function BlogInfo() {
       <div className="mt-2 flex justify-center gap-2">
         <Badge variant="destructive">{blog.category}</Badge>
       </div>
-      <div className="mx-auto mt-4 w-[90%] bg-background2 p-12">
+      <div className="mx-auto mt-4 w-[90%] bg-background p-12">
         <p className="text-center">{blog.description}</p>
         {blog.creator && (
           <p className="mt-8 text-right font-bold text-zinc-950">

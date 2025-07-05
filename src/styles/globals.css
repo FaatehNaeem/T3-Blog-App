@@ -5,17 +5,15 @@
 
 @layer base {
   :root {
-    --background: 261 100% 97%;
-    --background2: 251 67% 90%;
-    --foreground: 282 80% 14%;
-    --foreground2: 229 50% 77%;
-    --card: 0 0% 100%;
+    --background: 0, 0%, 100%;
+    --foreground: 0, 0%, 0%;
+    --card: 44, 14%, 67%;
+    --primary: 16, 100%, 53%;
+    --secondary: 43, 33%, 88%;
     --card-foreground: 0 0% 3.9%;
     --popover: 0 0% 100%;
     --popover-foreground: 0 0% 3.9%;
-    --primary: 0 0% 9%;
     --primary-foreground: 0 0% 98%;
-    --secondary: 0 0% 96.1%;
     --secondary-foreground: 0 0% 9%;
     --muted: 0 0% 96.1%;
     --muted-foreground: 0 0% 45.1%;
@@ -82,6 +80,9 @@
   }
   body {
     @apply bg-background text-foreground;
+    margin: 0px;
+    padding: 0px;
+    box-sizing: border-box;
   }
 }
 

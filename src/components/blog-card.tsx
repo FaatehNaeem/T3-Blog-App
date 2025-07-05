@@ -41,7 +41,7 @@ export function BlogCard() {
           {blogs?.map((blog, index) => (
             <Card
               key={index}
-              className="h-[400px] w-[350px] cursor-pointer rounded-md bg-background text-foreground shadow-foreground"
+              className="h-[400px] w-[350px] cursor-pointer rounded-md bg-secondary text-foreground shadow-foreground"
               onClick={()=>handleClick(blog.id)}
             >
               <img src={blog.blogImage} alt="error loading image" />
