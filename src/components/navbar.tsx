@@ -9,7 +9,6 @@ import { usePathname } from "next/navigation";
 export default function Navbar() {
   const pathname = usePathname();
 
-  const isActivePathName = pathname
   const navlinks = [
     {
       pathUrl: "/",
