@@ -103,3 +103,7 @@ input[type=file]::file-selector-button {
     height: 20px;
     width: 20px;
 }
+
+.black-shadow{
+  text-shadow: 0.2px 0.5px 1px black;
+}
