@@ -9,7 +9,7 @@ export function HeroCards() {
   ));
 
   return (
-    <div className="w-full h-full py-6">
+    <div className="w-full py-2">
       <Carousel items={cards} />
     </div>
   );

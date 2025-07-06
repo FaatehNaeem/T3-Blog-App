@@ -9,10 +9,7 @@ export default function Home() {
     <div className="h-screen w-screen overflow-x-hidden bg-background">
       <Header />
       <HeroComponent/>
-      {/* <SearchBar/>
-      <div className="w-screen overflow-x-hidden bg-background py-8">
         <Blogs />
-      </div> */}
       <Footer />
     </div>
   );
