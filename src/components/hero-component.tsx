@@ -56,7 +56,7 @@ export default function HeroComponent() {
       </div>
       <HeroCards />
       <Link href={'#scrollId'}>
-        <ArrowDown className="animate-bounce" />
+        <ArrowDown className="animate-bounce w-8 h-8 bg-foreground text-background py-1 px-1 rounded-full shadow-sm shadow-primary"/>
       </Link>
     </div>
   );
