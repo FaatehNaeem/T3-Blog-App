@@ -32,7 +32,7 @@ export default function HeroComponent() {
   ];
 
   return (
-    <div className="flex h-screen flex-col items-center justify-center gap-4 py-8">
+    <div className="flex flex-col items-center justify-center gap-4 py-8">
       <h1 className="text-6xl font-bold">
         <span className="text-primary">AI</span> POWERED{" "}
         <span className="text-primary">BLOGS</span>
