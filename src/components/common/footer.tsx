@@ -1,144 +1,68 @@
-import Image from "next/image";
+import {
+  GitHubLogoIcon,
+  InstagramLogoIcon,
+  LinkedInLogoIcon,
+} from "@radix-ui/react-icons";
 import Link from "next/link";
 
-const tech = ["T", "E", "C", "H"];
-const stack = ["S", "T", "A", "C", "K"];
 export default function Footer() {
   return (
-      <div className="flex h-2/3 w-screen flex-row bg-gradient-to-b from-foreground to-card-foreground text-white">
-        {/* tech stack 1 */}
-        <div className="mx-auto my-auto h-[80%] flex-col">
-          <div className="flex h-2/4 w-[300px] flex-col items-center justify-center hover:bg-background2">
-            <Image
-              src="https://static-00.iconduck.com/assets.00/nextjs-icon-512x512-y563b8iq.png"
-              alt="Image"
-              width="120"
-              height="120"
-            />
+    <div className="flex w-screen flex-col border-t border-secondary bg-background text-foreground">
+      <div className="flex w-full flex-row justify-around p-8">
+        <div className="flex w-4/12 flex-col items-start px-6">
+          <div className="flex flex-row items-center justify-start">
+            <p className="text-4xl text-foreground">
+              Blog <span className="font-bold text-primary">Nest</span>
+            </p>
           </div>
-
-          <div className="mt-4 flex h-2/4 w-[300px] flex-col items-center justify-center hover:bg-background2">
-            <Image
-              src="https://www.svgrepo.com/show/374144/typescript.svg"
-              alt="TypeScript Logo"
-              width={120}
-              height={120}
-              priority
-            />
+          <div className="mt-2 flex flex-col text-justify">
+            <p>
+              Blog Nest – Smarter Blogging with AI Built with the T3 Stack
+              (Next.js, Tailwind, PostgreSQL, Drizzle & tRPC), Blog Nest is your
+              AI-powered platform for effortless, intelligent content creation.
+              Write better, faster—with smart suggestions and Gemini API
+              integration.
+            </p>
           </div>
         </div>
 
-        {/* Tech stack container  */}
-        <div className="flex h-full w-16 flex-col items-center justify-center bg-background text-foreground border-t-4 border-purple-950">
-          {tech.map((stack, index) => (
-            <h1 key={index} className="mt-[14px] font-extrabold">
-              {stack}
-            </h1>
-          ))}
-          <div className="mt-4 h-1 w-full bg-foreground"></div>
-          {stack.map((stack, index) => (
-            <h1 key={index} className="mt-[14px] font-extrabold">
-              {stack}
-            </h1>
-          ))}
-        </div>
-
-        {/* tech stack 2 */}
-        <div className="mx-auto my-auto h-[80%] flex-col">
-          <div className="flex h-2/4 w-[300px] flex-col items-center justify-center hover:bg-background2">
-            <Image
-              src="https://trpc.io/img/logo.svg"
-              alt="Image"
-              width="120"
-              height="120"
-            />
-            {/* <h3>MY Blog App</h3> */}
-          </div>
-
-          <div className="mt-4 flex h-2/4 w-[300px] flex-col items-center justify-center hover:bg-background2">
-            <Image
-              src="https://static-00.iconduck.com/assets.00/postgresql-plain-wordmark-icon-1024x1021-3tzxcisn.png"
-              alt="Image"
-              width="120"
-              height="120"
-            />
-            {/* <h3>MY Blog App</h3> */}
-          </div>
-        </div>
-
-        {/* social links */}
-        <div className="flex h-full w-16 flex-col items-center justify-center gap-6 bg-background text-foreground border-t-4 border-purple-950">
-          <Image
-            src="https://www.svgrepo.com/show/521688/github.svg"
-            alt="Image"
-            width="50"
-            height="50"
-          />
-          <Image
-            src="https://www.svgrepo.com/show/521725/linkedin.svg"
-            alt="Image"
-            width="50"
-            height="50"
-          />
-          <div className="mb-5 h-1 w-full bg-foreground"></div>
-          <Image
-            src="https://www.svgrepo.com/show/521711/instagram.svg"
-            alt="Image"
-            width="50"
-            height="50"
-          />
-          <Image
-            src="https://www.svgrepo.com/show/501561/facebook-boxed.svg"
-            alt="Image"
-            width="50"
-            height="50"
-          />
-        </div>
-
-        {/* second section  */}
-        <div className="mx-auto my-auto ml-3 h-[80%] w-[48%] flex-col bg-gradient-to-b from-foreground to-card-foreground">
-          {/* logo + web name */}
-          <div className="flex h-1/3 w-[95%] flex-row items-center justify-center gap-0 text-background hover:bg-background2 hover:text-foreground">
-            {/* <Image
-              src="https://pngimg.com/d/firefox_PNG47.png"
-              alt="Image"
-              width="60"
-              height="60"
-            /> */}
-            <h3 className="text-lg font-extrabold">BLOG NEST</h3>
-          </div>
-
-          {/* menu items  */}
-          <div className="group mt-2 flex h-1/3 w-[95%] flex-row items-center justify-center gap-6 pl-8 hover:bg-background2">
-            <Link
-              href="/"
-              className="text-lg font-bold text-background transition-colors group-hover:text-foreground"
-            >
-              Home
+        <div className="flex flex-col items-center">
+          <p className="font-bold text-primary">Social Links</p>
+          <div className="mt-4 flex w-full flex-row items-center justify-center gap-2">
+            <Link href={"/"}>
+              <InstagramLogoIcon className="h-6 w-6" />
             </Link>
-
-            <Link
-              href="#"
-              className="text-lg font-bold text-background transition-colors group-hover:text-foreground"
-            >
-              About
+            <Link href={"/"}>
+              <LinkedInLogoIcon className="h-6 w-6" />
             </Link>
-
-            <Link
-              href="#"
-              className="text-lg font-bold text-background transition-colors hover:text-foreground hover:text-zinc-300 group-hover:text-foreground"
-            >
-              Categories
+            <Link href={"/"}>
+              <GitHubLogoIcon className="h-6 w-6" />
             </Link>
           </div>
+        </div>
 
-          {/* copyrights*/}
-          <div className="group mt-2 flex h-1/3 w-[95%] flex-row items-center justify-center pl-4 text-foreground hover:bg-background2">
-            <h3 className="text-lg font-bold text-background group-hover:text-foreground">
-              &copy; Copyright. All Rights Reserved
-            </h3>
-          </div>
+        <div className="flex flex-col gap-4">
+          <p className="font-bold text-primary">Quick Links</p>
+          <Link href={"/"}>Home</Link>
+          <Link href={"/about"}>About</Link>
+          <Link href={"/"}>Categories</Link>
+        </div>
+
+        <div className="flex flex-col gap-4">
+          <p className="font-bold text-primary">Tech Stack Used</p>
+          <Link href={"https://trpc.io/"}>Trpc</Link>
+          <Link href={"https://nextjs.org/"}>Next</Link>
+          <Link href={"https://tailwindcss.com/"}>Tailwind</Link>
+          <Link href={"https://orm.drizzle.team/"}>Drizzle</Link>
+          <Link href={"https://www.postgresql.org/"}>Postgresql</Link>
         </div>
       </div>
+      <div className="border-t border-secondary p-2">
+        <p className="text-center">
+          <span className="text-primary">©</span> 2025 Blog Nest. All rights
+          reserved
+        </p>
+      </div>
+    </div>
   );
 }

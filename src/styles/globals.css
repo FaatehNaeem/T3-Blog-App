@@ -5,17 +5,15 @@
 
 @layer base {
   :root {
-    --background: 261 100% 97%;
-    --background2: 251 67% 90%;
-    --foreground: 282 80% 14%;
-    --foreground2: 229 50% 77%;
-    --card: 0 0% 100%;
+    --background: 0, 0%, 100%;
+    --foreground: 0, 0%, 0%;
+    --card: 44, 14%, 67%;
+    --primary: 16, 100%, 53%;
+    --secondary: 43, 33%, 88%;
     --card-foreground: 0 0% 3.9%;
     --popover: 0 0% 100%;
     --popover-foreground: 0 0% 3.9%;
-    --primary: 0 0% 9%;
     --primary-foreground: 0 0% 98%;
-    --secondary: 0 0% 96.1%;
     --secondary-foreground: 0 0% 9%;
     --muted: 0 0% 96.1%;
     --muted-foreground: 0 0% 45.1%;
@@ -82,6 +80,12 @@
   }
   body {
     @apply bg-background text-foreground;
+    margin: 0px;
+    padding: 0px;
+    box-sizing: border-box;
+  }
+  html{
+    scroll-behavior: smooth;
   }
 }
 
@@ -91,4 +95,18 @@ input[type=file]::file-selector-button {
   background-color: #380056;
   color: white;
   transition: 1s;
+}
+
+
+[type="search"]::-webkit-search-cancel-button {
+    -webkit-appearance: none;
+    background-color: black;
+    -webkit-mask-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%23777'><path d='M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z'/></svg>");
+    background-size: 20px 20px;
+    height: 20px;
+    width: 20px;
+}
+
+.black-shadow{
+  text-shadow: 0.2px 0.5px 1px black;
 }
