@@ -37,16 +37,17 @@ export function BlogCard() {
       {isloading ? (
         <Loader2Icon className="h-8 w-8 animate-spin text-foreground" />
       ) : (
-        <>
+        <div className="flex flex-row flex-wrap w-full gap-6">
           {blogs?.map((blog, index) => (
+          
             <Card
               key={index}
-              className="h-[400px] w-[350px] cursor-pointer rounded-md bg-secondary text-foreground shadow-foreground"
+              className="basis-1/4 cursor-pointer rounded-md bg-background text-foreground shadow-foreground h-1/3"
               onClick={()=>handleClick(blog.id)}
             >
-              <img src={blog.blogImage} alt="error loading image" />
+              <img src={blog.blogImage} alt="error loading image" className="w-full"/>
 
-              <CardHeader className="h-[calc(350px-150px)]">
+              <CardHeader className="p-6 h-36">
                 <CardTitle className="font-bold text-foreground drop-shadow-sm">
                   {blog.title}
                 </CardTitle>
@@ -72,7 +73,7 @@ export function BlogCard() {
               </CardFooter>
             </Card>
           ))}
-        </>
+        </div>
       )}
     </>
   );
