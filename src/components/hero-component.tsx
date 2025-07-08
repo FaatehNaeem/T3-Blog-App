@@ -33,18 +33,18 @@ export default function HeroComponent() {
 
   return (
     <div className="flex flex-col items-center justify-center gap-4 py-8">
-      <h1 className="text-6xl font-bold">
+      <h1 className="text-6xl font-bold text-center">
         <span className="text-primary">AI</span> POWERED{" "}
         <span className="text-primary">BLOGS</span>
       </h1>
 
-      <h3 className="w-1/2 text-wrap text-center text-lg">
+      <h3 className="w-full px-4 md:px-0 md:w-1/2 text-wrap text-center text-lg">
         Create blogs almost instantenously utilizing AI, get smart suggestions,
         integrate tip tap form for proper styling of content...
       </h3>
 
       <div className="h-[1px] w-2/5 bg-secondary"></div>
-      <div className="flex flex-row gap-4">
+      <div className="flex flex-row flex-wrap gap-4 justify-center">
         {badges.map((item, index) => (
           <Badge
             key={index}

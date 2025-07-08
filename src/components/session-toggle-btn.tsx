@@ -60,7 +60,7 @@ export default function SessionToggleBtn() {
   return (
     <>
       <Button
-        className="bg-foreground font-bold text-background hover:bg-card"
+        className="bg-foreground font-bold text-background hover:bg-card absolute bottom-1 w-4/5 md:bottom-0 md:w-auto md:static"
         onClick={() => router.push("/login")}>
         Get Started
       </Button>
