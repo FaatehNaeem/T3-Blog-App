@@ -59,12 +59,11 @@ export default function SignUpForm() {
 
   return (
     <Form {...form}>
-      <div className="w-full bg-zinc-950 lg:grid lg:min-h-[600px] lg:grid-cols-2 xl:min-h-[559px]">
-        <div className="flex items-center justify-center">
-          <div className="fixed mx-auto grid w-[350px] gap-6 rounded-2xl bg-zinc-800 p-6">
-            <div className="grid gap-2">
+      <div className="w-full bg-background lg:grid h-screen lg:grid-cols-2">
+        <div className="flex items-center justify-center h-screen">
+          <div className="flex flex-col justify-center items-center lg:grid lg:w-[350px] gap-6 lg:rounded-2xl bg-foreground lg:p-6 h-screen lg:h-auto w-screen border-background border-1 shadow-md">
+            <div className="grid gap-2 text-center lg:text-left">
               <h1 className="text-3xl font-bold text-white">Sign Up</h1>
-
               <p className="text-balance text-muted-foreground text-white">
                 Enter your details below to signup !
               </p>
@@ -85,8 +84,7 @@ export default function SignUpForm() {
                           <FormLabel className="text-white">Username</FormLabel>
                           <FormControl>
                             <Input
-                              placeholder="username"
-                              className="bg-zinc-800"
+                              placeholder="Enter your username"
                               {...field}
                             />
                           </FormControl>
@@ -105,8 +103,7 @@ export default function SignUpForm() {
                           <FormLabel className="text-white">Email</FormLabel>
                           <FormControl>
                             <Input
-                              placeholder="email"
-                              className="bg-zinc-800"
+                              placeholder="Enter your email"
                               {...field}
                             />
                           </FormControl>
@@ -125,8 +122,7 @@ export default function SignUpForm() {
                           <FormLabel className="text-white">Password</FormLabel>
                           <FormControl>
                             <Input
-                              placeholder="password"
-                              className="bg-zinc-800"
+                              placeholder="Enter your password"
                               {...field}
                             />
                           </FormControl>
@@ -139,7 +135,7 @@ export default function SignUpForm() {
                   </div>
                   <Button
                     type="submit"
-                    className="mt-4"
+                    className="mt-4 hover:bg-background hover:text-foreground"
                     disabled={user.isPending}
                   >
                     {user.isPending ? "Submitting..." : "Submit"}
@@ -148,7 +144,7 @@ export default function SignUpForm() {
 
                 <div className="mt-4 text-center text-sm text-white">
                   Already have an account?{" "}
-                  <Link href="/login" className="underline">
+                  <Link href="/login" className="underline text-primary">
                     Login
                   </Link>
                 </div>
@@ -157,14 +153,10 @@ export default function SignUpForm() {
           </div>
         </div>
 
-        <div className="hidden bg-muted lg:block">
-          <Image
-            src="social/wp-content/uploads/2015/12/blog-background-2.jpg"
-            alt="Image"
-            width="1920"
-            height="1000"
-            className="h-full w-full object-cover dark:brightness-[0.2] dark:grayscale"
-          />
+        <div className="hidden bg-foreground lg:flex flex-col justify-center items-center">
+        <h1 className="text-7xl text-background">
+              BLOG <span className="font-bold text-primary">NEST</span>
+            </h1>
         </div>
       </div>
     </Form>
