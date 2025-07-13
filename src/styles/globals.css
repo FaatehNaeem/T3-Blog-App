@@ -93,7 +93,7 @@
 input[type=file]::file-selector-button {
   padding: .2em .4em;
   border-radius: .2em;
-  background-color: #380056;
+  background-color: hsl(16, 100%, 53%);
   color: white;
   transition: 1s;
 }

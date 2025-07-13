@@ -95,7 +95,7 @@ export default function BlogPostForm() {
     <Form {...form}>
       <form
         onSubmit={form.handleSubmit(onSubmit)}
-        className="w-2/4 rounded-2xl border border-background bg-gradient-to-b from-foreground to-card-foreground p-6 text-background"
+        className="rounded-2xl p-6 mt-6 text-foreground w-auto md:w-3/4"
       >
         <FormField
           control={form.control}
@@ -103,13 +103,14 @@ export default function BlogPostForm() {
           render={({ field }) => (
             <FormItem>
               <FormLabel>Title</FormLabel>
-              <FormControl className="placeholder:text-white">
+              <FormControl>
                 <Input placeholder="Enter a title" {...field} />
               </FormControl>
               <FormMessage />
             </FormItem>
           )}
         />
+
         <FormField
           control={form.control}
           name="description"
@@ -173,7 +174,7 @@ export default function BlogPostForm() {
         </FormItem>
         <Button
           type="submit"
-          className="mt-4 w-full bg-background text-foreground hover:bg-background hover:opacity-90"
+          className="mt-4 w-full bg-foreground text-background hover:text-foreground hover:opacity-95"
           disabled={submitting}
         >
           {submitting ? "Submitting..." : "Submit"}
