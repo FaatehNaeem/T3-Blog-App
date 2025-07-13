@@ -3,7 +3,6 @@
 import { Button } from "~/components/ui/button";
 import { Input } from "~/components/ui/input";
 import { zodResolver } from "@hookform/resolvers/zod";
-import Image from "next/image";
 import Link from "next/link";
 
 import { useForm } from "react-hook-form";
@@ -57,21 +56,17 @@ export default function LoginForm() {
 
   return (
     <Form {...form}>
-      <div className="w-full bg-zinc-950 lg:grid lg:min-h-[600px] lg:grid-cols-2 xl:min-h-[559px]">
-        <div className="hidden bg-muted lg:block">
-          <Image
-            src="social/wp-content/uploads/2015/12/blog-background-2.jpg"
-            alt="Image"
-            width="1920"
-            height="1000"
-            className="h-full w-full object-cover dark:brightness-[0.2] dark:grayscale"
-          />
+      <div className="w-full bg-background lg:grid min-h-screen lg:grid-cols-2">
+        <div className="hidden bg-foreground lg:flex flex-col justify-center items-center">
+        <h1 className="text-7xl text-background">
+              BLOG <span className="font-bold text-primary">NEST</span>
+            </h1>
         </div>
-        <div className="flex items-center justify-center">
-          <div className="fixed mx-auto grid w-[350px] gap-6 rounded-2xl bg-zinc-800 p-6">
-            <div className="grid gap-2">
-              <h1 className="text-3xl font-bold text-white">Login</h1>
-              <p className="text-balance text-muted-foreground text-white">
+        <div className="flex items-center justify-center h-screen">
+          <div className="flex flex-col justify-center items-center lg:grid lg:w-[350px] gap-6 lg:rounded-2xl bg-foreground lg:p-6 h-screen lg:h-auto w-screen border-background border-1 shadow-md">
+            <div className="grid gap-2 text-center lg:text-left">
+              <h1 className="text-3xl font-bold text-background">Login</h1>
+              <p className="text-balance text-secondary">
                 Enter your details below to login !
               </p>
             </div>
@@ -87,12 +82,12 @@ export default function LoginForm() {
                       control={form.control}
                       name="email"
                       render={({ field }) => (
-                        <FormItem className="mt-4 text-white">
-                          <FormLabel className="text-white">Email</FormLabel>
+                        <FormItem className="mt-4">
+                          <FormLabel className="text-background">Email</FormLabel>
                           <FormControl>
                             <Input
-                              placeholder="email"
-                              className="bg-zinc-800"
+                              placeholder="Enter your email"
+                              className="text-background"
                               type="email"
                               {...field}
                             />
@@ -112,8 +107,8 @@ export default function LoginForm() {
                           <FormLabel className="text-white">Password</FormLabel>
                           <FormControl>
                             <Input
-                              placeholder="password"
-                              className="bg-zinc-800"
+                              placeholder="Enter your password"
+                              className="text-background"
                               type="password"
                               {...field}
                             />
@@ -125,14 +120,14 @@ export default function LoginForm() {
                       )}
                     />
                   </div>
-                  <Button type="submit" className="mt-4">
+                  <Button type="submit" className="mt-4 bg-background text-foreground hover:bg-primary hover:text-background">
                     {!isSubmitted ? "Login" : "Logging In"}
                   </Button>
                 </div>
 
                 <div className="mt-4 text-center text-sm text-white">
                   Don&apos;t have an account?{" "}
-                  <Link href="/signup" className="underline">
+                  <Link href="/signup" className="underline text-primary">
                     Sign up
                   </Link>
                 </div>

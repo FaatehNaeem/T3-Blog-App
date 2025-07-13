@@ -8,8 +8,8 @@ import Link from "next/link";
 export default function Footer() {
   return (
     <div className="flex w-screen flex-col border-t border-secondary bg-background text-foreground">
-      <div className="flex w-full flex-row justify-around p-8">
-        <div className="flex w-4/12 flex-col items-start px-6">
+      <div className="flex w-full flex-col md:flex-row justify-around p-8 gap-8 md:gap-0">
+        <div className="flex w-full md:w-4/12 flex-col items-start px-0 md:px-6">
           <div className="flex flex-row items-center justify-start">
             <p className="text-4xl text-foreground">
               Blog <span className="font-bold text-primary">Nest</span>
@@ -26,9 +26,9 @@ export default function Footer() {
           </div>
         </div>
 
-        <div className="flex flex-col items-center">
+        <div className="flex flex-col items-start md:items-center">
           <p className="font-bold text-primary">Social Links</p>
-          <div className="mt-4 flex w-full flex-row items-center justify-center gap-2">
+          <div className="mt-4 flex w-full flex-row items-start justify-start md:items-center md:justify-center gap-2">
             <Link href={"/"}>
               <InstagramLogoIcon className="h-6 w-6" />
             </Link>
@@ -57,7 +57,7 @@ export default function Footer() {
           <Link href={"https://www.postgresql.org/"}>Postgresql</Link>
         </div>
       </div>
-      <div className="border-t border-secondary p-2">
+      <div className="border-t border-secondary p-4 md:p-2">
         <p className="text-center">
           <span className="text-primary">©</span> 2025 Blog Nest. All rights
           reserved

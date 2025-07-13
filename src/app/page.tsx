@@ -2,7 +2,6 @@ import Blogs from "~/components/blogs-container";
 import Footer from "~/components/common/footer";
 import Header from "~/components/common/header";
 import HeroComponent from "~/components/hero-component";
-import SearchBar from "~/components/search-bar";
 
 export default function Home() {
   return (
