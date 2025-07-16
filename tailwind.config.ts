@@ -8,8 +8,12 @@ export default {
   theme: {
   	extend: {
   		fontFamily: {
-			jacquardaBastarda9Charted:["var(--font-jacquardaBastarda9Charted)"],
-			notoSerif:["var(--font-notoSerif)"]
+  			jacquardaBastarda9Charted: [
+  				'var(--font-jacquardaBastarda9Charted)'
+  			],
+  			notoSerif: [
+  				'var(--font-notoSerif)'
+  			]
   		},
   		borderRadius: {
   			lg: 'var(--radius)',
