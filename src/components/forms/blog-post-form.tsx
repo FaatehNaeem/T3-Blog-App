@@ -41,7 +41,7 @@ export default function BlogPostForm() {
   const [selectedFile, setSelectedFile] = useState<File | null>(null); // State to hold the File object
   const utils = api.useUtils();
 
-  const TitleRef = useRef(null);
+  const TitleRef = useRef('');
 
   const { mutate } = api.blog.createBlog.useMutation({
     onSuccess: async () => {
@@ -126,15 +126,12 @@ export default function BlogPostForm() {
     TitleRef.current.value = prompt;
   };
 
-  console.log(data);
-
   return (
     <Form {...form}>
       <form
         onSubmit={form.handleSubmit(onSubmit)}
         className="mt-6 w-auto rounded-2xl p-6 text-foreground md:w-3/4"
       >
-        <div className="relative">
           <FormField
             control={form.control}
             name="title"
@@ -142,6 +139,7 @@ export default function BlogPostForm() {
               <FormItem>
                 <FormLabel>Title</FormLabel>
                 <FormControl>
+                <div className="relative">
                   <Input
                     placeholder="Enter a title"
                     {...field}
@@ -151,14 +149,9 @@ export default function BlogPostForm() {
                     }}
                     ref={TitleRef}
                   />
-                </FormControl>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
           <TooltipProvider>
           <Tooltip>
-            <TooltipTrigger asChild className="w-9 h-9 absolute bottom-0 right-0 border-none bg-black hover:bg-foreground group" onClick={handleClick}>
+            <TooltipTrigger asChild className="w-9 h-9 absolute bottom-0 right-0 border-none bg-black hover:bg-foreground group" onClick={handleClick} disabled={!TitleRef.current.value}>
               <Button variant="outline">
                 <IconBulbFilled
                   onClick={handleClick}
@@ -171,7 +164,14 @@ export default function BlogPostForm() {
             </TooltipContent>
           </Tooltip>
           </TooltipProvider>
+
         </div>
+      </FormControl>
+      <FormMessage />
+    </FormItem>
+  )}
+/>
+
         <div className="mt-1 flex flex-row flex-wrap items-center justify-center gap-2">
           {data?.map((suggestions, index) => (
             <Badge
