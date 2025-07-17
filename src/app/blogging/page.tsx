@@ -11,7 +11,7 @@ function Page() {
      headers: {
     "Content-Type": "application/json"
 },
-    body:JSON.stringify({prompt:"who are you"}),
+    body:JSON.stringify({prompt:"Suggest 5 better alternative blog titles based on this partial input: 'How AI works. Ps: just give 5 alternative blog titles... Nothing else... without any brackets... just 5 blog titles list as 1) blog title . 2) blog title.... and so on"}),
 })
     const output = await response.json()
     // console.log(output.data)

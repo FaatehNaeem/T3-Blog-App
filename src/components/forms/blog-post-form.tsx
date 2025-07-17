@@ -1,5 +1,5 @@
 "use client";
-import React, { useState } from "react";
+import React, { useState, useRef } from "react";
 import { BlogPostSchema } from "~/utils/schemas";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
@@ -25,11 +25,16 @@ import {
 } from "~/components/ui/form";
 import { Input } from "~/components/ui/input";
 import { api } from "~/trpc/react";
+import { Badge } from "../ui/badge";
 
 export default function BlogPostForm() {
+  const [data, setData] = useState<[string]>();
+  const [userPrompt, setUserPrompt] = useState<string>();
   const [submitting, setSubmitting] = useState(false);
   const [selectedFile, setSelectedFile] = useState<File | null>(null); // State to hold the File object
   const utils = api.useUtils();
+
+  const TitleRef = useRef(null);
 
   const { mutate } = api.blog.createBlog.useMutation({
     onSuccess: async () => {
@@ -55,7 +60,10 @@ export default function BlogPostForm() {
 
     const formData = new FormData();
     formData.append("file", selectedFile); // Append the File object to FormData
-    formData.append("upload_preset", process.env.NEXT_PUBLIC_UPLOAD_PRESET ?? "");
+    formData.append(
+      "upload_preset",
+      process.env.NEXT_PUBLIC_UPLOAD_PRESET ?? "",
+    );
 
     setSubmitting(true);
     try {
@@ -74,7 +82,7 @@ export default function BlogPostForm() {
       }
 
       const data = await res.json();
-      
+
       const imageUrl = data.secure_url; // Get the secure URL from Cloudinary
 
       // Submit blog post data with the image URL
@@ -91,26 +99,70 @@ export default function BlogPostForm() {
     }
   };
 
+  const handleclick = async () => {
+    const response = await fetch("/api/gemini-ai-model", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        prompt: `Suggest 5 better alternative blog titles based on this partial input: ${userPrompt}. Only return the 5 titles as a single line, separated by commas with no extra spaces before or after the commas or quotes. Do not include numbers, bullets, brackets, or line breaks. Titles must be trimmed — no leading or trailing whitespace inside the quotes. Only output in this exact format: Title1,Title2,Title3,Title4,Title5`,
+      }),
+    });
+    const output = await response.json();
+    const out = output.data;
+    const promptArray = out.split(",");
+    setData(promptArray);
+  };
+
+  const handleBadgeClick = (prompt: string) => {
+    TitleRef.current.value = prompt
+  };
+
+
   return (
     <Form {...form}>
       <form
         onSubmit={form.handleSubmit(onSubmit)}
-        className="rounded-2xl p-6 mt-6 text-foreground w-auto md:w-3/4"
+        className="mt-6 w-auto rounded-2xl p-6 text-foreground md:w-3/4"
       >
-        <FormField
-          control={form.control}
-          name="title"
-          render={({ field }) => (
-            <FormItem>
-              <FormLabel>Title</FormLabel>
-              <FormControl>
-                <Input placeholder="Enter a title" {...field} />
-              </FormControl>
-              <FormMessage />
-            </FormItem>
-          )}
-        />
-
+        <div className="grid grid-cols-2">
+          <FormField
+            control={form.control}
+            name="title"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>Title</FormLabel>
+                <FormControl>
+                  <Input
+                    placeholder="Enter a title"
+                    {...field}
+                    onChange={(e) => {
+                      field.onChange(e); // update react-hook-form
+                      setUserPrompt(e.target.value); // update your own state
+                    }}
+                    ref={TitleRef}
+                  />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+          <button onClick={handleclick} className="bg-primary">
+            AI SUGGESTIONS
+          </button>
+        </div>
+        <div className="mt-1 flex flex-row flex-wrap items-center justify-center gap-2">
+          {data?.map((suggestions, index) => (
+            <Badge
+              className="bg-zinc-900 px-2 py-2 text-white hover:bg-primary"
+              key={index}
+              onClick={() => handleBadgeClick(suggestions)}
+            >
+              {suggestions}
+            </Badge>
+          ))}
+        </div>
         <FormField
           control={form.control}
           name="description"
