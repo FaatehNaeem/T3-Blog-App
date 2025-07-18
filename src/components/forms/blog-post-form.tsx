@@ -42,6 +42,7 @@ export default function BlogPostForm() {
   const utils = api.useUtils();
 
   const TitleRef = useRef('');
+  const DescRef = useRef('');
 
   const { mutate } = api.blog.createBlog.useMutation({
     onSuccess: async () => {
@@ -126,6 +127,23 @@ export default function BlogPostForm() {
     TitleRef.current.value = prompt;
   };
 
+
+    const handleDescriptionClick = async () => {
+    const response = await fetch("/api/gemini-ai-model", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        prompt: `Write a description for this title: ${TitleRef.current.value}.`,
+      }),
+    });
+    const output = await response.json();
+    const out = output.data;
+    DescRef.current.value = out
+  };
+  
+
   return (
     <Form {...form}>
       <form
@@ -183,6 +201,7 @@ export default function BlogPostForm() {
             </Badge>
           ))}
         </div>
+
         <FormField
           control={form.control}
           name="description"
@@ -190,14 +209,35 @@ export default function BlogPostForm() {
             <FormItem className="mt-2">
               <FormLabel>Description</FormLabel>
               <FormControl>
+               <div className="relative">
+
                 <Textarea
-                  placeholder="Tell us a little bit about yourself"
+                  placeholder="Write blog description"
                   className="resize-none placeholder:text-white"
+                  ref={DescRef}
                   {...field}
                 />
-              </FormControl>
-              <FormMessage />
-            </FormItem>
+
+          <TooltipProvider>
+          <Tooltip>
+            <TooltipTrigger asChild className="w-9 h-9 absolute top-0 right-0 border-none bg-black hover:bg-foreground group" onClick={handleClick} disabled={!TitleRef.current.value}>
+              <Button variant="outline">
+                <IconBulbFilled
+                  onClick={handleDescriptionClick}
+                  className="h-9 w-9 cursor-pointer text-background group-hover:text-primary"
+                />
+              </Button>
+            </TooltipTrigger>
+            <TooltipContent>
+              <p>Generate AI description</p>
+            </TooltipContent>
+          </Tooltip>
+          </TooltipProvider>
+
+        </div>
+      </FormControl>
+      <FormMessage />
+    </FormItem>
           )}
         />
         <FormField
