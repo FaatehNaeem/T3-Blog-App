@@ -108,7 +108,7 @@ export default function BlogPostForm() {
   };
 
   const handleClick = async () => {
-    const response = await fetch("/api/gemini-ai-model", {
+    const response = await fetch("/api/gemini-ai-model/create-title", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -129,13 +129,13 @@ export default function BlogPostForm() {
 
 
     const handleDescriptionClick = async () => {
-    const response = await fetch("/api/gemini-ai-model", {
+    const response = await fetch("/api/gemini-ai-model/create-desc", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
       },
       body: JSON.stringify({
-        prompt: `Write a description for this title: ${TitleRef.current.value}.`,
+        prompt: `Write a description for this title: ${TitleRef.current.value}.`
       }),
     });
     const output = await response.json();
@@ -220,7 +220,7 @@ export default function BlogPostForm() {
 
           <TooltipProvider>
           <Tooltip>
-            <TooltipTrigger asChild className="w-9 h-9 absolute top-0 right-0 border-none bg-black hover:bg-foreground group" onClick={handleClick} disabled={!TitleRef.current.value}>
+            <TooltipTrigger asChild className="w-9 h-9 absolute top-0 right-0 border-none bg-black hover:bg-foreground group" onClick={handleDescriptionClick} disabled={!TitleRef.current.value}>
               <Button variant="outline">
                 <IconBulbFilled
                   onClick={handleDescriptionClick}

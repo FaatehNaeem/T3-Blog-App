@@ -10,9 +10,6 @@ export async function POST(request: NextRequest) {
     contents: data.prompt,
   });
 
-//   console.log(data.prompt)
-  console.log(response.text)
-
-
   return NextResponse.json({ success: true, data: response.text });
 }
+
