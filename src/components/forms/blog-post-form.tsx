@@ -41,8 +41,8 @@ export default function BlogPostForm() {
   const [selectedFile, setSelectedFile] = useState<File | null>(null); // State to hold the File object
   const utils = api.useUtils();
 
-  const TitleRef = useRef('');
-  const DescRef = useRef('');
+  const TitleRef = useRef<HTMLInputElement>(null);
+  const DescRef = useRef<HTMLTextAreaElement>(null);
 
   const { mutate } = api.blog.createBlog.useMutation({
     onSuccess: async () => {
@@ -136,7 +136,7 @@ export default function BlogPostForm() {
         "Content-Type": "application/json",
       },
       body: JSON.stringify({
-        prompt: `Write a description for this title: ${TitleRef.current.value}. just the description dont give any options.... choose the best option yourself... and generate the description.... dont give any thing less and anything more.`
+        prompt: `Write a description for this title: ${TitleRef.current?.value}. just the description dont give any options.... choose the best option yourself... and generate the description.... dont give any thing less and anything more.`
       }),
     });
     const output = await response.json();
@@ -170,7 +170,7 @@ export default function BlogPostForm() {
                   />
           <TooltipProvider>
           <Tooltip>
-            <TooltipTrigger asChild className="w-9 h-9 absolute bottom-0 right-0 border-none bg-black hover:bg-foreground group" onClick={handleClick} disabled={!TitleRef.current.value}>
+            <TooltipTrigger asChild className="w-9 h-9 absolute bottom-0 right-0 border-none bg-black hover:bg-foreground group" onClick={handleClick} disabled={!TitleRef.current?.value}>
               <Button variant="outline">
                 <IconBulbFilled
                   onClick={handleClick}
@@ -221,7 +221,7 @@ export default function BlogPostForm() {
 
           <TooltipProvider>
           <Tooltip>
-            <TooltipTrigger asChild className="w-9 h-9 absolute top-0 right-0 border-none bg-black hover:bg-foreground group" onClick={handleDescriptionClick} disabled={!DescRef.current.value}>
+            <TooltipTrigger asChild className="w-9 h-9 absolute top-0 right-0 border-none bg-black hover:bg-foreground group" onClick={handleDescriptionClick} disabled={!DescRef.current?.value}>
               <Button variant="outline">
                 <IconBulbFilled
                   onClick={handleDescriptionClick}

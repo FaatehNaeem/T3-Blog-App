@@ -3,7 +3,7 @@ import Link from "next/link";
 export default function Page() {
 
   const features = [
-    {feature:"g POST",redirectUrl:"create-blog"},
+    {feature:"CREATE POST",redirectUrl:"create-blog"},
     {feature:"SAVED BLOGS",redirectUrl:"saved-blogs"},
     {feature:"YOUR BLOGS",redirectUrl:"your-blogs"},
   ]
