@@ -124,8 +124,9 @@ export default function BlogPostForm() {
   };
 
   const handleBadgeClick = (prompt: string) => {
-    TitleRef.current.value = prompt;
+  form.setValue("title", prompt);
   };
+
 
 
     const handleDescriptionClick = async () => {
@@ -135,12 +136,12 @@ export default function BlogPostForm() {
         "Content-Type": "application/json",
       },
       body: JSON.stringify({
-        prompt: `Write a description for this title: ${TitleRef.current.value}.`
+        prompt: `Write a description for this title: ${TitleRef.current.value}. just the description dont give any options.... choose the best option yourself... and generate the description.... dont give any thing less and anything more.`
       }),
     });
     const output = await response.json();
     const out = output.data;
-    DescRef.current.value = out
+    form.setValue("description",out)
   };
   
 
@@ -161,11 +162,11 @@ export default function BlogPostForm() {
                   <Input
                     placeholder="Enter a title"
                     {...field}
+                    ref={TitleRef}
                     onChange={(e) => {
                       field.onChange(e); // update react-hook-form
                       setUserPrompt(e.target.value); // update your own state
                     }}
-                    ref={TitleRef}
                   />
           <TooltipProvider>
           <Tooltip>
@@ -214,13 +215,13 @@ export default function BlogPostForm() {
                 <Textarea
                   placeholder="Write blog description"
                   className="resize-none placeholder:text-white"
-                  ref={DescRef}
                   {...field}
+                  ref={DescRef}
                 />
 
           <TooltipProvider>
           <Tooltip>
-            <TooltipTrigger asChild className="w-9 h-9 absolute top-0 right-0 border-none bg-black hover:bg-foreground group" onClick={handleDescriptionClick} disabled={!TitleRef.current.value}>
+            <TooltipTrigger asChild className="w-9 h-9 absolute top-0 right-0 border-none bg-black hover:bg-foreground group" onClick={handleDescriptionClick} disabled={!DescRef.current.value}>
               <Button variant="outline">
                 <IconBulbFilled
                   onClick={handleDescriptionClick}
