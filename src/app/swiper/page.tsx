@@ -26,14 +26,18 @@ export function CarouselPlugin() {
   )
 
   return (
- <Carousel className="w-full max-w-2xl" opts={{loop:true}} plugins={[plugin.current]}
+ <Carousel className="w-full max-w-2xl" 
+ opts={{loop:true}} 
+ plugins={[plugin.current]}
+ onMouseEnter={plugin.current.stop}
+ onMouseLeave={plugin.current.play}
 >
       <CarouselContent className="-ml-1">
         {imageArr.map((data, index) => (
           <CarouselItem key={index} className="pl-1 md:basis-1/2 lg:basis-1/3">
             <div>
               <Card className="bg-black border-2 border-secondary">
-                <CardContent className="flex items-center justify-center aspect-square p-1">
+                <CardContent className="flex items-center justify-center aspect-video p-1">
                   <img src={data.imgSrc} alt="" className="aspect-square rounded-2xl"/>
                   {/* <span className="text-2xl font-semibold">{index + 1}</span> */}
                 </CardContent>
@@ -42,8 +46,8 @@ export function CarouselPlugin() {
           </CarouselItem>
         ))}
       </CarouselContent>
-      <CarouselPrevious />
-      <CarouselNext />
+      {/* <CarouselPrevious />
+      <CarouselNext /> */}
     </Carousel>
   )
 }
