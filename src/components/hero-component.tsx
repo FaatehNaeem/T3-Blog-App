@@ -5,6 +5,7 @@ import { Badge } from "~/components/ui/badge";
 import { HeroCards } from "./hero-cards";
 import { ArrowDown } from "lucide-react";
 import Link from "next/link";
+import { CarouselPlugin } from "~/app/swiper/page";
 
 
 export default function HeroComponent() {
@@ -54,7 +55,8 @@ export default function HeroComponent() {
           </Badge>
         ))}
       </div>
-      <HeroCards />
+      {/* <HeroCards /> */}
+      <CarouselPlugin/>
       <Link href={'#scrollId'}>
         <ArrowDown className="animate-bounce w-8 h-8 bg-foreground text-background py-1 px-1 rounded-full shadow-sm shadow-primary"/>
       </Link>

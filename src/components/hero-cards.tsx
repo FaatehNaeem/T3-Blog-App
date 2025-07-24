@@ -10,7 +10,7 @@ export function HeroCards() {
 
   return (
     <div className="w-full py-2">
-      <Carousel items={cards} />
+      <Carousel items={cards}/>
     </div>
   );
 }
