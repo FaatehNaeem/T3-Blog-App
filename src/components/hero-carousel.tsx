@@ -8,8 +8,6 @@ import {
   Carousel,
   CarouselContent,
   CarouselItem,
-  CarouselNext,
-  CarouselPrevious,
 } from "~/components/ui/carousel"
 
 const imageArr = [
@@ -20,7 +18,7 @@ const imageArr = [
   {imgSrc:"https://images.panda.org/assets/images/pages/welcome/orangutan_1600x1000_279157.jpg"},
 ]
 
-export function CarouselPlugin() {
+export function HeroCarousel() {
   const plugin = React.useRef(
     Autoplay({ delay: 2000, stopOnInteraction: true })
   )
@@ -37,17 +35,14 @@ export function CarouselPlugin() {
           <CarouselItem key={index} className="pl-1 md:basis-1/2 lg:basis-1/3">
             <div>
               <Card className="bg-black border-2 border-secondary">
-                <CardContent className="flex items-center justify-center aspect-video p-1">
-                  <img src={data.imgSrc} alt="" className="aspect-square rounded-2xl"/>
-                  {/* <span className="text-2xl font-semibold">{index + 1}</span> */}
+                <CardContent className="flex items-center justify-center aspect-auto p-1">
+                  <img src={data.imgSrc} alt="" className="aspect-auto rounded-2xl shadow-lg shadow-primary w-full h-auto sm:h-96 md:h-48"/>
                 </CardContent>
               </Card>
             </div>
           </CarouselItem>
         ))}
       </CarouselContent>
-      {/* <CarouselPrevious />
-      <CarouselNext /> */}
     </Carousel>
   )
 }
