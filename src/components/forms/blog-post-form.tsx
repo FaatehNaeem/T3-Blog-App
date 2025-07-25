@@ -147,7 +147,7 @@ export default function BlogPostForm() {
         "Content-Type": "application/json",
       },
       body: JSON.stringify({
-        prompt: `Write a description for this title: ${TitleRef.current?.value}. just the description dont give any options.... choose the best option yourself... and generate the description.... dont give any thing less and anything more.`,
+        prompt: `Write a description for this title: ${TitleRef.current?.value}. just the description dont give any options.... choose the best option yourself... and generate the description.... dont give any thing less and anything more. you can write a minimum of a 100 characters and a maximum of 1000 characters,,, but every time try to pick a random range. sometimes do, 200, 300 and so on...`,
       }),
     });
     const output = await response.json();
@@ -253,7 +253,8 @@ export default function BlogPostForm() {
                         asChild
                         className="group absolute right-0 top-0 h-9 w-9 border-none bg-black hover:bg-foreground"
                         onClick={handleDescriptionClick}
-                        disabled={!DescRef.current?.value}
+                        disabled={!TitleRef.current?.value}
+
                       >
                         <Button variant="outline">
                           <IconBulbFilled
