@@ -34,6 +34,7 @@ import {
   TooltipTrigger,
 } from "~/components/ui/tooltip";
 import { Loader2 } from "lucide-react";
+import { JsonArray, JsonObject } from "next-auth/adapters";
 
 
 export default function BlogPostForm() {
@@ -47,7 +48,7 @@ export default function BlogPostForm() {
 
   const TitleRef = useRef<HTMLInputElement>(null);
   const DescRef = useRef<HTMLTextAreaElement>(null);
-  const BadgeRef = useRef(null);
+  const BadgeRef = useRef<HTMLDivElement>(null);
 
   const { mutate } = api.blog.createBlog.useMutation({
     onSuccess: async () => {
@@ -94,16 +95,16 @@ export default function BlogPostForm() {
         return;
       }
 
-      const data = await res.json();
+      const data = await res.json() as JsonObject;
 
-      const imageUrl = data.secure_url; // Get the secure URL from Cloudinary
+      const imageUrl:string = data.secure_url as string; // Get the secure URL from Cloudinary
 
       // Submit blog post data with the image URL
       mutate({
         title: values.title,
         category: values.category,
         description: values.description,
-        blogImage: imageUrl as string, // Use the Cloudinary URL
+        blogImage: imageUrl, // Use the Cloudinary URL
       });
     } catch (error) {
       console.error(error);
@@ -137,6 +138,7 @@ export default function BlogPostForm() {
 
   const handleBadgeClick = (prompt: string) => {
     form.setValue("title", prompt);
+    if(BadgeRef.current)
     BadgeRef.current.style.display = 'none';
   };
 

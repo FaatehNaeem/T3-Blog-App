@@ -21,15 +21,16 @@ const imageArr = [
 
 export function HeroCarousel() {
   const plugin = React.useRef(
-    Autoplay({ delay: 2000, stopOnInteraction: true })
+    Autoplay({ delay: 2000, stopOnInteraction: true})
   )
 
   return (
- <Carousel className="w-full max-w-2xl" 
- opts={{loop:true}} 
+ <Carousel 
  plugins={[plugin.current]}
+ className="w-full max-w-2xl" 
+ opts={{loop:true}} 
  onMouseEnter={plugin.current.stop}
- onMouseLeave={plugin.current.play}
+ onMouseLeave={()=>plugin.current.play}
 >
       <CarouselContent className="-ml-1">
         {imageArr.map((data, index) => (
