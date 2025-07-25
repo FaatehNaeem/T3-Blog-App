@@ -12,8 +12,8 @@ export default function Page() {
       <div className="mt-4 flex flex-1 flex-col gap-4 p-4 pt-0">
         <div className="grid auto-rows-min gap-4 md:grid-cols-3">
               {features.map((feature,index)=>(
-          <Link key={index} href={`/Dashboard/${feature.redirectUrl}`}>
-            <div className="flex aspect-video items-center justify-center rounded-xl bg-gradient-to-b from-card to-foreground text-white hover:bg-gradient-to-t">
+          <Link key={index} href={`/dashboard/${feature.redirectUrl}`}>
+            <div className="flex aspect-video items-center justify-center rounded-xl bg-gradient-to-r from-foreground to-black/65 text-white hover:bg-gradient-to-t">
                 <h1 className="text-3xl font-bold">{feature.feature}</h1>
             </div>
           </Link> 
