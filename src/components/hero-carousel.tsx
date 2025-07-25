@@ -9,6 +9,7 @@ import {
   CarouselContent,
   CarouselItem,
 } from "~/components/ui/carousel"
+import { Badge } from "./ui/badge"
 
 const imageArr = [
   {imgSrc:"https://images.unsplash.com/photo-1526779259212-939e64788e3c?fm=jpg&q=60&w=3000&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8N3x8ZnJlZSUyMGltYWdlc3xlbnwwfHwwfHx8MA%3D%3D"},
@@ -35,8 +36,9 @@ export function HeroCarousel() {
           <CarouselItem key={index} className="pl-1 md:basis-1/2 lg:basis-1/3">
             <div>
               <Card className="bg-black border-2 border-secondary">
-                <CardContent className="flex items-center justify-center aspect-auto p-1">
-                  <img src={data.imgSrc} alt="" className="aspect-auto rounded-2xl shadow-lg shadow-primary w-full h-auto sm:h-96 md:h-48"/>
+            <CardContent className="flex flex-col items-center justify-center aspect-auto p-1">
+                  <img src={data.imgSrc} alt="" className="aspect-auto rounded-2xl shadow-lg shadow-primary w-full h-auto sm:h-96 md:h-48 opacity-50"/>
+                  <Badge className="bg-black text-white absolute bottom-1 right-1">Hello</Badge>
                 </CardContent>
               </Card>
             </div>
