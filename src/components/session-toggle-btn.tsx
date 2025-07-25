@@ -34,7 +34,7 @@ export default function SessionToggleBtn() {
                 textSizeRatio={2}
                 title="user"
                 round
-                color="#7A1CAC"
+                color="black"
                 className="font-bold"
               />
 
@@ -46,7 +46,7 @@ export default function SessionToggleBtn() {
               Welcome <p className="text-foreground font-black">{session.user.username}!</p>
             </DropdownMenuLabel>
             <DropdownMenuSeparator />
-            <DropdownMenuItem><Link href={"/Dashboard"}>Dashboard</Link></DropdownMenuItem>
+            <DropdownMenuItem><Link href={"/dashboard"}>Dashboard</Link></DropdownMenuItem>
             <DropdownMenuItem>Settings</DropdownMenuItem>
             <DropdownMenuSeparator />
             <DropdownMenuItem onClick={() => signOut()}>
