@@ -12,11 +12,11 @@ import {
 import { Badge } from "./ui/badge"
 
 const imageArr = [
-  {imgSrc:"https://images.unsplash.com/photo-1526779259212-939e64788e3c?fm=jpg&q=60&w=3000&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8N3x8ZnJlZSUyMGltYWdlc3xlbnwwfHwwfHx8MA%3D%3D"},
-  {imgSrc:"https://media.istockphoto.com/id/838816304/photo/mauricie-national-park.jpg?s=612x612&w=0&k=20&c=A7EG0vrX7bIIxWdrP3VBwTnph0IaKL_Oxkbn9DChXKY="},
-  {imgSrc:"https://media.istockphoto.com/id/508819120/photo/bridge-to-the-sea.jpg?s=170667a&w=0&k=20&c=dZmqNzNMYy14bmhQTmPIFICdDgcsGjZmvwo1-9PJZG8="},
-  {imgSrc:"https://static.vecteezy.com/system/resources/thumbnails/036/324/708/small/ai-generated-picture-of-a-tiger-walking-in-the-forest-photo.jpg"},
-  {imgSrc:"https://images.panda.org/assets/images/pages/welcome/orangutan_1600x1000_279157.jpg"},
+  {imgSrc:"https://images.pexels.com/photos/3861969/pexels-photo-3861969.jpeg?_gl=1*qpzo17*_ga*MTY4ODE2NjQ4Ni4xNzUzNDY2NTUz*_ga_8JE65Q40S6*czE3NTM0NjY1NTMkbzEkZzEkdDE3NTM0NjY1NjIkajUxJGwwJGgw"},
+  {imgSrc:"https://images.pexels.com/photos/965345/pexels-photo-965345.jpeg?_gl=1*1t381eg*_ga*MTY4ODE2NjQ4Ni4xNzUzNDY2NTUz*_ga_8JE65Q40S6*czE3NTM0NjY1NTMkbzEkZzEkdDE3NTM0NjY2MTkkajU2JGwwJGgw"},
+  {imgSrc:"https://images.pexels.com/photos/8386365/pexels-photo-8386365.jpeg?_gl=1*3k8q02*_ga*MTY4ODE2NjQ4Ni4xNzUzNDY2NTUz*_ga_8JE65Q40S6*czE3NTM0NjY1NTMkbzEkZzEkdDE3NTM0NjY2NDkkajI2JGwwJGgw"},
+  {imgSrc:"https://images.pexels.com/photos/1933900/pexels-photo-1933900.jpeg?_gl=1*ha62ls*_ga*MTY4ODE2NjQ4Ni4xNzUzNDY2NTUz*_ga_8JE65Q40S6*czE3NTM0NjY1NTMkbzEkZzEkdDE3NTM0NjY2NzYkajU5JGwwJGgw"},
+  {imgSrc:"https://images.pexels.com/photos/8721318/pexels-photo-8721318.jpeg?_gl=1*gha0ma*_ga*MTY4ODE2NjQ4Ni4xNzUzNDY2NTUz*_ga_8JE65Q40S6*czE3NTM0NjY1NTMkbzEkZzEkdDE3NTM0NjY3MDAkajM1JGwwJGgw"},
 ]
 
 export function HeroCarousel() {
@@ -37,7 +37,7 @@ export function HeroCarousel() {
             <div>
               <Card className="bg-black border-2 border-secondary">
             <CardContent className="flex flex-col items-center justify-center aspect-auto p-1">
-                  <img src={data.imgSrc} alt="" className="aspect-auto rounded-2xl shadow-lg shadow-primary w-full h-auto sm:h-96 md:h-48 opacity-50"/>
+                  <img src={data.imgSrc} alt="" className="aspect-auto rounded-2xl shadow-lg shadow-primary w-full h-auto sm:h-96 md:h-48 opacity-80 cursor-pointer hover:brightness-125"/>
                   <Badge className="bg-black text-white absolute bottom-1 right-1">Hello</Badge>
                 </CardContent>
               </Card>
