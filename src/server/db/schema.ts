@@ -26,14 +26,12 @@ export const users = pgTable("users", {
 export const categories = pgTable("categories",{
   categoryId:varchar("categoryId",{length:255}).primaryKey().$default(()=>crypto.randomUUID()),
   categoryName:varchar("categoryName",{length:255}).notNull().unique(),
-  blogs:varchar("blog")
 })
 
 export const blogs = pgTable("blogs", {
   id: varchar("id", { length: 255 }).primaryKey().$default(() => crypto.randomUUID()),
   title: text("title").notNull(),
   description: text("description").notNull(),
-  category: text("category").notNull(),
   blogImage: varchar("blogImage", { length: 255 }).notNull(),
   userId: varchar("userId", { length: 255 })
     .notNull()

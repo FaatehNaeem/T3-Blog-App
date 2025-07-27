@@ -1,5 +1,5 @@
 "use client";
-import React, { useState, useRef } from "react";
+import React, { useState, useRef, useEffect } from "react";
 import { BlogPostSchema } from "~/utils/schemas";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
@@ -26,6 +26,7 @@ import {
 } from "~/components/ui/tooltip";
 import { Loader2 } from "lucide-react";
 import { type JsonObject } from "next-auth/adapters";
+import { categories } from "~/server/db/schema";
 
 
 export default function BlogPostForm() {
@@ -40,6 +41,12 @@ export default function BlogPostForm() {
   const TitleRef = useRef<HTMLInputElement>(null);
   const DescRef = useRef<HTMLTextAreaElement>(null);
   const BadgeRef = useRef<HTMLDivElement>(null);
+
+  const mutateCategory = api.category.createCategory.useMutation({
+    onSuccess: async () => {
+      await utils.category.invalidate();
+    },
+  });
 
   const { mutate } = api.blog.createBlog.useMutation({
     onSuccess: async () => {
@@ -91,12 +98,17 @@ export default function BlogPostForm() {
       const imageUrl:string = data.secure_url as string; // Get the secure URL from Cloudinary
 
       // Submit blog post data with the image URL
+        mutateCategory.mutate({
+          categoryName:values.category
+        })  
+
       mutate({
         title: values.title,
-        category: values.category,
         description: values.description,
         blogImage: imageUrl, // Use the Cloudinary URL
+        
       });
+
     } catch (error) {
       console.error(error);
     } finally {
