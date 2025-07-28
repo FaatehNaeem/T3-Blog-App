@@ -1,6 +1,6 @@
 import { z } from "zod";
 import { createTRPCRouter, protectedProcedure, publicProcedure } from "~/server/api/trpc";
-import { blogs, categories } from "~/server/db/schema";
+import { blogs } from "~/server/db/schema";
 import { BlogPostSchema } from "~/utils/schemas";
 
 export const blogRouter = createTRPCRouter({
@@ -13,10 +13,9 @@ export const blogRouter = createTRPCRouter({
         .values({
           title: input.title,
           description: input.description,
-          category: input.category,
           blogImage: input.blogImage,
           userId: ctx.session?.user?.id,
-          categoryId:input.categoryId
+          categoryId:input.categoryId,
         })
         .onConflictDoNothing();
   }),

@@ -1,5 +1,5 @@
 "use client";
-import React, { useState, useRef, useEffect } from "react";
+import React, { useState, useRef } from "react";
 import { BlogPostSchema } from "~/utils/schemas";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
@@ -59,8 +59,8 @@ export default function BlogPostForm() {
     defaultValues: {
       title: "",
       description: "",
-      category: "",
       blogImage: "", // This will store the Cloudinary URL after upload
+      category: "",
     },
   });
 
@@ -97,15 +97,23 @@ export default function BlogPostForm() {
 
       const imageUrl:string = data.secure_url as string; // Get the secure URL from Cloudinary
 
+      let categoryId:string;
       // Submit blog post data with the image URL
-        mutateCategory.mutate({
-          categoryName:values.category
-        })  
+      try {
+        const category = await mutateCategory.mutate({
+            categoryName:values.category
+          })  
+          categoryId = category.categoryId as string
+        
+      } catch (error) {
+        console.error(error)
+      }
 
-      mutate({
+      await mutate({
         title: values.title,
         description: values.description,
         blogImage: imageUrl, // Use the Cloudinary URL
+        categoryId: categoryId
         
       });
 
