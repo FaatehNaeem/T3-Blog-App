@@ -1,25 +1,30 @@
-import Link from "next/link";
+import { AppSidebar } from "~/components/app-sidebar"
+import { ChartAreaInteractive } from "~/components/chart-area-interactive"
+import { DataTable } from "~/components/data-table"
+import { SectionCards } from "~/components/section-cards"
+import { SiteHeader } from "~/components/site-header"
+import { SidebarInset, SidebarProvider } from "~/components/ui/sidebar"
+
+import data from "./data.json"
 
 export default function Page() {
-
-  const features = [
-    {feature:"CREATE POST",redirectUrl:"create-blog"},
-    {feature:"SAVED BLOGS",redirectUrl:"saved-blogs"},
-    {feature:"YOUR BLOGS",redirectUrl:"your-blogs"},
-  ]
   return (
-    <section className="p-8">
-      <div className="mt-4 flex flex-1 flex-col gap-4 p-4 pt-0">
-        <div className="grid auto-rows-min gap-4 md:grid-cols-3">
-              {features.map((feature,index)=>(
-          <Link key={index} href={`/dashboard/${feature.redirectUrl}`}>
-            <div className="flex aspect-video items-center justify-center rounded-xl bg-gradient-to-r from-foreground to-black/65 text-white hover:bg-gradient-to-t">
-                <h1 className="text-3xl font-bold">{feature.feature}</h1>
+    <SidebarProvider>
+      <AppSidebar variant="inset" />
+      <SidebarInset>
+        <SiteHeader />
+        <div className="flex flex-1 flex-col">
+          <div className="@container/main flex flex-1 flex-col gap-2">
+            <div className="flex flex-col gap-4 py-4 md:gap-6 md:py-6">
+              <SectionCards />
+              <div className="px-4 lg:px-6">
+                <ChartAreaInteractive />
+              </div>
+              <DataTable data={data} />
             </div>
-          </Link> 
-              ))}
+          </div>
         </div>
-      </div>
-    </section>
-  );
+      </SidebarInset>
+    </SidebarProvider>
+  )
 }
