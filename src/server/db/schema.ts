@@ -55,17 +55,21 @@ export const categoryRelations = relations(categories,({many})=>({
 }))
 
 
-export const blogsRelations = relations(blogs, ({ one }) => ({
-  creator: one(users, {
-    fields: [blogs.userId],       // Foreign key in `blogs`
-    references: [users.id],       // Primary key in `users`
-  })
-}));
+  export const blogsRelations = relations(blogs, ({ one }) => ({
+    creator: one(users, {
+      fields: [blogs.userId],       // Foreign key in `blogs`
+      references: [users.id],       // Primary key in `users`
+    }),
+      category:one(categories,{
+      fields:[blogs.categoryId],
+      references:[categories.categoryId]
+    })
+  }));
 
-export const blogs2Relations = relations(blogs, ({ one }) => ({
+// export const blogs2Relations = relations(blogs, ({ one }) => ({
 
-  category:one(categories,{
-    fields:[blogs.categoryId],
-    references:[categories.categoryId]
-  })
-}));
+//   category:one(categories,{
+//     fields:[blogs.categoryId],
+//     references:[categories.categoryId]
+//   })
+// }));

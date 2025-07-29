@@ -26,7 +26,6 @@ import {
 } from "~/components/ui/tooltip";
 import { Loader2 } from "lucide-react";
 import { type JsonObject } from "next-auth/adapters";
-import { categories } from "~/server/db/schema";
 
 
 export default function BlogPostForm() {
@@ -48,7 +47,7 @@ export default function BlogPostForm() {
     },
   });
 
-  const { mutate } = api.blog.createBlog.useMutation({
+  const { mutateAsync } = api.blog.createBlog.useMutation({
     onSuccess: async () => {
       await utils.blog.invalidate();
     },
@@ -97,23 +96,24 @@ export default function BlogPostForm() {
 
       const imageUrl:string = data.secure_url as string; // Get the secure URL from Cloudinary
 
-      let categoryId:string;
+      let categoryId:string | undefined;
       // Submit blog post data with the image URL
       try {
-        const category = await mutateCategory.mutate({
-            categoryName:values.category
+        const category = await mutateCategory.mutateAsync({
+            categoryName:values.category??""
           })  
-          categoryId = category.categoryId as string
+          categoryId = category
         
       } catch (error) {
         console.error(error)
       }
 
-      await mutate({
+      await mutateAsync({
         title: values.title,
         description: values.description,
         blogImage: imageUrl, // Use the Cloudinary URL
-        categoryId: categoryId
+        categoryId: categoryId??"",
+
         
       });
 

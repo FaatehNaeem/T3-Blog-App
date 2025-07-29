@@ -17,14 +17,17 @@ export const categoryRouter = createTRPCRouter({
         .from(categories)
         .where(eq(categories.categoryName, input.categoryName));
 
-      if (existingCategory) {
-        return existingCategory;
+      if (existingCategory.length>0) {
+        return existingCategory[0]?.categoryId??"";
       }
 
       const newCategory = await ctx.db.insert(categories).values({
         categoryName: input.categoryName,
-      });
+      })
+      .returning();
+      
+      console.log(newCategory)
 
-      return newCategory;
+      return newCategory[0]?.categoryId??"";
     }),
 });
