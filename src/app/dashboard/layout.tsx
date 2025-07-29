@@ -16,9 +16,8 @@ export default function RootLayout({
   children,
 }: Readonly<{ children: React.ReactNode }>) {
   return (
-        <SessionWrapper>
-          <Header />
-          <TRPCReactProvider>{children}</TRPCReactProvider>
-        </SessionWrapper>
+    <SessionWrapper>
+      <TRPCReactProvider>{children}</TRPCReactProvider>
+    </SessionWrapper>
   );
 }
