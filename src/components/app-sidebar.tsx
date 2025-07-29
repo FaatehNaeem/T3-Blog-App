@@ -2,7 +2,6 @@
 
 import * as React from "react"
 import {
-  ArrowUpCircleIcon,
   BarChartIcon,
   CameraIcon,
   ClipboardListIcon,
@@ -46,17 +45,17 @@ const data = {
       icon: LayoutDashboardIcon,
     },
     {
-      title: "Lifecycle",
+      title: "Impressions",
       url: "#",
       icon: ListIcon,
     },
     {
-      title: "Analytics",
+      title: "Saves",
       url: "#",
       icon: BarChartIcon,
     },
     {
-      title: "Projects",
+      title: "Shares",
       url: "#",
       icon: FolderIcon,
     },
@@ -133,17 +132,17 @@ const data = {
   ],
   documents: [
     {
-      name: "Data Library",
+      name: "Create Blogs",
       url: "#",
       icon: DatabaseIcon,
     },
     {
-      name: "Reports",
+      name: "Saved Blogs",
       url: "#",
       icon: ClipboardListIcon,
     },
     {
-      name: "Word Assistant",
+      name: "View Your Blogs",
       url: "#",
       icon: FileIcon,
     },
@@ -161,8 +160,7 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
               className="data-[slot=sidebar-menu-button]:!p-1.5"
             >
               <a href="#">
-                <ArrowUpCircleIcon className="h-5 w-5" />
-                <span className="text-base font-semibold">Acme Inc.</span>
+                <span className="text-lg font-bold">Blog Nest</span>
               </a>
             </SidebarMenuButton>
           </SidebarMenuItem>
