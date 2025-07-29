@@ -13,9 +13,9 @@ export const blogRouter = createTRPCRouter({
         .values({
           title: input.title,
           description: input.description,
-          category: input.category,
           blogImage: input.blogImage,
           userId: ctx.session?.user?.id,
+          categoryId:input.categoryId,
         })
         .onConflictDoNothing();
   }),

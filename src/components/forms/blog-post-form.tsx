@@ -4,15 +4,6 @@ import { BlogPostSchema } from "~/utils/schemas";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { type z } from "zod";
-import {
-  Select,
-  SelectContent,
-  SelectGroup,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-  SelectLabel,
-} from "~/components/ui/select";
 import { Textarea } from "~/components/ui/textarea";
 import { Button } from "~/components/ui/button";
 import {
@@ -34,7 +25,7 @@ import {
   TooltipTrigger,
 } from "~/components/ui/tooltip";
 import { Loader2 } from "lucide-react";
-import { JsonArray, JsonObject } from "next-auth/adapters";
+import { type JsonObject } from "next-auth/adapters";
 
 
 export default function BlogPostForm() {
@@ -50,7 +41,13 @@ export default function BlogPostForm() {
   const DescRef = useRef<HTMLTextAreaElement>(null);
   const BadgeRef = useRef<HTMLDivElement>(null);
 
-  const { mutate } = api.blog.createBlog.useMutation({
+  const mutateCategory = api.category.createCategory.useMutation({
+    onSuccess: async () => {
+      await utils.category.invalidate();
+    },
+  });
+
+  const { mutateAsync } = api.blog.createBlog.useMutation({
     onSuccess: async () => {
       await utils.blog.invalidate();
     },
@@ -61,8 +58,8 @@ export default function BlogPostForm() {
     defaultValues: {
       title: "",
       description: "",
-      category: "",
       blogImage: "", // This will store the Cloudinary URL after upload
+      category: "",
     },
   });
 
@@ -99,13 +96,27 @@ export default function BlogPostForm() {
 
       const imageUrl:string = data.secure_url as string; // Get the secure URL from Cloudinary
 
+      let categoryId:string | undefined;
       // Submit blog post data with the image URL
-      mutate({
+      try {
+        const category = await mutateCategory.mutateAsync({
+            categoryName:values.category??""
+          })  
+          categoryId = category
+        
+      } catch (error) {
+        console.error(error)
+      }
+
+      await mutateAsync({
         title: values.title,
-        category: values.category,
         description: values.description,
         blogImage: imageUrl, // Use the Cloudinary URL
+        categoryId: categoryId??"",
+
+        
       });
+
     } catch (error) {
       console.error(error);
     } finally {
@@ -157,6 +168,23 @@ export default function BlogPostForm() {
     form.setValue("description", out);
   };
 
+
+   const handleCategoryClick = async () => {
+    const response = await fetch("/api/gemini-ai-model/create-category", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        prompt: `Write a category for this title: ${TitleRef.current?.value}. This is the description ${DescRef.current?.value}.... Just One word category looking at the title and the description.... or it can be three words as well like - Generative Artificial Intelligence... But the category must be exactly categorizing the title and the description exactly......Dont give options - Here are a few options that closely match your criteria:
+        just give the category name... and nothing else...`,
+      }),
+    });
+    const output = await response.json();
+    const out = output.data;
+    form.setValue("category", out);
+  };
+
   return (
     <Form {...form}>
       <form
@@ -192,7 +220,6 @@ export default function BlogPostForm() {
                           >
                             <Button variant="outline">
                               <IconBulbFilled
-                                onClick={handleClick}
                                 className="h-9 w-9 cursor-pointer text-background group-hover:text-primary"
                               />
                             </Button>
@@ -260,7 +287,6 @@ export default function BlogPostForm() {
                       >
                         <Button variant="outline">
                           <IconBulbFilled
-                            onClick={handleDescriptionClick}
                             className="h-9 w-9 cursor-pointer text-background group-hover:text-primary"
                           />
                         </Button>
@@ -276,29 +302,43 @@ export default function BlogPostForm() {
             </FormItem>
           )}
         />
+
         <FormField
           control={form.control}
           name="category"
           render={({ field }) => (
-            <FormItem className="mt-2">
+            <FormItem>
               <FormLabel>Category</FormLabel>
-              <Select onValueChange={field.onChange} defaultValue={field.value}>
-                <FormControl>
-                  <SelectTrigger className="w-full">
-                    <SelectValue placeholder="Select a category" />
-                  </SelectTrigger>
-                </FormControl>
-                <SelectContent>
-                  <SelectGroup>
-                    <SelectLabel>Categories</SelectLabel>
-                    <SelectItem value="Fashion">Fashion</SelectItem>
-                    <SelectItem value="Technology">Technology</SelectItem>
-                    <SelectItem value="Health">Health</SelectItem>
-                    <SelectItem value="Lifestyle">Lifestyle</SelectItem>
-                    <SelectItem value="Coding">Coding</SelectItem>
-                  </SelectGroup>
-                </SelectContent>
-              </Select>
+              <FormControl>
+                <div className="relative">
+                  <Input
+                    placeholder="Enter a category"
+                    {...field}
+                  />
+
+
+                  <TooltipProvider>
+                    <Tooltip>
+                      <TooltipTrigger
+                        asChild
+                        className="group absolute right-0 top-0 h-9 w-9 border-none bg-black hover:bg-foreground"
+                        onClick={handleCategoryClick}
+                        disabled={!TitleRef.current?.value}
+
+                      >
+                        <Button variant="outline">
+                          <IconBulbFilled
+                            className="h-9 w-9 cursor-pointer text-background group-hover:text-primary"
+                          />
+                        </Button>
+                      </TooltipTrigger>
+                      <TooltipContent>
+                        <p>Generate AI Category</p>
+                      </TooltipContent>
+                    </Tooltip>
+                  </TooltipProvider>
+                </div>
+              </FormControl>
               <FormMessage />
             </FormItem>
           )}

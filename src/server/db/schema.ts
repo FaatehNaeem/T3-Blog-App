@@ -12,9 +12,6 @@ import {
  */
 export const roleEnum = pgEnum("roles", ["user", "admin"]);
 
-/**
- * Schema for the Users table
- */
 export const users = pgTable("users", {
   id: varchar("id", { length: 255 }).primaryKey().$default(() => crypto.randomUUID()),
   username: varchar("username", { length: 255 }).notNull().unique(),
@@ -26,18 +23,23 @@ export const users = pgTable("users", {
   role: roleEnum("roles").notNull().$default(() => "user"),
 });
 
-/**
- * Schema for the Blogs table
- */
+export const categories = pgTable("categories",{
+  categoryId:varchar("categoryId",{length:255}).primaryKey().$default(()=>crypto.randomUUID()),
+  categoryName:varchar("categoryName",{length:255}).notNull().unique(),
+})
+
 export const blogs = pgTable("blogs", {
   id: varchar("id", { length: 255 }).primaryKey().$default(() => crypto.randomUUID()),
   title: text("title").notNull(),
   description: text("description").notNull(),
-  category: text("category").notNull(),
   blogImage: varchar("blogImage", { length: 255 }).notNull(),
   userId: varchar("userId", { length: 255 })
     .notNull()
     .references(() => users.id, { onDelete: "cascade" }),
+    
+  categoryId:varchar("categoryId",{length:255})
+  .notNull()  
+  .references(()=>categories.categoryId)
 });
 
 /**
@@ -48,10 +50,26 @@ export const usersRelations = relations(users, ({ many }) => ({
   blogs: many(blogs),
 }));
 
-export const blogsRelations = relations(blogs, ({ one }) => ({
-  creator: one(users, {
-    fields: [blogs.userId],       // Foreign key in `blogs`
-    references: [users.id],       // Primary key in `users`
-  }),
-}));
+export const categoryRelations = relations(categories,({many})=>({
+  blogs:many(blogs)
+}))
 
+
+  export const blogsRelations = relations(blogs, ({ one }) => ({
+    creator: one(users, {
+      fields: [blogs.userId],       // Foreign key in `blogs`
+      references: [users.id],       // Primary key in `users`
+    }),
+      category:one(categories,{
+      fields:[blogs.categoryId],
+      references:[categories.categoryId]
+    })
+  }));
+
+// export const blogs2Relations = relations(blogs, ({ one }) => ({
+
+//   category:one(categories,{
+//     fields:[blogs.categoryId],
+//     references:[categories.categoryId]
+//   })
+// }));
