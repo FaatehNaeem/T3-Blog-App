@@ -27,7 +27,6 @@ import {
 import { Loader2 } from "lucide-react";
 import { type JsonObject } from "next-auth/adapters";
 
-
 export default function BlogPostForm() {
   const [data, setData] = useState<[string]>();
   const [userPrompt, setUserPrompt] = useState<string>();
@@ -41,13 +40,14 @@ export default function BlogPostForm() {
   const DescRef = useRef<HTMLTextAreaElement>(null);
   const BadgeRef = useRef<HTMLDivElement>(null);
 
-  const mutateCategory = api.category.createCategory.useMutation({
-    onSuccess: async () => {
-      await utils.category.invalidate();
-    },
-  });
+  const { mutateAsync: createCategory } =
+    api.category.createCategory.useMutation({
+      onSuccess: async () => {
+        await utils.category.invalidate();
+      },
+    });
 
-  const { mutateAsync } = api.blog.createBlog.useMutation({
+  const { mutateAsync: createBlog } = api.blog.createBlog.useMutation({
     onSuccess: async () => {
       await utils.blog.invalidate();
     },
@@ -60,10 +60,17 @@ export default function BlogPostForm() {
       description: "",
       blogImage: "", // This will store the Cloudinary URL after upload
       category: "",
+      categoryId:""
     },
   });
 
   const onSubmit = async (values: z.infer<typeof BlogPostSchema>) => {
+    console.log("submitting form");
+    form.handleSubmit((values) => {
+  console.log("VALIDATED VALUES", values);
+}, (errors) => {
+  console.log("VALIDATION ERRORS", errors);
+});
     if (!selectedFile) {
       console.error("No file selected.");
       return;
@@ -92,31 +99,27 @@ export default function BlogPostForm() {
         return;
       }
 
-      const data = await res.json() as JsonObject;
+      const data = (await res.json()) as JsonObject;
 
-      const imageUrl:string = data.secure_url as string; // Get the secure URL from Cloudinary
+      const imageUrl: string = data.secure_url as string; // Get the secure URL from Cloudinary
 
-      let categoryId:string | undefined;
+      let categoryId: string | undefined;
       // Submit blog post data with the image URL
       try {
-        const category = await mutateCategory.mutateAsync({
-            categoryName:values.category??""
-          })  
-          categoryId = category
-        
+        const category = await createCategory({
+          categoryName: values.category ?? "",
+        });
+        categoryId = category;
       } catch (error) {
-        console.error(error)
+        console.error(error);
       }
 
-      await mutateAsync({
+      await createBlog({
         title: values.title,
         description: values.description,
         blogImage: imageUrl, // Use the Cloudinary URL
-        categoryId: categoryId??"",
-
-        
+        categoryId: categoryId ?? "",
       });
-
     } catch (error) {
       console.error(error);
     } finally {
@@ -147,12 +150,6 @@ export default function BlogPostForm() {
     }
   };
 
-  const handleBadgeClick = (prompt: string) => {
-    form.setValue("title", prompt);
-    if(BadgeRef.current)
-    BadgeRef.current.style.display = 'none';
-  };
-
   const handleDescriptionClick = async () => {
     const response = await fetch("/api/gemini-ai-model/create-desc", {
       method: "POST",
@@ -168,8 +165,7 @@ export default function BlogPostForm() {
     form.setValue("description", out);
   };
 
-
-   const handleCategoryClick = async () => {
+  const handleCategoryClick = async () => {
     const response = await fetch("/api/gemini-ai-model/create-category", {
       method: "POST",
       headers: {
@@ -183,6 +179,11 @@ export default function BlogPostForm() {
     const output = await response.json();
     const out = output.data;
     form.setValue("category", out);
+  };
+
+  const handleBadgeClick = (prompt: string) => {
+    form.setValue("title", prompt);
+    if (BadgeRef.current) BadgeRef.current.style.display = "none";
   };
 
   return (
@@ -209,28 +210,24 @@ export default function BlogPostForm() {
                     }}
                   />
 
-           
-                      <TooltipProvider>
-                        <Tooltip>
-                          <TooltipTrigger
-                            asChild
-                            className="group absolute bottom-0 right-0 h-9 w-9 border-none bg-black hover:bg-foreground"
-                            onClick={handleClick}
-                            disabled={!TitleRef.current?.value}
-                          >
-                            <Button variant="outline">
-                              <IconBulbFilled
-                                className="h-9 w-9 cursor-pointer text-background group-hover:text-primary"
-                              />
-                            </Button>
-                 
-                          </TooltipTrigger>
-                                     
-                          <TooltipContent>
-                            <p>Generate AI suggestions</p>
-                          </TooltipContent>
-                        </Tooltip>
-                      </TooltipProvider>
+                  <TooltipProvider>
+                    <Tooltip>
+                      <TooltipTrigger
+                        asChild
+                        className="group absolute bottom-0 right-0 h-9 w-9 border-none bg-black hover:bg-foreground"
+                        onClick={handleClick}
+                        disabled={!TitleRef.current?.value}
+                      >
+                        <Button variant="outline">
+                          <IconBulbFilled className="h-9 w-9 cursor-pointer text-background group-hover:text-primary" />
+                        </Button>
+                      </TooltipTrigger>
+
+                      <TooltipContent>
+                        <p>Generate AI suggestions</p>
+                      </TooltipContent>
+                    </Tooltip>
+                  </TooltipProvider>
                 </div>
               </FormControl>
               <FormMessage />
@@ -238,28 +235,26 @@ export default function BlogPostForm() {
           )}
         />
 
-                     {isLoading ?
-                     (  
-                      <div className="w-full flex justify-center mt-1">
-                       <Loader2 className="animate-spin w-6 h-6 text-center"/>
-                       </div>
-                     ):(
-
-        <div className="mt-1 flex flex-row flex-wrap items-center justify-center gap-2" ref={BadgeRef}>
-
-
-          {data?.map((suggestions, index) => (
-            <Badge
-              className="cursor-pointer bg-zinc-900 px-2 py-2 text-white hover:bg-primary"
-              key={index}
-              onClick={() => handleBadgeClick(suggestions)}
-            >
-              {suggestions}
-            </Badge>
-          ))}
-        </div>
-                     )
-                            }
+        {isLoading ? (
+          <div className="mt-1 flex w-full justify-center">
+            <Loader2 className="h-6 w-6 animate-spin text-center" />
+          </div>
+        ) : (
+          <div
+            className="mt-1 flex flex-row flex-wrap items-center justify-center gap-2"
+            ref={BadgeRef}
+          >
+            {data?.map((suggestions, index) => (
+              <Badge
+                className="cursor-pointer bg-zinc-900 px-2 py-2 text-white hover:bg-primary"
+                key={index}
+                onClick={() => handleBadgeClick(suggestions)}
+              >
+                {suggestions}
+              </Badge>
+            ))}
+          </div>
+        )}
 
         <FormField
           control={form.control}
@@ -283,12 +278,9 @@ export default function BlogPostForm() {
                         className="group absolute right-0 top-0 h-9 w-9 border-none bg-black hover:bg-foreground"
                         onClick={handleDescriptionClick}
                         disabled={!TitleRef.current?.value}
-
                       >
                         <Button variant="outline">
-                          <IconBulbFilled
-                            className="h-9 w-9 cursor-pointer text-background group-hover:text-primary"
-                          />
+                          <IconBulbFilled className="h-9 w-9 cursor-pointer text-background group-hover:text-primary" />
                         </Button>
                       </TooltipTrigger>
                       <TooltipContent>
@@ -311,11 +303,7 @@ export default function BlogPostForm() {
               <FormLabel>Category</FormLabel>
               <FormControl>
                 <div className="relative">
-                  <Input
-                    placeholder="Enter a category"
-                    {...field}
-                  />
-
+                  <Input placeholder="Enter a category" {...field} />
 
                   <TooltipProvider>
                     <Tooltip>
@@ -324,12 +312,9 @@ export default function BlogPostForm() {
                         className="group absolute right-0 top-0 h-9 w-9 border-none bg-black hover:bg-foreground"
                         onClick={handleCategoryClick}
                         disabled={!TitleRef.current?.value}
-
                       >
                         <Button variant="outline">
-                          <IconBulbFilled
-                            className="h-9 w-9 cursor-pointer text-background group-hover:text-primary"
-                          />
+                          <IconBulbFilled className="h-9 w-9 cursor-pointer text-background group-hover:text-primary" />
                         </Button>
                       </TooltipTrigger>
                       <TooltipContent>

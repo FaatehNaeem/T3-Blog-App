@@ -65,11 +65,3 @@ export const categoryRelations = relations(categories,({many})=>({
       references:[categories.categoryId]
     })
   }));
-
-// export const blogs2Relations = relations(blogs, ({ one }) => ({
-
-//   category:one(categories,{
-//     fields:[blogs.categoryId],
-//     references:[categories.categoryId]
-//   })
-// }));
