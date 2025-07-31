@@ -1,7 +1,8 @@
 import z from "zod";
-import { createTRPCRouter, protectedProcedure } from "../trpc";
+import { createTRPCRouter, protectedProcedure, publicProcedure } from "../trpc";
 import { categories } from "~/server/db/schema";
 import { eq } from "drizzle-orm";
+import { db } from "~/server/db";
 
 export const categoryRouter = createTRPCRouter({
   createCategory: protectedProcedure
@@ -30,4 +31,28 @@ export const categoryRouter = createTRPCRouter({
 
       return newCategory[0]?.categoryId??"";
     }),
+    getCategories: publicProcedure
+    .query(async()=>{
+     const categories = db.query.categories.findMany()
+     return categories;
+    }),
+
+    getCatgoryByName:publicProcedure
+    .input(z.object({
+      categoryName: z.string()
+    }))
+    .query(async({input})=>{
+    return await db.query.categories.findMany({
+        where:(categories,{eq})=>(eq(categories.categoryName,input.categoryName)),
+        with:{
+          blogs:{
+            columns:{
+            blogImage:true,
+            title:true,
+            description:true
+            }
+          }
+        }
+      })
+    })
 });
