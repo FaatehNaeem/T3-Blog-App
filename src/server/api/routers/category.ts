@@ -47,6 +47,7 @@ export const categoryRouter = createTRPCRouter({
         with:{
           blogs:{
             columns:{
+            id:true,
             blogImage:true,
             title:true,
             description:true
