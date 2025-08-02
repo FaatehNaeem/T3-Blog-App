@@ -37,23 +37,31 @@ export const categoryRouter = createTRPCRouter({
      return categories;
     }),
 
-    getCatgoryByName:publicProcedure
-    .input(z.object({
-      categoryName: z.string()
-    }))
-    .query(async({input})=>{
-    return await db.query.categories.findMany({
-        where:(categories,{eq})=>(eq(categories.categoryName,input.categoryName)),
-        with:{
-          blogs:{
-            columns:{
-            id:true,
-            blogImage:true,
-            title:true,
-            description:true
-            }
-          }
-        }
-      })
-    })
+getBlogsByCategoryInfinite: publicProcedure
+  .input(z.object({
+    categoryName: z.string(),
+    limit: z.number().default(10),
+    cursor: z.string().nullish(), // Use blog ID as cursor
+  }))
+  .query(async ({ input, ctx }) => {
+    const blogs = await ctx.db.blog.findMany({
+      where: (blog, { eq, and }) => and(
+        eq(blog.categoryName, input.categoryName)
+      ),
+      orderBy: (blog, { desc }) => [desc(blog.createdAt)],
+      take: input.limit + 1,
+    });
+
+    let nextCursor: string | undefined = undefined;
+    if (blogs.length > input.limit) {
+      const next = blogs.pop();
+      nextCursor = next?.id;
+    }
+
+    return {
+      blogs,
+      nextCursor,
+    };
+  });
+
 });
