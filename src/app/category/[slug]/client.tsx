@@ -1,4 +1,3 @@
-// app/category/[slug]/Client.tsx
 'use client';
 
 import InfiniteScroll from 'react-infinite-scroll-component';
@@ -8,6 +7,7 @@ import {
 } from '~/components/ui/card';
 import { Avatar, AvatarFallback, AvatarImage } from '~/components/ui/avatar';
 import { api } from '~/trpc/react';
+import { useInfiniteQuery } from '@tanstack/react-query';
 
 type Props = {
   categoryName: string;
@@ -18,31 +18,50 @@ export default function BlogClient({ categoryName }: Props) {
     data,
     fetchNextPage,
     hasNextPage,
-    isLoading,
-  } = api.blog.getBlogsByCategoryInfinite.useInfiniteQuery(
-    { categoryName, limit: 8 },
-    {
-      getNextPageParam: (lastPage) => lastPage.nextCursor,
-    }
-  );
+    isFetching,
+  } = useInfiniteQuery({
+    queryKey: ['blogs-by-category', categoryName],
+    initialPageParam:10,
+    queryFn: async ({ pageParam }) => {
+      return await api.category.getBlogsByCategoryInfinite.query({
+        categoryName,
+        cursor: pageParam,
+        limit: 10,
+      });
+    },
+getNextPageParam: (lastPage) => {
+  if (!lastPage.nextCursor) return undefined;
+  return lastPage.nextCursor; // now this should be createdAt of last blog
+},
+  });
 
-  const blogs = data?.pages.flatMap(page => page.blogs) ?? [];
+  const allBlogs = data?.pages.flatMap((page) => page.blogs) ?? [];
+
+  console.log(allBlogs)
 
   return (
     <div className="p-6">
       <p className="text-center text-4xl font-black">
-        {categoryName.toUpperCase()}
+        {categoryName}
       </p>
 
+      {allBlogs.length == 0 && !isFetching && (
+        <p className="text-center text-black mt-4">No blogs found in this category.</p>
+      )}
+
       <InfiniteScroll
-        dataLength={blogs.length}
+        dataLength={allBlogs.length}
         next={fetchNextPage}
         hasMore={!!hasNextPage}
-        loader={<h4 className="text-center text-white mt-4">Loading...</h4>}
-        endMessage={<p className="text-center text-white">Yay! You have seen it all</p>}
+        loader={<h4 className="text-center text-black mt-4">Loading...</h4>}
+        endMessage={
+          <p className="text-center text-black mt-4">
+            Yay! You have seen it all.
+          </p>
+        }
       >
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 p-6">
-          {blogs.map((blog) => (
+          {allBlogs.map((blog) => (
             <Link href={`/blog/${blog.id}`} key={blog.id}>
               <Card className="cursor-pointer rounded-md bg-background text-foreground shadow-card">
                 <img

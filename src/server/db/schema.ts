@@ -26,6 +26,7 @@ export const users = pgTable("users", {
 export const categories = pgTable("categories",{
   categoryId:varchar("categoryId",{length:255}).primaryKey().$default(()=>crypto.randomUUID()),
   categoryName:varchar("categoryName",{length:255}).notNull().unique(),
+  createdAt: timestamp("createdAt").notNull().defaultNow(),
 })
 
 export const blogs = pgTable("blogs", {
@@ -33,6 +34,7 @@ export const blogs = pgTable("blogs", {
   title: text("title").notNull(),
   description: text("description").notNull(),
   blogImage: varchar("blogImage", { length: 255 }).notNull(),
+  createdAt: timestamp("createdAt").notNull().defaultNow(),
   userId: varchar("userId", { length: 255 })
     .notNull()
     .references(() => users.id, { onDelete: "cascade" }),
