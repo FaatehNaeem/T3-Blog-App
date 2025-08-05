@@ -7,37 +7,65 @@ import {
 } from '~/components/ui/card';
 import { Avatar, AvatarFallback, AvatarImage } from '~/components/ui/avatar';
 import { api } from '~/trpc/react';
-import { useInfiniteQuery } from '@tanstack/react-query';
 
 type Props = {
   categoryName: string;
 };
 
 export default function BlogClient({ categoryName }: Props) {
+  console.log('🔍 Frontend categoryName:', categoryName);
+  
   const {
     data,
     fetchNextPage,
     hasNextPage,
     isFetching,
-  } = useInfiniteQuery({
-    queryKey: ['blogs-by-category', categoryName],
-    initialPageParam:10,
-    queryFn: async ({ pageParam }) => {
-      return await api.category.getBlogsByCategoryInfinite.query({
-        categoryName,
-        cursor: pageParam,
-        limit: 10,
-      });
+    isLoading,
+    error,
+  } = api.category.getBlogsByCategoryInfinite.useInfiniteQuery(
+    {
+      categoryName,
+      limit: 10,
     },
-getNextPageParam: (lastPage) => {
-  if (!lastPage.nextCursor) return undefined;
-  return lastPage.nextCursor; // now this should be createdAt of last blog
-},
-  });
+    {
+      getNextPageParam: (lastPage) => lastPage?.nextCursor,
+    }
+  );
 
-  const allBlogs = data?.pages.flatMap((page) => page.blogs) ?? [];
+  // Safely extract blogs from pages
+  const allBlogs = data?.pages?.flatMap((page) => page?.blogs ?? []) ?? [];
 
-  console.log(allBlogs)
+  console.log('All blogs:', allBlogs);
+  console.log('Has next page:', hasNextPage);
+  console.log('Is fetching:', isFetching);
+  console.log('Error:', error);
+
+  if (isLoading) {
+    return (
+      <div className="p-6">
+        <p className="text-center text-4xl font-black">{categoryName}</p>
+        <h4 className="text-center text-black mt-4">Loading...</h4>
+      </div>
+    );
+  }
+
+  if (error) {
+    return (
+      <div className="p-6">
+        <p className="text-center text-4xl font-black">{categoryName}</p>
+        <p className="text-center text-red-500 mt-4">Error: {error.message}</p>
+      </div>
+    );
+  }
+
+  if (!allBlogs || allBlogs.length === 0) {
+    return (
+      <div className="p-6">
+        <p className="text-center text-4xl font-black">{categoryName}</p>
+        <p className="text-center text-black mt-4">No blogs found in this category.</p>
+      </div>
+    );
+  }
 
   return (
     <div className="p-6">
@@ -45,20 +73,14 @@ getNextPageParam: (lastPage) => {
         {categoryName}
       </p>
 
-      {allBlogs.length == 0 && !isFetching && (
-        <p className="text-center text-black mt-4">No blogs found in this category.</p>
-      )}
-
       <InfiniteScroll
         dataLength={allBlogs.length}
-        next={fetchNextPage}
-        hasMore={!!hasNextPage}
-        loader={<h4 className="text-center text-black mt-4">Loading...</h4>}
-        endMessage={
-          <p className="text-center text-black mt-4">
-            Yay! You have seen it all.
-          </p>
-        }
+        next={() => {
+          console.log('📜 Fetching next page...');
+          fetchNextPage().catch(console.error);
+        }}
+        hasMore={!!hasNextPage && !isFetching}
+        loader={<h4 className="text-center text-black">Loading more...</h4>}
       >
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 p-6">
           {allBlogs.map((blog) => (
@@ -86,7 +108,7 @@ getNextPageParam: (lastPage) => {
               </Card>
             </Link>
           ))}
-        </div>
+         </div>
       </InfiniteScroll>
     </div>
   );
