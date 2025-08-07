@@ -44,8 +44,7 @@ export function BlogCard() {
             <Card
               key={index}
               className="cursor-pointer rounded-md bg-background text-foreground shadow-card"
-              onClick={()=>handleClick(blog.id)}
-            >
+              onClick={()=>handleClick(blog.id)}>
               <img src={blog.blogImage} alt="error loading image" className="w-full rounded-sm"/>
 
               <CardHeader className="p-6 h-36">
