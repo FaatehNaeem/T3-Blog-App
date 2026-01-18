@@ -102,17 +102,17 @@ export default function Navbar() {
                     <NavigationMenuTrigger>
                       {item.navLinkName}
                     </NavigationMenuTrigger>
+                        {categories?.map((component) => (
                     <NavigationMenuContent>
                       <ul className="grid gap-2 md:grid-cols-3 w-max">
-                        {categories?.map((component) => (
                           <ListItem
                             key={component.categoryId}
                             title={component.categoryName}
                             href={`http://localhost:3000/category/${component.categoryName}`}
                           />
-                        ))}
                       </ul>
                     </NavigationMenuContent>
+                        ))}
                   </NavigationMenuItem>
                 )}
               </NavigationMenuList>

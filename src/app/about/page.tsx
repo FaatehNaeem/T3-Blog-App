@@ -1,99 +1,102 @@
 import React from "react";
-import Navbar from "~/components/navbar";
-import Image from "next/image";
+import Header from "~/components/common/header";
 import Footer from "~/components/common/footer";
+import Image from "next/image";
+import { Card, CardContent, CardHeader, CardTitle } from "~/components/ui/card";
+import { Badge } from "~/components/ui/badge";
 
-function page() {
+export default function AboutPage() {
+  const features = [
+    {
+      title: "Secure Authentication",
+      description: "Sign in seamlessly using Google Authentication or Credentials Login. Enjoy a personalized experience with separate user dashboards.",
+      icon: "🔐",
+    },
+    {
+      title: "User Dashboard",
+      description: "Create, edit, and manage blogs with ease. Save your favorite reads for later and customize your personal workspace.",
+      icon: "👤",
+    },
+    {
+      title: "Guest Experience",
+      description: "Browse, search, and filter blogs without needing an account. Discover content effortlessly.",
+      icon: "🌐",
+    },
+    {
+      title: "Social Engagement",
+      description: "Foster community by commenting on blogs and engaging with other creators.",
+      icon: "💬",
+    },
+  ];
+
+  const techStack = [
+    { src: "https://www.svgrepo.com/show/374144/typescript.svg", alt: "Typescript" },
+    { src: "https://www.svgrepo.com/show/354113/nextjs-icon.svg", alt: "Next.js" },
+    { src: "https://trpc.io/img/logo.svg", alt: "tRPC" },
+    { src: "https://www.svgrepo.com/show/303301/postgresql-logo.svg", alt: "PostgreSQL" },
+  ];
+
   return (
-    <div>
-      <Navbar />
-      <h1 className="mt-2 text-center text-2xl font-black">
-        Blog Nest - A cozy space for bloggers to create and share.
-      </h1>
-      <div className="mt-8 flex w-screen flex-col lg:flex-row items-center justify-around p-8 bg-gradient-to-b from-foreground to-card-foreground text-white overflow-x-hidden">
-        <div className="flex w-full lg:w-1/3 flex-col gap-4">
-          <p className="font-mono">
-            BlogSphere is a dynamic and user-friendly blogging platform designed
-            to give users complete control over their blogging experience.
-            Whether you're a casual reader or an active blogger, our platform
-            offers an engaging space for content creation, discovery, and
-            interaction.{" "}
+    <div className="min-h-screen w-screen overflow-x-hidden bg-background flex flex-col">
+      <Header />
+
+      <main className="flex-grow container mx-auto px-4 py-12 flex flex-col items-center gap-16">
+        {/* Hero Section */}
+        <div className="flex flex-col items-center justify-center gap-6 text-center max-w-3xl">
+          <h1 className="text-5xl md:text-7xl font-bold tracking-tight">
+            ABOUT <span className="text-primary">BLOG NEST</span>
+          </h1>
+          <p className="text-xl text-muted-foreground leading-relaxed">
+            A cozy space for bloggers to create and share. Whether you're a casual reader or an active blogger,
+            our platform offers an engaging space for content creation, discovery, and interaction.
           </p>
-
-          <h1>Key Features:</h1>
-          <h3>✅ Secure Authentication:</h3>
-          <ul>
-            <li>
-              Sign in seamlessly using Google Authentication or Credentials
-              Login.
-            </li>
-            <li>
-              Enjoy a personalized experience with separate user dashboards.
-            </li>
-          </ul>
-
-          <h3>✅ User Dashboard & Blog Management:</h3>
-          <ul>
-            <li>Registered users can create blogs with a title, description,category, and an image.</li>
-            <li>Save blogs for later reading.</li>
-            <li>Edit and manage personal blogs from their dashboard.</li>
-          </ul>
-
-          <h3>✅ Guest User Experience:</h3>
-          <ul>
-            <li>Browse all blogs on the Home Page without an account. </li>
-            <li>Search for blogs by title.</li>
-            <li>Filter blogs by categories to find relevant content. </li>
-          </ul>
-
-          <h3>✅ Social Engagement:</h3>
-          <ul>
-            <li>
-              Users can comment on each other's blogs, fostering discussions and
-              community engagement.{" "}
-            </li>
-            <li>
-              Saved Blogs: Logged-in users can save blogs they like for easy
-              access later.{" "}
-            </li>
-          </ul>
+          <div className="h-[1px] w-24 bg-primary/50 mt-4"></div>
         </div>
 
-        <h1 className="text-2xl font-black block lg:hidden mt-8">TECH STACK</h1>
-
-        <div className="flex flex-row flex-wrap lg:flex-col justify-center gap-8 p-4 items-center mt-8 lg:mt-0">
-          <h1 className="text-2xl font-black hidden lg:block">TECH STACK</h1>
-          <Image
-            src="https://trpc.io/img/logo.svg"
-            alt="Image"
-            width="120"
-            height="120"
-          />
-          <Image
-            src="https://static-00.iconduck.com/assets.00/postgresql-plain-wordmark-icon-1024x1021-3tzxcisn.png"
-            alt="Image"
-            width="120"
-            height="120"
-          />
-
-          <Image
-            src="https://static-00.iconduck.com/assets.00/nextjs-icon-512x512-y563b8iq.png"
-            alt="Image"
-            width="120"
-            height="120"
-          />
-
-          <Image
-            src="https://www.svgrepo.com/show/374144/typescript.svg"
-            alt="TypeScript Logo"
-            width={120}
-            height={120}
-            priority
-          />
+        {/* Features Grid */}
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6 w-full max-w-5xl">
+          {features.map((feature, index) => (
+            <Card key={index} className="border-secondary/50 shadow-md hover:shadow-lg transition-shadow duration-300 bg-card/50 backdrop-blur-sm">
+              <CardHeader className="flex flex-row items-center gap-4 pb-2">
+                <div className="text-4xl">{feature.icon}</div>
+                <CardTitle className="text-xl font-bold">{feature.title}</CardTitle>
+              </CardHeader>
+              <CardContent>
+                <p className="text-muted-foreground">
+                  {feature.description}
+                </p>
+              </CardContent>
+            </Card>
+          ))}
         </div>
-      </div>
+
+        {/* Tech Stack Section */}
+        <div className="flex flex-col items-center gap-8 w-full">
+          <div className="flex items-center gap-4 w-full justify-center">
+            <div className="h-[1px] w-full max-w-[100px] bg-border"></div>
+            <Badge variant="outline" className="px-4 py-1 text-lg font-medium border-primary/20 text-muted-foreground">
+              POWERED BY
+            </Badge>
+            <div className="h-[1px] w-full max-w-[100px] bg-border"></div>
+          </div>
+
+          <div className="flex flex-wrap justify-center gap-12 items-center grayscale hover:grayscale-0 transition-all duration-500 opacity-80 hover:opacity-100">
+            {techStack.map((tech, index) => (
+              <div key={index} className="relative w-20 h-20 md:w-24 md:h-24 transition-transform hover:scale-110 duration-300">
+                <Image
+                  src={tech.src}
+                  alt={tech.alt}
+                  fill
+                  className="object-contain"
+                  priority
+                />
+              </div>
+            ))}
+          </div>
+        </div>
+      </main>
+
+      <Footer />
     </div>
   );
 }
-
-export default page;

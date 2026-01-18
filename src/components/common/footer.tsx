@@ -59,7 +59,7 @@ export default function Footer() {
       </div>
       <div className="border-t border-secondary p-4 md:p-2">
         <p className="text-center">
-          <span className="text-primary">©</span> 2025 Blog Nest. All rights
+          <span className="text-primary">©</span> 2026 Blog Nest. All rights
           reserved
         </p>
       </div>
