@@ -1,6 +1,7 @@
 "use client";
 
 import { Button } from "~/components/ui/button";
+import { toast } from "sonner"
 import { Input } from "~/components/ui/input";
 import { zodResolver } from "@hookform/resolvers/zod";
 import Link from "next/link";
@@ -23,6 +24,7 @@ import { useState } from "react";
 
 export default function LoginForm() {
   const [isSubmitted, setIsSubmitting] = useState(false);
+  const [error, setIsError] = useState(false);
   const router = useRouter();
   const form = useForm<z.infer<typeof loginSchema>>({
     resolver: zodResolver(loginSchema),
@@ -43,9 +45,10 @@ export default function LoginForm() {
         redirect: false, // Prevent auto-redirect for custom handling
       });
       if (res?.error) {
-        console.error("Login failed:", res.error);
+toast.error("Invalid Credentials")
       } else if (res?.ok) {
-        router.push("/"); // Redirect to dashboard upon success
+toast.success("Login Successfull")
+        router.push("/"); // Redirect to dashboard upon success  
       }
     } catch (error) {
       throw error;

@@ -5,6 +5,7 @@ import { type Metadata } from "next";
 import { TRPCReactProvider } from "~/trpc/react";
 import SessionWrapper from "~/components/providers/providers";
 import { Jacquarda_Bastarda_9_Charted,Noto_Serif } from 'next/font/google'
+import { Toaster } from "~/components/ui/sonner";
 
 
 export const metadata: Metadata = {
@@ -34,6 +35,7 @@ export default function RootLayout({
       <body className="h-screen w-screen overflow-x-hidden bg-background">
         <SessionWrapper>
           <TRPCReactProvider>{children}</TRPCReactProvider>
+          <Toaster/>
         </SessionWrapper>
       </body>
     </html>
