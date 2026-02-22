@@ -41,7 +41,7 @@ const data = {
   navMain: [
     {
       title: "Dashboard",
-      url: "#",
+      url: "/dashboard",
       icon: LayoutDashboardIcon,
     },
     {
@@ -133,17 +133,17 @@ const data = {
   documents: [
     {
       name: "Create Blogs",
-      url: "#",
+      url: "/dashboard/create-blog",
       icon: DatabaseIcon,
     },
     {
       name: "Saved Blogs",
-      url: "#",
+      url: "/dashboard/saved-blogs",
       icon: ClipboardListIcon,
     },
     {
       name: "View Your Blogs",
-      url: "#",
+      url: "/dashboard/your-blogs",
       icon: FileIcon,
     },
   ],

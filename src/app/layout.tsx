@@ -4,7 +4,7 @@ import { type Metadata } from "next";
 
 import { TRPCReactProvider } from "~/trpc/react";
 import SessionWrapper from "~/components/providers/providers";
-import { Jacquarda_Bastarda_9_Charted,Noto_Serif } from 'next/font/google'
+import { Noto_Serif } from 'next/font/google'
 import { Toaster } from "~/components/ui/sonner";
 
 
@@ -14,28 +14,20 @@ export const metadata: Metadata = {
   icons: [{ rel: "icon", url: "/favicon.ico" }],
 };
 
-const jacquardaBastarda9Charted = Jacquarda_Bastarda_9_Charted({
-  subsets:['latin'],
-  display:"swap",
-  weight:"400",
-  variable:'--font-jacquardaBastarda9Charted'
-})
-
 const notoSerif = Noto_Serif({
-  preload:true,
-  subsets:["greek"],
-  variable:'--font-notoSerif'
+  subsets: ["latin"],
+  variable: '--font-notoSerif'
 })
 
 export default function RootLayout({
   children,
-}: Readonly<{ children: React.ReactNode }>) { 
+}: Readonly<{ children: React.ReactNode }>) {
   return (
-    <html lang="en" className={`${jacquardaBastarda9Charted.variable} ${notoSerif.variable} font-notoSerif`}>
-      <body className="h-screen w-screen overflow-x-hidden bg-background">
+    <html lang="en" className={`${notoSerif.variable}`}>
+      <body className="min-h-screen bg-background font-sans antialiased">
         <SessionWrapper>
           <TRPCReactProvider>{children}</TRPCReactProvider>
-          <Toaster/>
+          <Toaster />
         </SessionWrapper>
       </body>
     </html>

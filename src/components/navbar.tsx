@@ -1,4 +1,5 @@
 "use client";
+import React from "react";
 import { Sheet, SheetContent, SheetTrigger } from "~/components/ui/sheet";
 import { Menu } from "lucide-react";
 import Link from "next/link";
@@ -39,7 +40,7 @@ function ListItem({
 
 export default function Navbar() {
 
-  const {data:categories} = api.category.getCategories.useQuery()
+  const { data: categories } = api.category.getCategories.useQuery()
 
   const pathname = usePathname();
 
@@ -79,10 +80,10 @@ export default function Navbar() {
 
         <div className="active hidden w-3/5 justify-center gap-12 md:flex">
           <NavigationMenu viewport={false}>
-            {navlinks.map((item, index) => (
-              <NavigationMenuList key={index}>
-                {item.navLinkName !== "Categories" ? (
-                  <NavigationMenuItem>
+            <NavigationMenuList className="gap-6">
+              {navlinks.map((item, index) =>
+                item.navLinkName !== "Categories" ? (
+                  <NavigationMenuItem key={index}>
                     <NavigationMenuLink
                       asChild
                       className={navigationMenuTriggerStyle()}
@@ -95,28 +96,26 @@ export default function Navbar() {
                       </Link>
                     </NavigationMenuLink>
                   </NavigationMenuItem>
-                ) 
-                : 
-                (
-                  <NavigationMenuItem>
+                ) : (
+                  <NavigationMenuItem key={index}>
                     <NavigationMenuTrigger>
                       {item.navLinkName}
                     </NavigationMenuTrigger>
-                        {categories?.map((component) => (
                     <NavigationMenuContent>
-                      <ul className="grid gap-2 md:grid-cols-3 w-max">
+                      <ul className="grid gap-2 p-4 md:w-[400px] lg:w-[500px] md:grid-cols-2">
+                        {categories?.map((component) => (
                           <ListItem
                             key={component.categoryId}
                             title={component.categoryName}
-                            href={`http://localhost:3000/category/${component.categoryName}`}
+                            href={`/category/${component.categoryName}`}
                           />
+                        ))}
                       </ul>
                     </NavigationMenuContent>
-                        ))}
                   </NavigationMenuItem>
-                )}
-              </NavigationMenuList>
-            ))}
+                )
+              )}
+            </NavigationMenuList>
           </NavigationMenu>
         </div>
 

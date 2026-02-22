@@ -4,13 +4,15 @@ import tailwindcssAnimate from "tailwindcss-animate"
 
 export default {
     darkMode: ["class"],
-    content: ["./src/**/*.tsx"],
+    content: [
+      "./src/app/**/*.{js,ts,jsx,tsx,mdx}",
+      "./src/pages/**/*.{js,ts,jsx,tsx,mdx}",
+      "./src/components/**/*.{js,ts,jsx,tsx,mdx}",
+      "./src/styles/**/*.{js,ts,jsx,tsx,mdx}",
+    ],
   theme: {
   	extend: {
   		fontFamily: {
-  			jacquardaBastarda9Charted: [
-  				'var(--font-jacquardaBastarda9Charted)'
-  			],
   			notoSerif: [
   				'var(--font-notoSerif)'
   			]
