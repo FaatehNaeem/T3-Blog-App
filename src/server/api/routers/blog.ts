@@ -25,7 +25,8 @@ export const blogRouter = createTRPCRouter({
       return (await ctx.db.query.blogs.findMany({with:{
         creator:{columns:{
           username:true
-        }}
+        }},
+        category: true
       }}))
     }),
 
@@ -37,7 +38,8 @@ export const blogRouter = createTRPCRouter({
       with:{
         creator:{columns:{
           username:true
-        }}
+        }},
+        category: true
       }
       })
     }),

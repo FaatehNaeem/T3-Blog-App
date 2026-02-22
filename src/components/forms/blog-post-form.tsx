@@ -195,7 +195,7 @@ export default function BlogPostForm() {
                         <TooltipTrigger asChild>
                           <Button
                             type="button"
-                            variant="subtle"
+                            variant="ghost"
                             size="sm"
                             className="h-8 gap-2 bg-primary/10 text-primary hover:bg-primary/20"
                             onClick={handleSuggestTitles}
@@ -255,7 +255,7 @@ export default function BlogPostForm() {
                     <FormLabel className="text-base font-semibold">Content Description</FormLabel>
                     <Button
                       type="button"
-                      variant="subtle"
+                      variant="ghost"
                       size="sm"
                       className="h-8 gap-2 bg-primary/10 text-primary hover:bg-primary/20"
                       onClick={generateAIDescription}
