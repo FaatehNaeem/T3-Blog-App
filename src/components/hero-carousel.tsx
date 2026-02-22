@@ -1,51 +1,70 @@
 "use client"
 
 import * as React from "react"
-import Autoplay from "embla-carousel-autoplay"
-
-import { Card, CardContent } from "~/components/ui/card"
-import {
-  Carousel,
-  CarouselContent,
-  CarouselItem,
-} from "~/components/ui/carousel"
+import { motion } from "motion/react"
 import { Badge } from "./ui/badge"
 
-const imageArr = [
-  {imgSrc:"https://images.pexels.com/photos/3861969/pexels-photo-3861969.jpeg?_gl=1*qpzo17*_ga*MTY4ODE2NjQ4Ni4xNzUzNDY2NTUz*_ga_8JE65Q40S6*czE3NTM0NjY1NTMkbzEkZzEkdDE3NTM0NjY1NjIkajUxJGwwJGgw"},
-  {imgSrc:"https://images.pexels.com/photos/965345/pexels-photo-965345.jpeg?_gl=1*1t381eg*_ga*MTY4ODE2NjQ4Ni4xNzUzNDY2NTUz*_ga_8JE65Q40S6*czE3NTM0NjY1NTMkbzEkZzEkdDE3NTM0NjY2MTkkajU2JGwwJGgw"},
-  {imgSrc:"https://images.pexels.com/photos/8386365/pexels-photo-8386365.jpeg?_gl=1*3k8q02*_ga*MTY4ODE2NjQ4Ni4xNzUzNDY2NTUz*_ga_8JE65Q40S6*czE3NTM0NjY1NTMkbzEkZzEkdDE3NTM0NjY2NDkkajI2JGwwJGgw"},
-  {imgSrc:"https://images.pexels.com/photos/1933900/pexels-photo-1933900.jpeg?_gl=1*ha62ls*_ga*MTY4ODE2NjQ4Ni4xNzUzNDY2NTUz*_ga_8JE65Q40S6*czE3NTM0NjY1NTMkbzEkZzEkdDE3NTM0NjY2NzYkajU5JGwwJGgw"},
-  {imgSrc:"https://images.pexels.com/photos/8721318/pexels-photo-8721318.jpeg?_gl=1*gha0ma*_ga*MTY4ODE2NjQ4Ni4xNzUzNDY2NTUz*_ga_8JE65Q40S6*czE3NTM0NjY1NTMkbzEkZzEkdDE3NTM0NjY3MDAkajM1JGwwJGgw"},
+const row1 = [
+  { imgSrc: "https://images.pexels.com/photos/3861969/pexels-photo-3861969.jpeg?auto=compress&cs=tinysrgb&w=600" },
+  { imgSrc: "https://images.pexels.com/photos/965345/pexels-photo-965345.jpeg?auto=compress&cs=tinysrgb&w=600" },
+  { imgSrc: "https://images.pexels.com/photos/8386365/pexels-photo-8386365.jpeg?auto=compress&cs=tinysrgb&w=600" },
+  { imgSrc: "https://images.pexels.com/photos/1933900/pexels-photo-1933900.jpeg?auto=compress&cs=tinysrgb&w=600" },
+  { imgSrc: "https://images.pexels.com/photos/8721318/pexels-photo-8721318.jpeg?auto=compress&cs=tinysrgb&w=600" },
+  { imgSrc: "https://images.pexels.com/photos/2007647/pexels-photo-2007647.jpeg?auto=compress&cs=tinysrgb&w=600" },
+  { imgSrc: "https://images.pexels.com/photos/546819/pexels-photo-546819.jpeg?auto=compress&cs=tinysrgb&w=600" },
+  { imgSrc: "https://images.pexels.com/photos/2599244/pexels-photo-2599244.jpeg?auto=compress&cs=tinysrgb&w=600" },
 ]
 
-export function HeroCarousel() {
-  const plugin = React.useRef(
-    Autoplay({ delay: 2000, stopOnInteraction: true})
-  )
+const row2 = [
+  { imgSrc: "https://images.pexels.com/photos/1181244/pexels-photo-1181244.jpeg?auto=compress&cs=tinysrgb&w=600" },
+  { imgSrc: "https://images.pexels.com/photos/1181675/pexels-photo-1181675.jpeg?auto=compress&cs=tinysrgb&w=600" },
+  { imgSrc: "https://images.pexels.com/photos/1181263/pexels-photo-1181263.jpeg?auto=compress&cs=tinysrgb&w=600" },
+  { imgSrc: "https://images.pexels.com/photos/574071/pexels-photo-574071.jpeg?auto=compress&cs=tinysrgb&w=600" },
+  { imgSrc: "https://images.pexels.com/photos/546819/pexels-photo-546819.jpeg?auto=compress&cs=tinysrgb&w=600" },
+  { imgSrc: "https://images.pexels.com/photos/3183150/pexels-photo-3183150.jpeg?auto=compress&cs=tinysrgb&w=600" },
+  { imgSrc: "https://images.pexels.com/photos/1181359/pexels-photo-1181359.jpeg?auto=compress&cs=tinysrgb&w=600" },
+  { imgSrc: "https://images.pexels.com/photos/1181271/pexels-photo-1181271.jpeg?auto=compress&cs=tinysrgb&w=600" },
+]
+
+const InfiniteRow = ({ items, direction = "left" }: { items: typeof row1, direction?: "left" | "right" }) => {
+  const scrollValue = direction === "left" ? ["0%", "-50%"] : ["-50%", "0%"]
 
   return (
- <Carousel 
- plugins={[plugin.current]}
- className="w-full max-w-2xl" 
- opts={{loop:true}} 
- onMouseEnter={plugin.current.stop}
- onMouseLeave={()=>plugin.current.play}
->
-      <CarouselContent className="-ml-1">
-        {imageArr.map((data, index) => (
-          <CarouselItem key={index} className="pl-1 md:basis-1/2 lg:basis-1/3">
-            <div>
-              <Card className="bg-black border-2 border-secondary">
-            <CardContent className="flex flex-col items-center justify-center aspect-auto p-1">
-                  <img src={data.imgSrc} alt="" className="aspect-auto rounded-2xl shadow-lg shadow-primary w-full h-auto sm:h-96 md:h-48 opacity-80 cursor-pointer hover:brightness-125"/>
-                  <Badge className="bg-black text-white absolute bottom-1 right-1">Hello</Badge>
-                </CardContent>
-              </Card>
+    <div className="flex overflow-hidden w-full">
+      <motion.div
+        animate={{ x: scrollValue }}
+        transition={{
+          duration: 30,
+          repeat: Infinity,
+          ease: "linear",
+        }}
+        className="flex gap-6 py-2 shrink-0"
+      >
+        {[...items, ...items].map((item, index) => (
+          <div key={index} className="relative w-72 h-44 group shrink-0 shadow-xl shadow-black/5 hover:scale-[1.02] transition-all duration-500">
+            <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent opacity-60 group-hover:opacity-30 transition-opacity rounded-2xl z-10" />
+            <img
+              src={item.imgSrc}
+              alt=""
+              className="w-full h-full object-cover rounded-2xl border border-border/50"
+            />
+            <div className="absolute top-4 left-4 z-20">
+              <span className="px-3 py-1 text-[10px] font-bold uppercase tracking-widest text-white bg-primary/90 backdrop-blur-md rounded-full border border-white/20 shadow-lg">
+                Category
+              </span>
             </div>
-          </CarouselItem>
+          </div>
         ))}
-      </CarouselContent>
-    </Carousel>
+      </motion.div>
+    </div>
+  )
+}
+
+export function HeroCarousel() {
+  return (
+    <div className="flex flex-col gap-6 w-screen overflow-hidden py-4">
+      <InfiniteRow items={row1} direction="left" />
+      <InfiniteRow items={row2} direction="right" />
+    </div>
   )
 }

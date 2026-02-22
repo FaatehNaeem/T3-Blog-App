@@ -111,3 +111,7 @@ input[type=file]::file-selector-button {
 .black-shadow{
   text-shadow: 0.2px 0.5px 1px black;
 }
+
+.mask-gradient {
+  mask-image: linear-gradient(to right, transparent, black 10%, black 90%, transparent);
+}
